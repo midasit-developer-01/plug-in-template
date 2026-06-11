@@ -5,28 +5,16 @@ import {
   Color,
   Typography,
   Stack,
-  Button,
 } from "@midasit-dev/moaui";
 import { useTranslation } from "react-i18next";
 import LanguageType from "../../Input/Dropdown/LanguageType";
 import RequestBtnPy from "../../Input/Button/RequestBtnPy";
 import { useState } from "react";
-import DefalutTextEdit from "../../Input/TextEdit/TextEdit";
 
 const Contents = () => {
   const [exampleAPI, setexampleAPI] = useState([]);
-  const [examplePython, setexamplePython] = useState(0);
-  const [resultPython, setresultPython] = useState(0);
   const { t: translate } = useTranslation();
-  const resultPython2 = translate("example");
 
-  const onClick = () => {
-    if (pyscript && pyscript.interpreter) {
-      const exampleFunc = pyscript.interpreter.globals.get("example");
-      if (examplePython > 0) setresultPython(exampleFunc(examplePython));
-      else setresultPython(0);
-    }
-  };
   return (
     <GuideBox verCenter width={"100%"} padding={2}>
       {/* Language Change */}
@@ -85,31 +73,6 @@ const Contents = () => {
             <Typography variant="h1" size="large">
               {exampleAPI && JSON.stringify(exampleAPI)}
             </Typography>
-          </Grid>
-        </Panel>
-      </GuideBox>
-
-      {/* factorial example  */}
-      <GuideBox verCenter width={"100%"} padding={2}>
-        <Panel
-          width="100%"
-          variant="shadow2"
-          padding={2}
-          border={`1px solid ${Color.secondary.main}`}
-        >
-          <Grid margin={2}>
-            <Typography variant="h1" size="large">
-              factorial example
-            </Typography>
-          </Grid>
-          <Grid margin={2}>
-            <DefalutTextEdit setexamplePython={setexamplePython} />
-          </Grid>
-          <Grid margin={2}>
-            <Button onClick={onClick}> factorial </Button>
-          </Grid>
-          <Grid margin={2}>
-            Result : {resultPython > 0 ? resultPython : resultPython2}
           </Grid>
         </Panel>
       </GuideBox>

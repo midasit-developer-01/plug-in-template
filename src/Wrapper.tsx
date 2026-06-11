@@ -1,6 +1,6 @@
 /**
  * @title 2-wrapper
- * @description Wrapper for Pyscript
+ * @description MAPI-Key 검증 게이트 (pyscript 미사용)
  * @next ./src/App.tsx
  * ┬┌┐┌   ┌─┐┌─┐┌┬┐┬┬  ┬┌─┐
  * ││││───├─┤│   │ │└┐┌┘├┤ 	🌑🌑🌑🌑🌑
@@ -22,12 +22,10 @@ import {
 } from "@midasit-dev/moaui";
 import Signature from "./Signature";
 import { SnackbarProvider, closeSnackbar } from "notistack";
-import { setGlobalVariable, getGlobalVariable } from "./utils_pyscript";
 import { useTranslation } from "react-i18next";
+import { DEV_AUTH_BYPASS } from "./config";
 
-const ValidWrapper = (props: any) => {
-  const { isIntalledPyscript } = props;
-
+const ValidWrapper = () => {
   const [isInitialized, setIsInitialized] = React.useState(false);
   const [isValid, setIsValid] = React.useState(false);
   const [checkUri, setCheckUri] = React.useState(false);
@@ -35,46 +33,63 @@ const ValidWrapper = (props: any) => {
   const [checkMapiKeyMsg, setCheckMapiKeyMsg] = React.useState("");
   const { i18n } = useTranslation();
 
+  // MAPI-Key 검증 게이트 (pyscript 미사용, VerifyUtil + fetch 기반)
+  // 로컬 개발 시에는 URL에 ?mapiKey=... (필요 시 &redirectTo=...) 를 붙여야 통과합니다.
   React.useEffect(() => {
+    // 개발용 인증 우회 (.env.development.local 의 REACT_APP_SKIP_AUTH=true).
+    // NODE_ENV=development 일 때만 활성화되며 프로덕션 빌드에는 영향 없음.
+    if (DEV_AUTH_BYPASS) {
+      console.warn("[DEV] 인증 검증 게이트를 우회합니다 (REACT_APP_SKIP_AUTH=true).");
+      setCheckUri(true);
+      setCheckMapiKey(true);
+      setIsValid(true);
+      setIsInitialized(true);
+      return;
+    }
+
     const callback = async () => {
-      //redirectTo와 mapi-key 유효성 검사
+      // redirectTo(Base URI) 와 mapi-key 유효성 검사
       let _checkUri = true;
       let _checkMapiKey = true;
 
-      const url = VerifyUtil.getProtocolDomainPort();
-      const resUrl = await fetch(`${url}/health`);
-      if (resUrl.status !== 200) {
+      // Base URI (/health) 체크
+      try {
+        const url = VerifyUtil.getProtocolDomainPort();
+        const resUrl = await fetch(`${url}/health`);
+        if (resUrl.status !== 200) _checkUri = false;
+      } catch (error) {
         _checkUri = false;
       }
       setCheckUri(_checkUri);
 
-      const mapiKey = VerifyUtil.getMapiKey();
-      const verifyMapiKey = await VerifyUtil.getVerifyInfoAsync(mapiKey);
-      if ("error" in verifyMapiKey && "message" in verifyMapiKey.error) {
+      // MAPI-Key 검증
+      try {
+        const mapiKey = VerifyUtil.getMapiKey();
+        const verifyMapiKey = await VerifyUtil.getVerifyInfoAsync(mapiKey);
+        if ("error" in verifyMapiKey && "message" in verifyMapiKey.error) {
+          _checkMapiKey = false;
+          setCheckMapiKeyMsg(verifyMapiKey.error.message);
+        }
+        if ("keyVerified" in verifyMapiKey) {
+          if (!verifyMapiKey["keyVerified"]) {
+            _checkMapiKey = false;
+            setCheckMapiKeyMsg("keyVerified");
+          }
+        }
+        if ("status" in verifyMapiKey) {
+          if (verifyMapiKey["status"] !== "connected") {
+            _checkMapiKey = false;
+            setCheckMapiKeyMsg(verifyMapiKey["status"]);
+          }
+        }
+      } catch (error) {
         _checkMapiKey = false;
-        setCheckMapiKeyMsg(verifyMapiKey.error.message);
-      }
-      if ("keyVerified" in verifyMapiKey) {
-        if (!verifyMapiKey["keyVerified"]) {
-          _checkMapiKey = false;
-          setCheckMapiKeyMsg("keyVerified");
-        }
-      }
-      if ("status" in verifyMapiKey) {
-        if (verifyMapiKey["status"] !== "connected") {
-          _checkMapiKey = false;
-          setCheckMapiKeyMsg(verifyMapiKey["status"]);
-        }
+        setCheckMapiKeyMsg("verify request failed");
       }
       setCheckMapiKey(_checkMapiKey);
 
-      //최종 결과 Set
-      if (!_checkUri || !_checkMapiKey) {
-        setIsValid(false);
-      } else {
-        setIsValid(true);
-      }
-
+      // 최종 결과 Set
+      setIsValid(_checkUri && _checkMapiKey);
       setIsInitialized(true);
     };
 
@@ -127,6 +142,9 @@ const ValidWrapper = (props: any) => {
 
   return (
     <>
+      {/* 검증 진행 중 로딩 다이얼로그 */}
+      {!DEV_AUTH_BYPASS && <VerifyDialog loading={!isInitialized} />}
+      
       {isInitialized && isValid && (
         <RecoilRoot>
           <SnackbarProvider
@@ -165,12 +183,6 @@ const ValidWrapper = (props: any) => {
               <Typography variant="h1">Validation Check</Typography>
               <GuideBox spacing={2}>
                 <ValidationComponent
-                  title="pyscript"
-                  checkIf={isIntalledPyscript}
-                  strValid="Installed"
-                  strInvalid={`Not Installed`}
-                />
-                <ValidationComponent
                   title="Base URI"
                   checkIf={checkUri}
                   strValid="Valid"
@@ -191,35 +203,4 @@ const ValidWrapper = (props: any) => {
   );
 };
 
-const PyscriptWrapper = () => {
-  const [installed, setInstalled] = React.useState(false);
-
-  //fill in global variables
-  React.useEffect(() => {
-    function checkPyScriptReady(callback: any) {
-      // if pyscript is ready, call callback function
-      if (pyscript && pyscript.interpreter) {
-        setGlobalVariable();
-        getGlobalVariable();
-        setInstalled(true);
-      } else {
-        // if not, wait 100ms and try again
-        setTimeout(() => checkPyScriptReady(callback), 100);
-      }
-    }
-
-    checkPyScriptReady(() => {});
-  }, []);
-
-  return (
-    <>
-      <VerifyDialog loading={!installed} />
-      {installed && VerifyUtil.isExistQueryStrings("mapiKey") && (
-        <ValidWrapper isIntalledPyscript={installed} />
-      )}
-    </>
-  );
-};
-
-//변경
-export default PyscriptWrapper;
+export default ValidWrapper;
