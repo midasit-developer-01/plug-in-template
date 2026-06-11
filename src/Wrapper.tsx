@@ -24,6 +24,7 @@ import Signature from "./Signature";
 import { SnackbarProvider, closeSnackbar } from "notistack";
 import { useTranslation } from "react-i18next";
 import { DEV_AUTH_BYPASS } from "./config";
+import { detectLanguage } from "./language";
 
 const ValidWrapper = () => {
   const [isInitialized, setIsInitialized] = React.useState(false);
@@ -134,11 +135,10 @@ const ValidWrapper = () => {
   }, [isInitialized, isValid]);
 
   // language switcher
+  // URL 경로를 강제로 바꾸지 않고(리로드 방지) detectLanguage() 결과로 한 번만 설정.
   React.useEffect(() => {
-    if (window.location.pathname === "/") window.location.pathname = "/en"; // initialize
-    i18n.changeLanguage(window.location.pathname.split("/")[1]); // change language when pathname changes
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [window.location.pathname]);
+    i18n.changeLanguage(detectLanguage());
+  }, [i18n]);
 
   return (
     <>

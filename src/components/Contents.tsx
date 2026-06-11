@@ -7,8 +7,8 @@ import {
   Stack,
 } from "@midasit-dev/moaui";
 import { useTranslation } from "react-i18next";
-import LanguageType from "../../Input/Dropdown/LanguageType";
-import RequestBtnPy from "../../Input/Button/RequestBtnPy";
+import LanguageType from "../UI/LanguageType";
+import RequestBtnPy from "./RequestBtnPy";
 import { useState } from "react";
 
 const Contents = () => {

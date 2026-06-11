@@ -1,7 +1,7 @@
 import { Button } from "@midasit-dev/moaui";
 // (구) pyscript 기반 구현 — 주석 처리
-// import { dbRead } from "../../../utils_pyscript";
-import { dbRead } from "../../../utils_api";
+// import { dbRead } from "../utils_pyscript";
+import { dbRead } from "../utils_api";
 
 const RequestBtnPy = ({ setexampleAPI }: any) => {
   // (구) pyscript 기반 호출 — 주석 처리

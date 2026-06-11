@@ -1,4 +1,4 @@
-import Contents from "./Layout/Contents/Contents";
+import Contents from "./Contents";
 import { GuideBox } from "@midasit-dev/moaui";
 
 function MainWindow() {
