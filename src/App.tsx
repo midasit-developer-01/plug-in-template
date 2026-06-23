@@ -30,15 +30,30 @@ const opacity = 0.5;
  */
 const App = () => {
   return (
-    <GuideBox
-      center
-      fill={"rgba(240, 240, 240, 0.5)"}
-      width={"90%"}
-      spacing={2}
-      padding={2}
+    // 스크롤 컨테이너: 내용이 창 높이를 넘으면 세로 스크롤 생성.
+    // (flex + 안쪽 margin:auto → 내용이 작으면 가운데 정렬, 커지면 위가 잘리지 않고 끝까지 스크롤)
+    <div
+      style={{
+        height: "100vh",
+        width: "100%",
+        overflowY: "auto",
+        overflowX: "hidden",
+        display: "flex",
+        flexDirection: "column",
+      }}
     >
-      <MainWindow />
-    </GuideBox>
+      <div style={{ margin: "auto", width: "100%" }}>
+        <GuideBox
+          center
+          fill={"rgba(240, 240, 240, 0.5)"}
+          width={"90%"}
+          spacing={2}
+          padding={2}
+        >
+          <MainWindow />
+        </GuideBox>
+      </div>
+    </div>
   );
 };
 

@@ -139,10 +139,12 @@ const { t } = useTranslation();
 Midas 서버와의 통신은 **두 가지 방식** 중 하나를 사용합니다.
 **기본은 pyscript 미사용(권장)** 입니다.
 
-> 📖 **엔드포인트·JSON 규약 정제본**: [`./midas-api-reference.md`](./midas-api-reference.md)
-> (Base URL, MAPI-Key, DB/DOC/VIEW/POST/OPER 분류, `Assign`/`Argument` 규약, 항목/예시).
-> API 코드를 작성하기 전 이 문서를 먼저 참고하세요.
-> **이 문서에 없거나 불명확한 경우에만** 공식 Online Manual 을 확인하고, 확인한 내용은 이 문서에 반영합니다.
+> 📖 **엔드포인트 카탈로그·규약 정제본**: [`./midas-api-reference.md`](./midas-api-reference.md)
+> (Base URL, MAPI-Key, DOC/DB/OPE/VIEW/POST 5종 분류, `Assign`/`Argument` 규약, **전체 엔드포인트 카탈로그**+article 번호).
+> 📦 **실제 요청/응답 payload 예시**: [`./midas-api-examples.json`](./midas-api-examples.json) (엔드포인트 키 기반).
+> API 코드를 작성하기 전 두 문서를 먼저 참고하세요.
+> **각 엔드포인트의 정확한 필드 스키마가 필요하면** 카탈로그의 `article` 번호로 매뉴얼 하위 페이지
+> (`https://support.midasuser.com/hc/en-us/articles/<id>`)를 확인하고, 확인한 스키마/예시는 `midas-api-examples.json` 에 반영합니다.
 
 ### 4-1. pyscript 미사용 (권장) → `src/utils_api.ts`
 

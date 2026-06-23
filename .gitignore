@@ -21,3 +21,6 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# 비개발자 실행 시 저장되는 MAPI-Key (이 PC 에만 보관, 공유 금지)
+.mapikey
