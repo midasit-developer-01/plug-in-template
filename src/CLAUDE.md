@@ -1,62 +1,62 @@
-# src/CLAUDE.md — 작업 가이드 (코드 작성 규칙)
+# src/CLAUDE.md — Work Guide (code-writing rules)
 
-이 문서는 이 템플릿으로 **실제 플러그인을 만들 때** 지켜야 할 규칙을 정의합니다.
-루트 구조/실행 흐름은 [`../CLAUDE.md`](../CLAUDE.md) 를 먼저 참고하세요.
-
----
-
-## 0. 작업 대상 프로젝트 정의 (★ 작업 시작 전 이 섹션부터 채우기)
-
-> 새 프로젝트를 시작하면 아래 내용을 **이 파일에 직접 기록**합니다.
-> 이후 모든 코드는 여기에 적힌 정의를 기준으로 작성합니다.
-
-- **프로젝트 목적**: _(예: 말뚝 스프링 강성을 계산해 모델에 입력하는 플러그인)_
-- **대상 제품**: _(CIVIL / GEN 등)_
-- **주요 기능 목록**:
-  1. _(예: 입력값으로부터 스프링 강성 계산)_
-  2. _(예: 계산 결과를 DB API로 모델에 입력)_
-  3. _(예: 데이터 import/export)_
-- **화면 구성(패널/탭)**: _(예: 입력 패널 / 결과 패널 / 실행 버튼)_
-- **사용하는 API**: _(예: `db/NODE` 읽기, `db/SPRING` 쓰기)_
-- **상태(state) 구조**: _(recoil atom/selector 목록)_
+This document defines the rules to follow when **actually building a plug-in** with this template.
+For the root structure / entry flow, see [`../CLAUDE.md`](../CLAUDE.md) first.
 
 ---
 
-## 1. 폴더 구성 규칙 (기능별 분리)
+## 0. Target project definition (★ fill in this section before starting work)
 
-실제 코드는 `src/` 안에 **기능별 폴더**로 구분해서 작성합니다.
+> When you start a new project, **record the following directly in this file**.
+> All subsequent code is written against the definitions written here.
 
-| 역할(한글) | 폴더명 | 담는 내용 | 판별 기준 |
+- **Project purpose**: _(e.g. a plug-in that calculates pile spring stiffness and inputs it into the model)_
+- **Target product**: _(CIVIL / GEN, etc.)_
+- **Main feature list**:
+  1. _(e.g. calculate spring stiffness from input values)_
+  2. _(e.g. input the calculated result into the model via the DB API)_
+  3. _(e.g. data import/export)_
+- **Screen layout (panels/tabs)**: _(e.g. input panel / result panel / run button)_
+- **APIs used**: _(e.g. read `db/NODE`, write `db/SPRING`)_
+- **State structure**: _(list of recoil atoms/selectors)_
+
+---
+
+## 1. Folder organization rules (separation by feature)
+
+The actual code is written inside `src/`, separated into **feature folders**.
+
+| Role | Folder | Contents | Decision test |
 | --- | --- | --- | --- |
-| 순수 UI 위젯 | **`src/UI/`** | 재사용 가능한 프레젠테이션 컴포넌트 (버튼/입력/드롭다운/다이얼로그/표/패널 래퍼). props로만 동작, 도메인·API 로직 없음 | *다른 플러그인에 그대로 복붙 가능?* |
-| 커스텀 훅 | **`src/hooks/`** | 로직·상태·사이드이펙트·API 호출 캡슐화 (`useXxx`). JSX 없음 | *JSX 없이 로직/상태만?* |
-| 기능/도메인 컴포넌트 | **`src/components/`** | 화면 섹션(패널·탭·창)을 조립한 **컨테이너**. UI 위젯 + hooks + recoil 상태를 묶음. 이 플러그인 특화 | *특정 기능/화면에 묶임?* |
-| 계산 | `src/Calculates/` | 순수 계산 로직 (입력 → 출력, UI 무관) | |
-| 데이터 | `src/DataControls/` | 데이터 가공/변환, import/export | |
-| 상태 | `src/states/` | recoil atom/selector, 타입 | |
+| Pure UI widgets | **`src/UI/`** | Reusable presentational components (button/input/dropdown/dialog/table/panel wrappers). Driven by props only, no domain/API logic | *Can it be copy-pasted as-is into another plug-in?* |
+| Custom hooks | **`src/hooks/`** | Encapsulate logic/state/side-effects/API calls (`useXxx`). No JSX | *Logic/state only, no JSX?* |
+| Feature/domain components | **`src/components/`** | **Containers** that assemble screen sections (panels/tabs/windows). Combine UI widgets + hooks + recoil state. Specific to this plug-in | *Tied to a specific feature/screen?* |
+| Calculation | `src/Calculates/` | Pure calculation logic (input → output, UI-agnostic) | |
+| Data | `src/DataControls/` | Data processing/transformation, import/export | |
+| State | `src/states/` | recoil atoms/selectors, types | |
 
-규칙:
-- ⚠️ **새 폴더를 임의로 만들지 마세요.** 컴포넌트는 성격에 따라 `src/UI/` 또는 `src/components/`
-  중 하나에 넣습니다. (`src/component/` 단수 폴더 금지)
-- **UI vs components 구분**:
-  - 재사용 가능한 **순수 위젯** = `src/UI/` (도메인 로직·API 호출 없이 props로만 동작)
-  - 위젯·훅·상태를 조립한 **화면 단위 컨테이너** = `src/components/` (예: `MainWindow`, `InputPanel`, `ResultPanel`)
-- **로직만 있고 JSX가 없으면** = `src/hooks/` 의 `useXxx`. (예: 창 드래그/리사이즈, 도메인 상태 관리)
-- **계산 로직**은 `Calculates/` 의 순수 함수로 분리해 컴포넌트/훅에서 호출.
-- **데이터 입출력/변환**은 `DataControls/` 에 모음.
-- 번역 문자열은 **코드에 하드코딩하지 않고** `src/locales` 에 둠(번들 포함, 아래 3항).
+Rules:
+- ⚠️ **Do not create new folders arbitrarily.** Place a component in either `src/UI/` or `src/components/`
+  depending on its nature. (No singular `src/component/` folder.)
+- **UI vs components distinction**:
+  - Reusable **pure widgets** = `src/UI/` (driven by props only, no domain logic / API calls)
+  - **Screen-level containers** assembling widgets/hooks/state = `src/components/` (e.g. `MainWindow`, `InputPanel`, `ResultPanel`)
+- **Logic-only, no JSX** = a `useXxx` in `src/hooks/`. (e.g. window drag/resize, domain state management)
+- **Calculation logic** is split into pure functions in `Calculates/` and called from components/hooks.
+- **Data I/O / transformation** is collected in `DataControls/`.
+- Translation strings are **not hardcoded in code** but kept in `src/locales` (bundled, see section 3 below).
 
-예시 구조:
+Example structure:
 ```
 src/
-├─ UI/                     # 재사용 순수 위젯 (presentational)
+├─ UI/                     # Reusable pure widgets (presentational)
 │  ├─ NumberField.tsx
 │  ├─ ConfirmDialog.tsx
 │  └─ LanguageType.tsx
-├─ hooks/                  # 커스텀 훅 (로직·상태·API)
+├─ hooks/                  # Custom hooks (logic/state/API)
 │  ├─ usePileDomain.ts
 │  └─ useWindowControl.ts
-├─ components/             # 기능/도메인 컨테이너 (화면 섹션 조립)
+├─ components/             # Feature/domain containers (assemble screen sections)
 │  ├─ MainWindow.tsx
 │  ├─ InputPanel.tsx
 │  └─ ResultPanel.tsx
@@ -71,12 +71,12 @@ src/
 
 ---
 
-## 2. 컴포넌트 작성 패턴
+## 2. Component-writing pattern
 
-- UI는 `@midasit-dev/moaui` 컴포넌트를 우선 사용합니다 (`GuideBox`, `Panel`, `Grid`,
-  `Typography`, `Button`, `DropList`, `Stack`, `Icon` 등).
-- 전역 상태는 `recoil` 사용. 화면 진입점은 `App.tsx`.
-- 번역은 `useTranslation()` 의 `t("key")` 로 표시.
+- Prefer `@midasit-dev/moaui` components for UI (`GuideBox`, `Panel`, `Grid`,
+  `Typography`, `Button`, `DropList`, `Stack`, `Icon`, etc.).
+- Use `recoil` for global state. The screen entry point is `App.tsx`.
+- Display translations via `t("key")` from `useTranslation()`.
 
 ```tsx
 import { GuideBox, Panel, Typography, Button } from "@midasit-dev/moaui";
@@ -99,13 +99,13 @@ export default ResultPanel;
 
 ---
 
-## 3. 번역 (i18n) 작성 규칙
+## 3. Translation (i18n) rules
 
-- 리소스 위치: `src/locales/{en,kr,jp}/translation.json` — **`i18n.js` 가 import 해 번들에 포함**합니다.
-  (런타임에 `/locales/*.json` 을 fetch 하지 않음 → 배포 호스트가 `/locales/` 를 막아도 동작)
-- **새 텍스트는 키로 등록하고, 세 지역(en/kr/jp) 파일에 모두 추가**합니다.
-- 새 언어를 추가하려면: `src/locales/{lng}/translation.json` 생성 → `src/language.ts` 의
-  `SUPPORTED_LANGS` 에 코드 추가 → `src/i18n.js` 의 `resources` 에 import 추가.
+- Resource location: `src/locales/{en,kr,jp}/translation.json` — **`i18n.js` imports them into the bundle**.
+  (Not fetched from `/locales/*.json` at runtime → works even if the deploy host blocks `/locales/`.)
+- **Register new text as a key and add it to all three regional (en/kr/jp) files.**
+- To add a new language: create `src/locales/{lng}/translation.json` → add the code to
+  `SUPPORTED_LANGS` in `src/language.ts` → add the import to `resources` in `src/i18n.js`.
 
 `src/locales/en/translation.json`
 ```json
@@ -120,91 +120,91 @@ export default ResultPanel;
 { "result_title": "結果", "calculate": "計算" }
 ```
 
-사용:
+Usage:
 ```tsx
 const { t } = useTranslation();
 <Typography>{t("result_title")}</Typography>
 ```
 
-- 언어 결정/전환 로직은 `src/language.ts` 에 모여 있습니다.
-  - `detectLanguage()`: 경로 segment → `?lang=` → localStorage → 기본 `en` (경로 위치 비의존, `ja→jp`·`ko→kr` 별칭 지원).
-  - 전환은 `i18n.changeLanguage()` + `persistLanguage()` 로 **리로드 없이** 처리 (전환 UI: `src/UI/LanguageType.tsx`).
-  - ⚠️ `window.location.pathname` 을 직접 바꾸지 마세요(전체 리로드 → 배포 호스트 SPA 폴백 부재 시 오프라인 페이지로 떨어질 수 있음).
-- 키 누락 시 `fallbackLng: "en"` 으로 영어가 표시됩니다.
+- Language detection/switching logic is centralized in `src/language.ts`.
+  - `detectLanguage()`: path segment → `?lang=` → localStorage → default `en` (path-position-independent, supports `ja→jp` / `ko→kr` aliases).
+  - Switching is handled via `i18n.changeLanguage()` + `persistLanguage()` **without a reload** (switching UI: `src/UI/LanguageType.tsx`).
+  - ⚠️ Do not change `window.location.pathname` directly (a full reload → if the deploy host lacks SPA fallback, you may drop to an offline page).
+- On a missing key, English is shown via `fallbackLng: "en"`.
 
 ---
 
-## 4. API 요청 가이드
+## 4. API request guide
 
-Midas 서버와의 통신은 **두 가지 방식** 중 하나를 사용합니다.
-**기본은 pyscript 미사용(권장)** 입니다.
+Communication with the Midas server uses one of **two methods**.
+**The default is no pyscript (recommended).**
 
-> 📖 **엔드포인트 카탈로그·규약 정제본**: [`./midas-api-reference.md`](./midas-api-reference.md)
-> (Base URL, MAPI-Key, DOC/DB/OPE/VIEW/POST 5종 분류, `Assign`/`Argument` 규약, **전체 엔드포인트 카탈로그**+article 번호).
-> 📦 **실제 요청/응답 payload 예시**: [`./midas-api-examples.json`](./midas-api-examples.json) (엔드포인트 키 기반).
-> API 코드를 작성하기 전 두 문서를 먼저 참고하세요.
-> **각 엔드포인트의 정확한 필드 스키마가 필요하면** 카탈로그의 `article` 번호로 매뉴얼 하위 페이지
-> (`https://support.midasuser.com/hc/en-us/articles/<id>`)를 확인하고, 확인한 스키마/예시는 `midas-api-examples.json` 에 반영합니다.
+> 📖 **Endpoint catalog / refined conventions**: [`./midas-api-reference.md`](./midas-api-reference.md)
+> (Base URL, MAPI-Key, the 5 categories DOC/DB/OPE/VIEW/POST, the `Assign`/`Argument` conventions, the **full endpoint catalog** + article numbers).
+> 📦 **Real request/response payload examples**: [`./midas-api-examples.json`](./midas-api-examples.json) (keyed by endpoint).
+> Consult both documents before writing API code.
+> **If you need the exact field schema of an endpoint**, check the manual sub-page via the catalog's `article` number
+> (`https://support.midasuser.com/hc/en-us/articles/<id>`), and reflect the confirmed schema/examples back into `midas-api-examples.json`.
 
-### 4-1. pyscript 미사용 (권장) → `src/utils_api.ts`
+### 4-1. No pyscript (recommended) → `src/utils_api.ts`
 
-`fetch` 기반 TypeScript 클라이언트. 인증(MAPI-Key)·base URL은 `VerifyUtil` 이 처리합니다.
-제공 함수: `dbCreate`, `dbCreateItem`, `dbRead`, `dbReadItem`, `dbUpdate`, `dbUpdateItem`, `dbDelete`.
-**모두 비동기(`async`)** 이므로 `await` 로 호출합니다.
+A `fetch`-based TypeScript client. Auth (MAPI-Key) and base URL are handled by `VerifyUtil`.
+Provided functions: `dbCreate`, `dbCreateItem`, `dbRead`, `dbReadItem`, `dbUpdate`, `dbUpdateItem`, `dbDelete`.
+**All are asynchronous (`async`)**, so call them with `await`.
 
 ```ts
 import { dbRead, dbUpdate } from "../utils_api";
 
-// 읽기: GET /db/NODE  → { id: value, ... } 형태로 반환
+// Read: GET /db/NODE  → returns as { id: value, ... }
 const nodes = await dbRead("NODE");
 if (nodes.error) { console.error(nodes.error); return; }
 
-// 쓰기: PUT /db/SPRING (body: { Assign: items })
+// Write: PUT /db/SPRING (body: { Assign: items })
 await dbUpdate("SPRING", {
   1: { /* ... item payload ... */ },
 });
 ```
 
-- 실패 시 반환값은 `{ error: string }` 규약을 따릅니다 → 호출부에서 `result.error` 확인.
-- 새 엔드포인트가 필요하면 `utils_api.ts` 의 `requestJson(method, endpoint, body)` 를
-  이용해 함수를 추가하세요. (`endpoint` 는 base URL 뒤 경로, 예: `/doc/anal`)
+- On failure, the return value follows the `{ error: string }` convention → check `result.error` at the call site.
+- If you need a new endpoint, add a function using `requestJson(method, endpoint, body)` in `utils_api.ts`.
+  (`endpoint` is the path after the base URL, e.g. `/doc/anal`.)
 
-### 4-2. pyscript 사용 → `src/utils_pyscript.ts` (참고)
+### 4-2. Using pyscript → `src/utils_pyscript.ts` (reference)
 
-`utils_pyscript.ts` 는 **현재 전체 주석 처리**되어 있으며, 파이썬 코드
-(`public/py_main.py`, `py_base.py`, `py_api_db.py`)를 호출하던 구현입니다.
+`utils_pyscript.ts` is **currently fully commented out**; it was the implementation that called the Python code
+(`public/py_main.py`, `py_base.py`, `py_api_db.py`).
 
-pyscript로 전환하려면:
-1. `public/index.html` 의 pyscript `<script>` / `<py-config>` / `<py-script>` 태그 주석 해제
-2. `src/global.d.ts` 의 `const pyscript: any` 선언 주석 해제
-3. `src/utils_pyscript.ts` 의 코드 주석 해제
-4. 호출부에서 `utils_api` 대신 `utils_pyscript` 의 `dbRead` 등을 사용
+To switch to pyscript:
+1. Uncomment the pyscript `<script>` / `<py-config>` / `<py-script>` tags in `public/index.html`
+2. Uncomment the `const pyscript: any` declaration in `src/global.d.ts`
+3. Uncomment the code in `src/utils_pyscript.ts`
+4. At call sites, use `dbRead` etc. from `utils_pyscript` instead of `utils_api`
 
-> 같은 함수명(`dbRead` 등)을 양쪽이 제공합니다. 단, `utils_api` 는 비동기(`await` 필요),
-> `utils_pyscript` 는 동기 호출이라 전환 시 호출부 수정이 필요합니다.
+> Both sides provide the same function names (`dbRead`, etc.). However, `utils_api` is asynchronous (needs `await`)
+> while `utils_pyscript` is synchronous, so call sites need editing when switching.
 
-### 4-3. 개발 중 인증 우회 (.env)
+### 4-3. Auth bypass during development (.env)
 
-로컬 개발 시 매번 `?mapiKey=` 를 붙이기 번거로우면 `.env.development.local` 로 우회할 수 있습니다.
+If attaching `?mapiKey=` every time during local development is tedious, you can bypass it via `.env.development.local`.
 
 ```bash
-REACT_APP_SKIP_AUTH=true     # Wrapper 검증 게이트 우회
-REACT_APP_MAPI_KEY=...       # (선택) utils_api 가 이 키로 요청
-REACT_APP_BASE_URL=https://moa-engineers.midasit.com:443/civil  # (선택) 프로그램 경로 포함
+REACT_APP_SKIP_AUTH=true     # Bypass the Wrapper verification gate
+REACT_APP_MAPI_KEY=...       # (optional) utils_api uses this key for requests
+REACT_APP_BASE_URL=https://moa-engineers.midasit.com:443/civil  # (optional) includes the program path
 ```
 
-- `NODE_ENV=development` 일 때만 적용(`src/config.ts`) → 프로덕션 빌드 영향 없음.
-- 키/URL 을 비워두면 URL 쿼리스트링 값으로 폴백합니다.
-- 자세한 내용: 루트 [`../CLAUDE.md`](../CLAUDE.md) 의 "개발용 인증 우회".
+- Applied only when `NODE_ENV=development` (`src/config.ts`) → no effect on production builds.
+- If the key/URL are left empty, falls back to URL query-string values.
+- Details: "Dev auth bypass" in the root [`../CLAUDE.md`](../CLAUDE.md).
 
 ---
 
-## 5. 새 기능 추가 체크리스트
+## 5. New-feature checklist
 
-1. [ ] `src/CLAUDE.md` 0항(작업 대상 프로젝트 정의)에 기능 내용 기록
-2. [ ] 화면 → 재사용 위젯은 `src/UI/`, 화면 단위 컨테이너는 `src/components/`, 로직은 `src/hooks/` 에 작성하고 `App.tsx` 에 연결
-3. [ ] 계산 로직 → `src/Calculates/` 에 순수 함수로 분리
-4. [ ] 데이터 처리 → `src/DataControls/` 에 작성
-5. [ ] 표시 문자열 → `src/locales/{en,kr,jp}` 에 키 추가 (3개 모두)
-6. [ ] 서버 통신 → `src/utils_api.ts` 사용/확장
-7. [ ] `npx tsc --noEmit` 으로 타입체크 통과 확인
+1. [ ] Record the feature in section 0 (target project definition) of `src/CLAUDE.md`
+2. [ ] Screen → write reusable widgets in `src/UI/`, screen-level containers in `src/components/`, logic in `src/hooks/`, and wire them into `App.tsx`
+3. [ ] Calculation logic → split into pure functions in `src/Calculates/`
+4. [ ] Data processing → write in `src/DataControls/`
+5. [ ] Display strings → add keys in `src/locales/{en,kr,jp}` (all three)
+6. [ ] Server communication → use/extend `src/utils_api.ts`
+7. [ ] Confirm the type check passes with `npx tsc --noEmit`
