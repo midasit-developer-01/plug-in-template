@@ -25,7 +25,14 @@ import { SnackbarProvider, closeSnackbar } from "notistack";
 import { useTranslation } from "react-i18next";
 import { DEV_AUTH_BYPASS } from "./config";
 import { detectLanguage } from "./language";
+// [pyscript 재활성화] Python 라이브러리가 필요할 때 아래 주석을 해제하세요.
+//   (utils_pyscript.ts / public/index.html / global.d.ts 의 주석도 함께 해제)
+// import { setGlobalVariable, getGlobalVariable } from "./utils_pyscript";
 
+// [pyscript 재활성화] ValidWrapper 를 props 를 받도록 바꾸세요:
+//   const ValidWrapper = (props: any) => {
+//     const { isIntalledPyscript } = props;
+//     ...아래 기존 본문 유지...
 const ValidWrapper = () => {
   const [isInitialized, setIsInitialized] = React.useState(false);
   const [isValid, setIsValid] = React.useState(false);
@@ -182,6 +189,13 @@ const ValidWrapper = () => {
             <GuideBox opacity={0.9} spacing={2}>
               <Typography variant="h1">Validation Check</Typography>
               <GuideBox spacing={2}>
+                {/* [pyscript 재활성화] pyscript 설치 여부 표시 행 (isIntalledPyscript prop 필요) */}
+                {/* <ValidationComponent
+                  title="pyscript"
+                  checkIf={isIntalledPyscript}
+                  strValid="Installed"
+                  strInvalid={`Not Installed`}
+                /> */}
                 <ValidationComponent
                   title="Base URI"
                   checkIf={checkUri}
@@ -204,3 +218,53 @@ const ValidWrapper = () => {
 };
 
 export default ValidWrapper;
+
+/* ────────────────────────────────────────────────────────────────────────────
+ * [pyscript 재활성화 가이드]
+ *
+ * Python 라이브러리(pyscript)가 필요할 때 아래 절차를 따르세요.
+ *   1) public/index.html  — pyscript <script>/<py-config>/<py-script> 태그 주석 해제
+ *   2) src/utils_pyscript.ts — 전체 주석 해제
+ *   3) src/global.d.ts    — `const pyscript: any` 선언 주석 해제
+ *   4) 이 파일 상단의 import(setGlobalVariable/getGlobalVariable) 주석 해제
+ *   5) ValidWrapper 를 `(props: any)` 로 바꾸고 isIntalledPyscript 를 받도록 수정
+ *   6) Validation 패널의 pyscript 표시 행(위 주석) 해제
+ *   7) 아래 PyscriptWrapper 주석을 해제하고, 맨 아래 export 를 PyscriptWrapper 로 교체
+ *
+ * PyscriptWrapper 는 pyscript 인터프리터가 준비될 때까지 대기(VerifyDialog loading)한 뒤,
+ * 전역 변수를 세팅하고 mapiKey 쿼리스트링이 있을 때 ValidWrapper 를 렌더링합니다.
+ * ────────────────────────────────────────────────────────────────────────────
+ *
+ * const PyscriptWrapper = () => {
+ *   const [installed, setInstalled] = React.useState(false);
+ *
+ *   // pyscript 준비 대기 → 전역 변수 세팅
+ *   React.useEffect(() => {
+ *     function checkPyScriptReady(callback: any) {
+ *       // pyscript 가 준비되면 콜백 실행
+ *       if (pyscript && pyscript.interpreter) {
+ *         setGlobalVariable();
+ *         getGlobalVariable();
+ *         setInstalled(true);
+ *       } else {
+ *         // 아직이면 100ms 후 재시도
+ *         setTimeout(() => checkPyScriptReady(callback), 100);
+ *       }
+ *     }
+ *
+ *     checkPyScriptReady(() => {});
+ *   }, []);
+ *
+ *   return (
+ *     <>
+ *       <VerifyDialog loading={!installed} />
+ *       {installed && VerifyUtil.isExistQueryStrings("mapiKey") && (
+ *         <ValidWrapper isIntalledPyscript={installed} />
+ *       )}
+ *     </>
+ *   );
+ * };
+ *
+ * // pyscript 사용 시 이 export 로 교체하세요 (위 `export default ValidWrapper;` 대신)
+ * // export default PyscriptWrapper;
+ */
