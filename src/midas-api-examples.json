@@ -4513,6 +4513,52 @@
         }
       }
     },
+    "IEHP": {
+      "article": null,
+      "uri": "db/IEHP",
+      "methods": "GET, PUT (POST/DELETE likely)",
+      "note": "UNDOCUMENTED endpoint (not in official API catalog / manual). Verified live GET works on civil (2026-07). Holds the inelastic-hinge property DEFINITION (M-phi skeleton curve / hysteresis model) that IEHG and NLNK.IEHP_NAME reference by name. See midas-api-reference.md §10-1. READ RULE: ALL_PROP[i] is a union object; only components where COMPONENT_DIR[i]==true (6-DOF [Fx,Fy,Fz,Mx,My,Mz]) hold valid values. Inactive components serialize uninitialized memory (garbage like -1717986918 / 5.29e-315). The single key in ALL_PROP[i] maps from HYSTERESIS_MODEL[i]: ETR->ELATRI, KIN->KINEMA, TAK->TAKEDA. ALL_SUBPROP[i]=J-end (equals I-end when EXIST_IJ_PROP all false).",
+      "schema": null,
+      "example": {
+        "IEHP": {
+          "1": {
+            "NAME": "101_Mphi",
+            "DESC": "",
+            "DEFINITION": "SKEL",
+            "HINGE_TYPE": "DIST",
+            "INTERACTION_TYPE": "NONE",
+            "MATERIAL_TYPE": "RC",
+            "LOCATION": "I",
+            "USEIEHCLOCATION": "AUTO",
+            "COMPONENT_DIR": [false, false, false, false, true, true],
+            "HYSTERESIS_MODEL": ["KIN", "KIN", "KIN", "KIN", "ETR", "ETR", "", "", ""],
+            "SECTION_NUM": [3, 3, 3, 3, 1, 1],
+            "EXIST_IJ_PROP": [false, false, false, false, false, false, false],
+            "MULT_DATA": [],
+            "_ALL_PROP_index4_My_ETR": {
+              "ELATRI": {
+                "SYMMETRIC": 1,
+                "YIELDSTRENGTHOPT": 0,
+                "DEFORMDEFINETYPE": 1,
+                "INITSTIFFNESS": 1e-06,
+                "PALPHADELTA": 1,
+                "COMPONENTPROPS": {
+                  "CRACKMOMENT": [296.919867424686, 867.267554646197],
+                  "YIELDMOMENT": [1174.4132548878422, 1916.4299205799978],
+                  "ULTIMATEMOMENT": [1712.4492868636742, 3657.63900595305],
+                  "YIELDROTN1ST": [0.00013260988052444882, 0.00038733766050038737],
+                  "YIELDROTN2ND": [0.002869374169886081, 0.0020305600801379785],
+                  "YIELDROTN3RD": [0.034608827662247876, 0.0062094872416366895],
+                  "STIFFRATIO1ST": [0.5, 0.5],
+                  "STIFFRATIO2ND": [0.1, 0.1],
+                  "DEFORMCAPACITY": [[0.5, 1, 2, 4, 8], [0.5, 1, 2, 4, 8]]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "IEHC": {
       "article": "35944093809689",
       "uri": "db/IEHC",

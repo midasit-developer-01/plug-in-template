@@ -173,8 +173,9 @@ Basics: `GET /db/{ITEM}` (all), `GET /db/{ITEM}/{id}` (single), `POST` (create),
 | `/db/VBEM` | Section for Resultant - Virtual Beam | 35943802727065 |
 | `/db/VSEC` | Section for Resultant - Virtual Section | 35943859944729 |
 | `/db/EWSF` | Effective Width Scale Factor | 35943954272281 |
+| `/db/IEHP` ⚠️ | **Inelastic hinge property definition** (the actual M-φ skeleton curve / hysteresis-model data). **Undocumented** — not in the manual/catalog, but GET/PUT verified working on the live REST server. See §10-1 | (none) |
 | `/db/IEHC` | Inelastic hinge control data | 35944093809689 |
-| `/db/IEHG` | Inelastic hinge property assignment | 35944228031001 |
+| `/db/IEHG` | Inelastic hinge property assignment (element↔property-name only) | 35944228031001 |
 | `/db/IEHG-BEAM-M1` ᴴˢ | Inelastic hinge - Beam | 57656773423385 |
 | `/db/IEHG-TRUSS-M1` ᴴˢ | Inelastic hinge - Truss | 57656796689177 |
 | `/db/IEHG-GL-M1` ᴴˢ | Inelastic hinge - General Link | 57656799110937 |
@@ -524,3 +525,13 @@ Each feature can be used independently. `CAPTURE` can be combined with `ANGLE`/`
 - Marker endpoints `ᴴˢ` (Hyper-S solver only) / `ᴶ` (JP version only) work only in the matching environment.
 - Request precondition: the target **NX app is running + a file is open** (fails otherwise).
 - The exact field names and required values are ultimately grounded in the relevant **article page**. Once confirmed, reflect into `midas-api-examples.json`.
+
+### 10-1. `db/IEHP` — Inelastic hinge "property definition" (undocumented endpoint)
+
+- The DB holding the actual property data (skeleton curve / hysteresis model) that `IEHG` (Assign) and `NLNK`'s `IEHP_NAME` merely **reference by name**. In the manual it exists only as the GUI "Define Inelastic Hinge Properties" dialog with **no Open API URI, yet `GET/PUT {base}/db/IEHP` works** (verified live on `civil`, 2026-07).
+- Record structure (key fields): `NAME`, `DESC`, `DEFINITION` (e.g. `SKEL` = skeleton), `HINGE_TYPE` (e.g. `DIST` = distributed), `INTERACTION_TYPE` (e.g. `NONE`), `MATERIAL_TYPE` (e.g. `RC`), `LOCATION` (`I`), `USEIEHCLOCATION`, `COMPONENT_DIR` (6-DOF bool array [Fx,Fy,Fz,Mx,My,Mz]), `HYSTERESIS_MODEL` (string array, length 9), `SECTION_NUM`, `EXIST_IJ_PROP`, `ALL_PROP` (length 8) / `ALL_SUBPROP` (length 8), `MULT_DATA`.
+- **⚠️ Read rule (important)**: `ALL_PROP[i]` is a **union object** — only components where `COMPONENT_DIR[i] == true` (active) hold valid values. **Inactive components serialize uninitialized memory as-is**, producing **garbage values** like `-1717986918` or `5.29e-315`. Always filter by `COMPONENT_DIR` when reading.
+- The single key inside `ALL_PROP[i]` corresponds to that component's `HYSTERESIS_MODEL[i]`: `ETR→ELATRI` (elasto-plastic tri-linear), `KIN→KINEMA` (kinematic), `TAK→TAKEDA`. Its `COMPONENTPROPS` holds the real M-φ values: `CRACK/YIELD/ULTIMATE MOMENT`, `YIELDROTN1/2/3RD`, `STIFFRATIO`, `DEFORMCAPACITY`, etc.
+- `ALL_SUBPROP[i]` is the member's J-end value (when both ends differ). If `EXIST_IJ_PROP` is all false, it equals the I-end (`ALL_PROP`).
+- Note: payload can be large (e.g. 362 records ≈ 4.2 MB in a real model). Alternative paths: GUI CSV Export, or a full-model round-trip via `/doc/EXPORT` (JSON).
+- Example payload: see the `IEHP` key in [`./midas-api-examples.json`](./midas-api-examples.json).
