@@ -3317,6 +3317,36 @@
               "Y_VAR": 1,
               "Z_VAR": 1
             }
+          },
+          "6003": {
+            "SECTTYPE": "VALUE",
+            "SECT_NAME": "PIER_VALUE",
+            "SECT_BEFORE": {
+              "OFFSET_PT": "CC",
+              "USE_SHEAR_DEFORM": true,
+              "USE_WARPING_EFFECT": false,
+              "SHAPE": "SB",
+              "SECT_I": {
+                "vSIZE": [0, 0, 0, 0, 0, 0, 0, 0],
+                "BUILT_FLAG": 1,
+                "STIFF": {
+                  "AREA": 5.0,
+                  "ASY": 4.0,
+                  "ASZ": 4.0,
+                  "RXX": 3.0,
+                  "RYY": 2.0,
+                  "RZZ": 1.0,
+                  "CYP": 0.5,
+                  "CYM": 0.5,
+                  "CZP": 0.5,
+                  "CZM": 0.5,
+                  "QYB": 0.1,
+                  "QZB": 0.1,
+                  "Y": [0.5, -0.5, -0.5, 0.5],
+                  "Z": [0.5, 0.5, -0.5, -0.5]
+                }
+              }
+            }
           }
         }
       }

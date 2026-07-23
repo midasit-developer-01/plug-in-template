@@ -535,3 +535,16 @@ Each feature can be used independently. `CAPTURE` can be combined with `ANGLE`/`
 - `ALL_SUBPROP[i]` is the member's J-end value (when both ends differ). If `EXIST_IJ_PROP` is all false, it equals the I-end (`ALL_PROP`).
 - Note: payload can be large (e.g. 362 records ≈ 4.2 MB in a real model). Alternative paths: GUI CSV Export, or a full-model round-trip via `/doc/EXPORT` (JSON).
 - Example payload: see the `IEHP` key in [`./midas-api-examples.json`](./midas-api-examples.json).
+
+### 10-2. `db/SECT` `SECTTYPE:"VALUE"` — numeric (直接入力) section (schema not in the article)
+
+The article (35808653964185) lists `VALUE` as a `SECTTYPE` but **does not document the numeric property fields**. Confirmed by **live round-trip** (GUI-create → `GET /db/SECT` → `POST` reproduce, 201 OK, `civil`, 2026-07):
+
+- **The section is stored under `SECT_BEFORE.SECT_I`**, and two things make the server treat it as a numeric section instead of a dimensioned shape:
+  - **`BUILT_FLAG: 1`** and a **`STIFF: { ... }`** object holding the properties directly.
+  - **`vSIZE` is all zeros** (`[0,0,0,0,0,0,0,0]`), `SHAPE` is display-only (`"SB"` etc.).
+- **⚠️ Failure cause**: omitting `BUILT_FLAG`/`STIFF` (i.e. sending `SHAPE` + `vSIZE` like a DB/User section) makes the server **validate `vSIZE` as real dimensions** → rejects with **`断面寸法が誤って入力されました`** (“section dimensions entered incorrectly”). This is the trap; VALUE ≠ dimensioned.
+- **`STIFF` field map**: `AREA`=area A · `ASY`/`ASZ`=effective shear areas · `RXX`=torsional constant **J (Ixx)** · `RYY`=**Iyy** · `RZZ`=**Izz** · `CYP`/`CYM`/`CZP`/`CZM`=extreme-fiber distances for stress (±y, ±z) · `QYB`/`QZB`=shear-stress factors Q/b · `Y[4]`/`Z[4]`=4 stress-point coordinates.
+- **`DESIGN`** (optional on POST, server fills 0): `YBAR`/`ZBAR`=centroid · `ZYY`/`ZZZ`=section moduli. `PERIIN`/`PERIOUT`=inner/outer perimeter.
+- Because you supply **exact J, Asy, Asz** directly, VALUE preserves torsion/shear constants perfectly — the correct choice when a rectangle-shape + scale-factor workaround would distort dynamic-analysis results.
+- Example payload: see key `"6003"` under the `SECT` example in [`./midas-api-examples.json`](./midas-api-examples.json).
