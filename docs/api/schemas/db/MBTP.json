@@ -1,0 +1,37 @@
+{
+  "_group": "db",
+  "_name": "MBTP",
+  "uri": "db/MBTP",
+  "methods": "POST, GET, PUT, DELETE",
+  "schema": {
+    "MBTP": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "description": "Member Type (MBTP). Assigns a design member-type classification to an element key; the single TYPE field selects the member role used by steel/RC/SRC design.",
+      "properties": {
+        "TYPE": {
+          "type": "string",
+          "enum": ["COLUMN", "BEAM", "BRACE"],
+          "description": "Member type classification of the element. Case-insensitive. COLUMN = column member, BEAM = beam member, BRACE = brace member."
+        }
+      },
+      "required": ["TYPE"]
+    }
+  },
+  "example": {
+    "Assign": {
+      "160": {
+        "TYPE": "COLUMN"
+      },
+      "188": {
+        "TYPE": "BEAM"
+      },
+      "376": {
+        "TYPE": "BRACE"
+      }
+    }
+  },
+  "manual_title": "Modify Member Type",
+  "feature_name": "Modify Member Type",
+  "manual_url": "https://support.midasuser.com/hc/en-us/articles/49513816193689-Modify-Member-Type"
+}

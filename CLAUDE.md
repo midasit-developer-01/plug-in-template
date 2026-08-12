@@ -36,12 +36,24 @@ template/
 │
 ├─ .env.example          # Example dev env vars → copy to create .env.development.local
 │
+├─ docs/api/             # ★ API knowledge base — read this before writing any API call
+│  ├─ README.md          #   Entry point: the lookup procedure and the body conventions
+│  ├─ INDEX.md           #   540 endpoints, one per line — GREP this, don't Read it
+│  ├─ INDEX-design.md    #   design / rating (nested by code standard)
+│  ├─ schemas/<uri>.json #   Per-endpoint JSON Schema + a working example (540)
+│  ├─ features/<uri>.json#   Per-endpoint GUI guide: menu path + field usage (155)
+│  ├─ cookbook.md        #   Ready-made recipes for common plug-in tasks
+│  └─ reference.md       #   Structure/auth/conventions overview + §10 gotchas
+│
+├─ scripts/
+│  └─ sync-api-docs.js   # Regenerates docs/api from the midas-mcp-server catalog
+│
 └─ src/
    ├─ index.tsx           # Entry. BrowserRouter → Wrapper routing
    ├─ Wrapper.tsx         # MAPI-Key auth verification gate (must pass to render App)
    ├─ App.tsx             # App root. Build the screen starting here
    ├─ config.ts           # Dev config (reads REACT_APP_* such as auth bypass)
-   ├─ utils_api.ts        # ★ API requests (recommended): fetch-based Midas DB CRUD client
+   ├─ utils_api.ts        # ★ API requests (recommended): fetch-based client (db CRUD + command)
    ├─ utils_pyscript.ts   # (old) pyscript-based API — fully commented out (reference)
    ├─ utils_typscript.ts  # Shared utility functions
    ├─ i18n.js             # i18next init (imports src/locales into the bundle)
@@ -131,13 +143,24 @@ REACT_APP_BASE_URL=https://moa-engineers.midasit.com:443/civil  # (optional) inc
 
 ## 6. API Requests (Summary)
 
+**Never write an API call from memory.** 540 endpoints, each with its own body shape.
+Grep [`docs/api/INDEX.md`](./docs/api/INDEX.md) → read `docs/api/schemas/<uri>.json` → copy its
+`example`. Start at [`docs/api/README.md`](./docs/api/README.md).
+
 | Method | File | Notes |
 | --- | --- | --- |
-| **Recommended (no pyscript)** | `src/utils_api.ts` | `fetch`-based `dbCreate/dbRead/dbUpdate/dbDelete …` |
+| **Recommended (no pyscript)** | `src/utils_api.ts` | `fetch`-based. `dbCreate/dbRead/dbUpdate/dbDelete…` for the `Assign` convention (402 endpoints), `command()` for `Argument` (138) |
 | (old) using pyscript | `src/utils_pyscript.ts` | Fully commented out. To re-enable, see section 7 below / `src/CLAUDE.md` |
 
-For detailed call examples, see the "API Request Guide" in [`src/CLAUDE.md`](./src/CLAUDE.md).
-A refined reference of MIDAS API endpoints and JSON conventions is in [`src/midas-api-reference.md`](./src/midas-api-reference.md).
+For detailed call examples, see the "API Request Guide" in [`src/CLAUDE.md`](./src/CLAUDE.md)
+and the recipes in [`docs/api/cookbook.md`](./docs/api/cookbook.md).
+
+The knowledge base is **generated** from the `midas-mcp-server` catalog and committed, so it works
+without that repo present. Regenerate only when the catalog changes:
+
+```bash
+node scripts/sync-api-docs.js
+```
 
 ---
 

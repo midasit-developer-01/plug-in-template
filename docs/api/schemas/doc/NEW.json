@@ -1,0 +1,23 @@
+{
+  "_group": "doc",
+  "_name": "NEW",
+  "uri": "doc/NEW",
+  "methods": "POST",
+  "schema": {
+    "NEW": {
+      "type": "object",
+      "description": "New Document (NEW). Creates a new empty MIDAS document; the request takes no meaningful body (DTO_EMPTY), so Argument is an empty object.",
+      "properties": {
+        "Argument": {
+          "type": "object"
+        }
+      }
+    }
+  },
+  "example": {
+    "Argument": {}
+  },
+  "manual_title": "New Project",
+  "feature_name": "New Project",
+  "manual_url": "https://support.midasuser.com/hc/en-us/articles/35994078198681-New-Project"
+}

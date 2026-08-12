@@ -139,35 +139,66 @@ const { t } = useTranslation();
 Communication with the Midas server uses one of **two methods**.
 **The default is no pyscript (recommended).**
 
-> 📖 **Endpoint catalog / refined conventions**: [`./midas-api-reference.md`](./midas-api-reference.md)
-> (Base URL, MAPI-Key, the 5 categories DOC/DB/OPE/VIEW/POST, the `Assign`/`Argument` conventions, the **full endpoint catalog** + article numbers).
-> 📦 **Real request/response payload examples**: [`./midas-api-examples.json`](./midas-api-examples.json) (keyed by endpoint).
-> Consult both documents before writing API code.
-> **If you need the exact field schema of an endpoint**, check the manual sub-page via the catalog's `article` number
-> (`https://support.midasuser.com/hc/en-us/articles/<id>`), and reflect the confirmed schema/examples back into `midas-api-examples.json`.
+> ### ⛔ Never write an API call from memory
+>
+> There are **540 endpoints**, each with its own body shape, and the names are 4-letter
+> abbreviations. A field list you recalled rather than read is a bug waiting to happen —
+> and the server rejects the whole request, so it fails at the user, not at compile time.
+>
+> **Procedure — follow it every time, without exception:**
+>
+> | # | Step | How |
+> | --- | --- | --- |
+> | 1 | Find candidates | **Grep** [`docs/api/INDEX.md`](../docs/api/INDEX.md) (design/rating: [`INDEX-design.md`](../docs/api/INDEX-design.md)). Do not Read it — it is 71KB. |
+> | 2 | Pick one | Read the `desc` column. The first grep hit is often not the right endpoint. |
+> | 3 | Get the contract | **Read** `docs/api/schemas/<uri>.json`. Its `example` is the authoritative body shape. |
+> | 4 | Write the call | Copy the `example`'s field names, nesting and types verbatim. |
+>
+> Start at [`docs/api/README.md`](../docs/api/README.md). Working recipes for common tasks
+> (read model, write model, run analysis, extract result tables) are in
+> [`docs/api/cookbook.md`](../docs/api/cookbook.md).
+>
+> **If the user is asking what a feature IS or where it lives in the product** — not asking for
+> a plug-in — answer from `docs/api/features/<uri>.json` (`menu_path` + `usage`) and write no code.
 
 ### 4-1. No pyscript (recommended) → `src/utils_api.ts`
 
 A `fetch`-based TypeScript client. Auth (MAPI-Key) and base URL are handled by `VerifyUtil`.
-Provided functions: `dbCreate`, `dbCreateItem`, `dbRead`, `dbReadItem`, `dbUpdate`, `dbUpdateItem`, `dbDelete`.
-**All are asynchronous (`async`)**, so call them with `await`.
+**All functions are asynchronous (`async`)**, so call them with `await`.
+
+There are two body conventions, and `INDEX.md`'s `body` column tells you which one an endpoint uses:
+
+| Convention | Count | Functions |
+| --- | --- | --- |
+| `Assign` | 402 | `dbCreate`, `dbCreateItem`, `dbRead`, `dbReadItem`, `dbUpdate`, `dbUpdateItem`, `dbDelete` |
+| `Argument` | 138 | `command(group, name, argument?, method?, body?)` |
 
 ```ts
-import { dbRead, dbUpdate } from "../utils_api";
+import { dbRead, dbCreate, command } from "../utils_api";
 
-// Read: GET /db/NODE  → returns as { id: value, ... }
+// Assign — GET /db/NODE  → returns as { id: value, ... }
 const nodes = await dbRead("NODE");
-if (nodes.error) { console.error(nodes.error); return; }
+if (nodes.error) { console.error(nodes.error, nodes.body); return; }
 
-// Write: PUT /db/SPRING (body: { Assign: items })
-await dbUpdate("SPRING", {
-  1: { /* ... item payload ... */ },
+// Assign — POST /db/NSPR (point spring). Shape copied from schemas/db/NSPR.json
+await dbCreate("NSPR", {
+  2: { ITEMS: [{ ID: 1, TYPE: "LINEAR", GROUP_NAME: "", SDR: [33000, 34000, 35000, 0, 0, 0] }] },
 });
+
+// Argument — POST /post/TABLE
+const table = await command("post", "TABLE", { TABLE_TYPE: "REACTIONG" });
+
+// Argument, GET — pass the method explicitly
+const selected = await command("view", "SELECT", undefined, "GET");
 ```
 
-- On failure, the return value follows the `{ error: string }` convention → check `result.error` at the call site.
-- If you need a new endpoint, add a function using `requestJson(method, endpoint, body)` in `utils_api.ts`.
-  (`endpoint` is the path after the base URL, e.g. `/doc/anal`.)
+- On failure, the return value follows the `{ error: string, body?: string }` convention →
+  check `result.error` at the call site. `body` carries the server's response text, which usually
+  says which field was rejected and why.
+- The db helpers also accept a **full uri**, so db-shaped tables outside `/db` are reachable:
+  `dbRead("design/PSC/AASHTO-LRFD24/MEMB")`.
+- `requestJson(method, endpoint, body)` is exported as an escape hatch, but `command()` already
+  covers every non-db group — reach for it only if an endpoint's `example` matches neither convention.
 
 ### 4-2. Using pyscript → `src/utils_pyscript.ts` (reference)
 
@@ -206,5 +237,5 @@ REACT_APP_BASE_URL=https://moa-engineers.midasit.com:443/civil  # (optional) inc
 3. [ ] Calculation logic → split into pure functions in `src/Calculates/`
 4. [ ] Data processing → write in `src/DataControls/`
 5. [ ] Display strings → add keys in `src/locales/{en,kr,jp}` (all three)
-6. [ ] Server communication → use/extend `src/utils_api.ts`
+6. [ ] Server communication → grep `docs/api/INDEX.md` → read `docs/api/schemas/<uri>.json` → call via `src/utils_api.ts`
 7. [ ] Confirm the type check passes with `npx tsc --noEmit`
