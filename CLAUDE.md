@@ -192,6 +192,24 @@ npx tsc --noEmit # Type check
 > The `dev` (DevTools server) script in `package.json` does not work in this template because the
 > DevTools folder has been removed.
 
+### 8-1. Packaging / upload — files the plug-in platform reads by name
+
+Build, zip the **`build/` folder**, and upload it from the **MyWork** tab of the plug-in platform.
+
+The platform reads two files **by exact name from the top level of `build/`**. Neither is referenced by
+any code, so nothing warns you when they are missing or wrong — the store page just renders broken.
+
+| File | Used as | Rules |
+| --- | --- | --- |
+| `build/icon.svg` | The plug-in icon in the store | **SVG only.** No other format is recognized — not `.ico`, not `.png`, and `manifest.json`'s `icons` array is ignored entirely. A missing `icon.svg` shows "이미지 로드 실패" in the icon slot. |
+| `build/readme.md` | The plug-in description page | Markdown. Edit `public/readme.md`. Images work — put the file under `public/` and reference it relative to `build/` (`![](./screenshot.png)`). |
+
+Since CRA copies `public/` to `build/` verbatim, keep them at `public/icon.svg` and `public/readme.md`.
+
+> `public/favicon.ico` and `manifest.json`'s `icons` are for the **browser tab and PWA metadata only**.
+> They have no effect on the store listing — don't try to fix a broken store icon there.
+> (Source: [A Guide to Creating Plug-in for Developers](https://support.midasuser.com/hc/en-us/articles/42327585548953-A-Guide-to-Creating-Plug-in-for-Developers), FAQ)
+
 ---
 
 ## 9. Running / Environment Setup (Claude Code standard procedure)
