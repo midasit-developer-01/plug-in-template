@@ -556,3 +556,26 @@ The article (35808653964185) lists `VALUE` as a `SECTTYPE` but **does not docume
 - **`DESIGN`** (optional on POST, server fills 0): `YBAR`/`ZBAR`=centroid · `ZYY`/`ZZZ`=section moduli. `PERIIN`/`PERIOUT`=inner/outer perimeter.
 - Because you supply **exact J, Asy, Asz** directly, VALUE preserves torsion/shear constants perfectly — the correct choice when a rectangle-shape + scale-factor workaround would distort dynamic-analysis results.
 - Example payload: the `"6003"` key inside [`schemas/db/SECT.json`](./schemas/db/SECT.json).
+
+### 10-3. `doc/ANAL` hangs — the Save dialog blocks the request
+
+Observed in the field (2026-08): `POST /doc/ANAL` sometimes never returns, and the plug-in only sees the `REQUEST_TIMEOUT_MS` (60 s) timeout from `utils_api.ts`. It is **not an API failure** — a modal dialog is holding the program.
+
+- `doc/ANAL` saves the model to file before solving. If the open model **has no file path yet** (never-saved new model) or **has unsaved edits**, the NX app pops its **Save / Save As dialog**.
+- That dialog is modal, and Open API requests are served on the same message loop, so the response is withheld **until a human closes the dialog**. Retrying does not help — the retries just queue behind it.
+- Fix: finish the save through the API first, so there is nothing left for the dialog to ask.
+
+```ts
+await command("doc", "SAVE");     // model that already has a file path
+await command("doc", "ANAL");
+```
+
+- `doc/SAVE` has no path to save to on a never-saved model, and falls back to the same Save As dialog. For plug-ins that may run on a fresh model, name the path explicitly:
+
+```ts
+await command("doc", "SAVEAS", "C:/temp/plugin_run.mcb");
+await command("doc", "ANAL");
+```
+
+- ⚠️ Both calls **overwrite the user's working file** (see the `doc` group warning in [`cookbook.md`](./cookbook.md) §7) — confirm with the user, or use `SAVEAS` with a scratch path.
+- Save time adds to solve time; on large models raise `REQUEST_TIMEOUT_MS` rather than assuming a hang.

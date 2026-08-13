@@ -117,12 +117,24 @@ await dbCreate("NSPR", {
 ```ts
 import { command } from "../utils_api";
 
+// 저장을 먼저 끝냅니다 (아래 ⚠️ 참고)
+await command("doc", "SAVE");
+
 // 기본 해석 — POST /doc/ANAL, 바디 {}
 const result = await command("doc", "ANAL");
 
 // 종류를 지정할 때
 await command("doc", "ANAL", { TYPE: "Pushover" });
 ```
+
+> ⚠️ **`SAVE` 를 먼저 호출하지 않으면 `doc/ANAL` 이 응답하지 않을 수 있습니다.**
+> `doc/ANAL` 은 해석 전에 모델을 저장하는데, 저장되지 않은 변경이 있거나 파일 경로가 없는
+> 새 모델이면 NX 본체가 **Save / Save As 다이얼로그**를 띄웁니다. 이 모달 다이얼로그가
+> 메시지 루프를 잡고 있어서 사용자가 닫을 때까지 응답이 오지 않고, 플러그인에는 타임아웃으로 보입니다.
+> 한 번도 저장하지 않은 모델은 `SAVE` 도 같은 다이얼로그로 빠지므로 경로를 명시하세요 —
+> `await command("doc", "SAVEAS", "C:/temp/plugin_run.mcb")`.
+> 자세한 내용은 [`reference.md` §10-3](./reference.md) 참고. (`SAVE`/`SAVEAS` 는 사용자 파일을
+> 덮어쓰므로 아래 7번 규칙을 지키세요.)
 
 해석은 오래 걸립니다. 요청 제한 시간은 `utils_api.ts` 의 `REQUEST_TIMEOUT_MS`(60초)이며,
 대형 모델에서 타임아웃이 나면 이 값을 늘리세요.
