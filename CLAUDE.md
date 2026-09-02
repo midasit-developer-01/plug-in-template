@@ -194,7 +194,11 @@ npx tsc --noEmit # Type check
 
 ### 8-1. Packaging / upload — files the plug-in platform reads by name
 
-Build, zip the **`build/` folder**, and upload it from the **MyWork** tab of the plug-in platform.
+Build, then zip **the contents of `build/`** — not the folder itself. The platform expects
+`index.html` / `icon.svg` / `readme.md` at the **top level of the archive**; an extra `build/`
+wrapper folder makes the plug-in load blank. Upload the zip from the **My Work** tab of the
+plug-in platform (cloud icon) → choose `new` / `update`, fill in title and description →
+**Select Zip File** → **Run** to verify. (See [`README.md`](./README.md) §5 for the screenshots.)
 
 The platform reads two files **by exact name from the top level of `build/`**. Neither is referenced by
 any code, so nothing warns you when they are missing or wrong — the store page just renders broken.
