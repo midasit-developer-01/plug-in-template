@@ -1,0 +1,199 @@
+{
+  "_group": "design",
+  "_name": "CODE-TABLE",
+  "product": "gen",
+  "uri": "design/STEEL/AIJ-ASD02/CODE-TABLE",
+  "methods": "POST",
+  "schema": {
+    "CODE-TABLE": {
+      "type": "object",
+      "description": "Steel Code Checking Result Table (CODE-TABLE) for AIJ-ASD02. The D_TABLE_REQUEST DTO (wrapped in Argument) selects the code-check result table (MEMB or PROP) plus formatting and element/section filters. Prerequisites: analysis results and AIJ-ASD02 code-check results (PUT /TEMP/DESIGN/STEEL/AIJ-ASD02/DCO, analysis, CODE-ANAL first); without analysis results the request fails in-band with 'Please perform analysis.'. The AIJ column set is: CHK, MEMB, COM, SECT, SHR, Section, Material, Fy, LCB, Len, Lb, Ly, Lz, Cb, Ky, Kz, Pu, pPn, Muy, pMny, Muz, pMnz, Vuy, pVny, Vuz, pVnz, Def, Defa (B1y/B1z/B2y/B2z/RatPc/Tu/pTn are excluded from this code). In the RESPONSE the stress-column headers are RENAMED to AIJ labels: Cb->C, Pu->fa, pPn->Fa, Muy->fby, pMny->FBy, Muz->fbz, pMnz->FBz, Vuy->fvy, pVny->Fvy, Vuz->fvz, pVnz->Fvz (lowercase = actual/required stress, uppercase = allowable/design stress). Response shape: {<table name>: {FORCE, DIST, HEAD, DATA}}.",
+      "properties": {
+        "Argument": {
+          "type": "object",
+          "description": "Steel code-check table request DTO (D_TABLE_REQUEST).",
+          "properties": {
+            "TABLE_TYPE": {
+              "type": "string",
+              "description": "Table Type: MEMB (per-element rows) or PROP (per-section rows). Case-insensitive.",
+              "enum": [
+                "MEMB",
+                "PROP"
+              ]
+            },
+            "RESULT": {
+              "type": "integer",
+              "description": "Result View Option: 0=All 1=OK 2=NG (filters rows on the CHK column).",
+              "default": 0
+            },
+            "TABLE_NAME": {
+              "type": "string",
+              "description": "Output table title in response.",
+              "default": ""
+            },
+            "EXPORT_PATH": {
+              "type": "string",
+              "description": "Save results to a file path on the HOST machine running MIDAS.",
+              "default": ""
+            },
+            "UNIT": {
+              "type": "object",
+              "description": "Unit Settings (temporarily overrides the model units for this request).",
+              "properties": {
+                "FORCE": {
+                  "type": "string",
+                  "description": "Force unit (case-insensitive).",
+                  "enum": [
+                    "KGF",
+                    "TONF",
+                    "N",
+                    "KN",
+                    "LBF",
+                    "KIPS"
+                  ]
+                },
+                "DIST": {
+                  "type": "string",
+                  "description": "Distance unit (case-insensitive).",
+                  "enum": [
+                    "MM",
+                    "CM",
+                    "M",
+                    "IN",
+                    "FT"
+                  ]
+                },
+                "HEAT": {
+                  "type": "string",
+                  "description": "Heat unit (case-insensitive).",
+                  "enum": [
+                    "CAL",
+                    "KCAL",
+                    "J",
+                    "BTU",
+                    "KJ"
+                  ]
+                },
+                "TEMP": {
+                  "type": "string",
+                  "description": "Temperature unit (case-insensitive).",
+                  "enum": [
+                    "C",
+                    "F"
+                  ]
+                }
+              }
+            },
+            "STYLES": {
+              "type": "object",
+              "description": "Number Format Settings.",
+              "properties": {
+                "FORMAT": {
+                  "type": "string",
+                  "description": "Style Format (case-insensitive).",
+                  "enum": [
+                    "DEFAULT",
+                    "SCIENTIFIC",
+                    "FIXED",
+                    "GENERAL"
+                  ]
+                },
+                "PLACE": {
+                  "type": "integer",
+                  "description": "Style Place (number of decimal places)."
+                }
+              }
+            },
+            "COMPONENTS": {
+              "type": "array",
+              "description": "Column filter list. IMPORTANT: use the INTERNAL (pre-rename, KDS-style) column names - the AIJ renaming is applied to the response HEAD only after filtering. Valid names for this endpoint: CHK, MEMB, COM, SECT, SHR, Section, Material, Fy, LCB, Len, Lb, Ly, Lz, Cb, Ky, Kz, Pu, pPn, Muy, pMny, Muz, pMnz, Vuy, pVny, Vuz, pVnz, Def, Defa. Any other name (including the AIJ display labels like 'fa' or 'FBy') ABORTS the request in-band with \"'<name>' is not a valid COMPONENTS name\".",
+              "items": {
+                "type": "string"
+              }
+            },
+            "ELEMS": {
+              "type": "object",
+              "description": "Element Numbers.",
+              "properties": {
+                "KEYS": {
+                  "type": "array",
+                  "description": "Specify Each ID - Element No.",
+                  "items": {
+                    "type": "integer"
+                  }
+                },
+                "TO": {
+                  "type": "string",
+                  "description": "Specify ID Range - Element Range (e.g. 1-10).",
+                  "default": ""
+                },
+                "STRUCTURE_GROUP_NAME": {
+                  "type": "string",
+                  "description": "Structure Group Name.",
+                  "default": ""
+                }
+              }
+            },
+            "SECTIONS": {
+              "type": "array",
+              "description": "Section No.",
+              "items": {
+                "type": "integer"
+              }
+            },
+            "PRI_SORT": {
+              "type": "integer",
+              "description": "Primary sort: 0=SECT 1=MEMB (only effective when that column is present in the output).",
+              "default": 1
+            },
+            "VIEW_RATPC": {
+              "type": "boolean",
+              "description": "When true, filters OUT rows whose utilization ratio RatPc <= 0.4 (keeps only members with RatPc > 0.4). The filter still works here even though the RatPc column itself is not displayed for AIJ-ASD02. Default false = show all rows.",
+              "default": false
+            }
+          },
+          "required": [
+            "TABLE_TYPE"
+          ]
+        }
+      },
+      "required": [
+        "Argument"
+      ]
+    }
+  },
+  "example": {
+    "Argument": {
+      "TABLE_TYPE": "MEMB",
+      "RESULT": 0,
+      "UNIT": {
+        "FORCE": "KN",
+        "DIST": "MM"
+      },
+      "STYLES": {
+        "FORMAT": "DEFAULT",
+        "PLACE": 3
+      },
+      "COMPONENTS": [
+        "MEMB",
+        "SECT",
+        "CHK",
+        "COM",
+        "Pu",
+        "pPn"
+      ],
+      "ELEMS": {
+        "KEYS": [
+          1,
+          2,
+          3
+        ]
+      },
+      "SECTIONS": [
+        1
+      ],
+      "PRI_SORT": 1,
+      "VIEW_RATPC": false
+    }
+  }
+}

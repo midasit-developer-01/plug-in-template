@@ -1,6 +1,7 @@
 {
   "_group": "rating",
   "_name": "DATR",
+  "product": "civil",
   "uri": "rating/PSC/AASHTO-LRFR19/DATR",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {
@@ -24,13 +25,13 @@
         "STRAIN_I": {
           "type": "number",
           "minimum": 0.0,
-          "default": 0.00001,
+          "default": 1e-05,
           "description": "[LTM_TYPE=0 and POSITION=0 or 2] Strain at I-End. Validated (must be >= 0) only for Auto Calculation when POSITION is 0 (I) or 2 (I & J)."
         },
         "STRAIN_J": {
           "type": "number",
           "minimum": 0.0,
-          "default": 0.00001,
+          "default": 1e-05,
           "description": "[LTM_TYPE=0 and POSITION=1 or 2] Strain at J-End. Validated (must be >= 0) only for Auto Calculation when POSITION is 1 (J) or 2 (I & J)."
         },
         "KB": {

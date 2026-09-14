@@ -1,6 +1,7 @@
 {
   "_group": "design",
   "_name": "RPSC",
+  "product": "civil",
   "uri": "design/PSC/AASHTO-LRFD24/RPSC",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {
@@ -23,7 +24,7 @@
         },
         "SBAR_ITEMS": {
           "type": "array",
-          "description": "Shear Reinforcement Properties. One entry per position (I, and J when OPT_SBAR_J is true); only the first two entries are used.",
+          "description": "Shear Reinforcement Properties. One entry per position (I, and J when OPT_SBAR_J is true); only the first two entries are used. Never send more than 2 entries: the C++ copies into a fixed Sbar[2] array without bounds checking (3+ entries corrupt memory).",
           "items": {
             "type": "object",
             "properties": {
@@ -113,7 +114,8 @@
                 "description": "[OPT_LBAR_FLG=true] Include Flange/Cantilever in the enclosed section."
               }
             }
-          }
+          },
+          "maxItems": 2
         },
         "MBARS": {
           "type": "array",
@@ -129,7 +131,10 @@
                   "properties": {
                     "IJ": {
                       "type": "string",
-                      "enum": ["I", "J"],
+                      "enum": [
+                        "I",
+                        "J"
+                      ],
                       "description": "I / J position of the bar (case-insensitive)."
                     },
                     "NAME": {
@@ -168,15 +173,30 @@
                       "description": "Part index the bar belongs to."
                     }
                   },
-                  "required": ["IJ", "NAME", "REF_Y", "REF_Z", "NUM", "PART"]
+                  "required": [
+                    "IJ",
+                    "NAME",
+                    "REF_Y",
+                    "REF_Z",
+                    "NUM",
+                    "PART"
+                  ]
                 }
               }
             },
-            "required": ["MBAR_ITEMS"]
+            "required": [
+              "MBAR_ITEMS"
+            ]
           }
         }
       },
-      "required": ["OPT_MBAR_J", "OPT_SBAR_J", "OPT_CRACKED", "SBAR_ITEMS", "MBARS"]
+      "required": [
+        "OPT_MBAR_J",
+        "OPT_SBAR_J",
+        "OPT_CRACKED",
+        "SBAR_ITEMS",
+        "MBARS"
+      ]
     }
   },
   "example": {

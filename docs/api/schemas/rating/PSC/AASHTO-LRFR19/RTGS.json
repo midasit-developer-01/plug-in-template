@@ -1,6 +1,7 @@
 {
   "_group": "rating",
   "_name": "RTGS",
+  "product": "civil",
   "uri": "rating/PSC/AASHTO-LRFR19/RTGS",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {
@@ -15,7 +16,11 @@
         },
         "POSITION": {
           "type": "integer",
-          "enum": [0, 1, 2],
+          "enum": [
+            0,
+            1,
+            2
+          ],
           "description": "Check Position: 0 = I-End, 1 = J-End, 2 = All."
         },
         "FACTOR": {
@@ -26,7 +31,10 @@
           "description": "Condition Factor. Allowed range (0, 1]. Defaults to 1.0."
         }
       },
-      "required": ["GROUP", "POSITION"],
+      "required": [
+        "GROUP",
+        "POSITION"
+      ],
       "additionalProperties": false
     }
   },

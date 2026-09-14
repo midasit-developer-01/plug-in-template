@@ -1,17 +1,20 @@
 {
   "_group": "design",
   "_name": "DPSC",
+  "product": "civil",
   "uri": "design/PSC/AASHTO-LRFD24/DPSC",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {
     "DPSC": {
       "$schema": "http://json-schema.org/draft-07/schema#",
       "type": "object",
-      "description": "PSC Design Parameters (DPSC). Fields configure AASHTO-LRFD24 prestressed-concrete design settings: tendon/exposure/corrosion options and the stress/strength check flags written to the design database.",
+      "description": "PSC Design Parameters (DPSC). Fields configure AASHTO-LRFD24 prestressed-concrete design settings: tendon/exposure/corrosion options and the stress/strength check flags written to the design database. Singleton record: the only valid key is 1; DGNCODE must be 'AASHTO-LRFD24' (checked against the URL). GET returns not-found when the model's stored PSC code is a different AASHTO edition. Code-specific fields NATIONAL_ANNEX (LRFD17) and BRG_TYPE (LRFD07) accept only 0 here and are omitted on GET.",
       "properties": {
         "DGNCODE": {
           "type": "string",
-          "enum": ["AASHTO-LRFD24"],
+          "enum": [
+            "AASHTO-LRFD24"
+          ],
           "description": "PSC Design Code (fixed: AASHTO-LRFD24). Case-insensitive enum; wire value is 'AASHTO-LRFD24'."
         },
         "TENDON_TYPE": {
@@ -54,6 +57,22 @@
           "maximum": 1,
           "default": 1,
           "description": "Construction Type (0=Segmental, 1=Non-Segmental). Must be 0 or 1."
+        },
+        "NATIONAL_ANNEX": {
+          "type": "integer",
+          "enum": [
+            0
+          ],
+          "default": 0,
+          "description": "Amendment. AASHTO-LRFD17-only option; on this AASHTO-LRFD24 endpoint only 0 (Recommended) is accepted - a non-zero value is rejected with 'NATIONAL_ANNEX must be 0 (Recommended) except for AASHTO-LRFD17.' The field is omitted on GET and is always stored as 0 here. Best to omit it."
+        },
+        "BRG_TYPE": {
+          "type": "integer",
+          "enum": [
+            0
+          ],
+          "default": 0,
+          "description": "Bridge Type (0=PC, 1=PRC). AASHTO-LRFD07-only option that drives the crack width check there; on this AASHTO-LRFD24 endpoint only 0 is accepted - a non-zero value is rejected with 'BRG_TYPE is only available for AASHTO-LRFD07.' The field is omitted on GET, and PUT/POST never overwrite the stored value here (even 0 is ignored). Best to omit it."
         },
         "STRESS_CS": {
           "type": "boolean",
@@ -106,7 +125,9 @@
           "description": "Combined Shear and Torsion Check."
         }
       },
-      "required": ["DGNCODE"],
+      "required": [
+        "DGNCODE"
+      ],
       "additionalProperties": false
     }
   },

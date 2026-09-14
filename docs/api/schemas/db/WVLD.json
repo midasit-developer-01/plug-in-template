@@ -1,6 +1,7 @@
 {
   "_group": "db",
   "_name": "WVLD",
+  "product": "civil",
   "uri": "db/WVLD",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {
@@ -33,7 +34,10 @@
         "VERT_COORD": {
           "description": "Vertical (up) global axis of the model. Case-insensitive: \"GLOBAL_Y\" or \"GLOBAL_Z\".",
           "type": "string",
-          "enum": ["GLOBAL_Y", "GLOBAL_Z"]
+          "enum": [
+            "GLOBAL_Y",
+            "GLOBAL_Z"
+          ]
         },
         "DENSITY": {
           "description": "Water weight density.",
@@ -50,7 +54,10 @@
             "TYPE": {
               "description": "Coefficient definition type. Case-insensitive; wire values: \"CONST\" (constant) or \"INTERPOL\" (linear interpolation by depth).",
               "type": "string",
-              "enum": ["CONST", "INTERPOL"]
+              "enum": [
+                "CONST",
+                "INTERPOL"
+              ]
             },
             "COEF_S": {
               "description": "Smooth-surface drag & inertia coefficient rows.",
@@ -91,7 +98,16 @@
                     "type": "number"
                   }
                 },
-                "required": ["GRUP", "DIA", "DRAG_COEF_X", "DRAG_COEF_Y", "DRAG_COEF_Z", "INER_COEF_X", "INER_COEF_Y", "INER_COEF_Z"]
+                "required": [
+                  "GRUP",
+                  "DIA",
+                  "DRAG_COEF_X",
+                  "DRAG_COEF_Y",
+                  "DRAG_COEF_Z",
+                  "INER_COEF_X",
+                  "INER_COEF_Y",
+                  "INER_COEF_Z"
+                ]
               }
             },
             "COEF_R": {
@@ -133,7 +149,16 @@
                     "type": "number"
                   }
                 },
-                "required": ["GRUP", "DIA", "DRAG_COEF_X", "DRAG_COEF_Y", "DRAG_COEF_Z", "INER_COEF_X", "INER_COEF_Y", "INER_COEF_Z"]
+                "required": [
+                  "GRUP",
+                  "DIA",
+                  "DRAG_COEF_X",
+                  "DRAG_COEF_Y",
+                  "DRAG_COEF_Z",
+                  "INER_COEF_X",
+                  "INER_COEF_Y",
+                  "INER_COEF_Z"
+                ]
               }
             },
             "bOVER": {
@@ -179,7 +204,16 @@
                     "type": "number"
                   }
                 },
-                "required": ["GRUP", "DIA", "DRAG_COEF_X", "DRAG_COEF_Y", "DRAG_COEF_Z", "INER_COEF_X", "INER_COEF_Y", "INER_COEF_Z"]
+                "required": [
+                  "GRUP",
+                  "DIA",
+                  "DRAG_COEF_X",
+                  "DRAG_COEF_Y",
+                  "DRAG_COEF_Z",
+                  "INER_COEF_X",
+                  "INER_COEF_Y",
+                  "INER_COEF_Z"
+                ]
               }
             },
             "OVER_R": {
@@ -221,11 +255,27 @@
                     "type": "number"
                   }
                 },
-                "required": ["GRUP", "DIA", "DRAG_COEF_X", "DRAG_COEF_Y", "DRAG_COEF_Z", "INER_COEF_X", "INER_COEF_Y", "INER_COEF_Z"]
+                "required": [
+                  "GRUP",
+                  "DIA",
+                  "DRAG_COEF_X",
+                  "DRAG_COEF_Y",
+                  "DRAG_COEF_Z",
+                  "INER_COEF_X",
+                  "INER_COEF_Y",
+                  "INER_COEF_Z"
+                ]
               }
             }
           },
-          "required": ["TYPE", "COEF_S", "COEF_R", "bOVER", "OVER_S", "OVER_R"]
+          "required": [
+            "TYPE",
+            "COEF_S",
+            "COEF_R",
+            "bOVER",
+            "OVER_S",
+            "OVER_R"
+          ]
         },
         "CHAR": {
           "description": "Wave characteristic definition object.",
@@ -234,7 +284,15 @@
             "THEORY": {
               "description": "Wave theory. Case-insensitive: \"AIRY\" (linear/Airy), \"AIRM\" (modified Airy), \"STOK\" (Stokes 5th), \"STRC\" (stream function - regular), \"STRN\" (stream function - irregular), \"CNDL\" (cnoidal), \"SLTR\" (solitary).",
               "type": "string",
-              "enum": ["AIRY", "AIRM", "STOK", "STRC", "STRN", "CNDL", "SLTR"]
+              "enum": [
+                "AIRY",
+                "AIRM",
+                "STOK",
+                "STRC",
+                "STRN",
+                "CNDL",
+                "SLTR"
+              ]
             },
             "FUNC": {
               "description": "[THEORY=STRC,STRN] Stream function order.",
@@ -251,7 +309,10 @@
             "CHAR_TYPE": {
               "description": "Which characteristic defines the wave. Case-insensitive: \"LENGTH\" (use wave length) or \"PERIOD\" (use wave period).",
               "type": "string",
-              "enum": ["LENGTH", "PERIOD"]
+              "enum": [
+                "LENGTH",
+                "PERIOD"
+              ]
             },
             "LENGTH": {
               "description": "[CHAR_TYPE=LENGTH] Wave length.",
@@ -274,7 +335,18 @@
               "type": "number"
             }
           },
-          "required": ["THEORY", "FUNC", "DIR", "HEIGHT", "CHAR_TYPE", "LENGTH", "PERIOD", "K_FACTOR", "SURFACE_V", "BOTTOM_Y"]
+          "required": [
+            "THEORY",
+            "FUNC",
+            "DIR",
+            "HEIGHT",
+            "CHAR_TYPE",
+            "LENGTH",
+            "PERIOD",
+            "K_FACTOR",
+            "SURFACE_V",
+            "BOTTOM_Y"
+          ]
         },
         "PROF": {
           "description": "Current profile definition object.",
@@ -303,11 +375,18 @@
                     "type": "number"
                   }
                 },
-                "required": ["D", "V"]
+                "required": [
+                  "D",
+                  "V"
+                ]
               }
             }
           },
-          "required": ["CUR_DIR", "CUR_FACTOR", "GRID_DATA"]
+          "required": [
+            "CUR_DIR",
+            "CUR_FACTOR",
+            "GRID_DATA"
+          ]
         },
         "FLOOD_GRUP": {
           "description": "Structure group names subject to the flood condition (each resolved to an internal group key).",
@@ -331,7 +410,10 @@
                 "type": "number"
               }
             },
-            "required": ["Z", "T"]
+            "required": [
+              "Z",
+              "T"
+            ]
           }
         },
         "GRID_X": {
@@ -389,7 +471,17 @@
                   "type": "number"
                 }
               },
-              "required": ["X", "Z", "ELEV", "VX", "VCX", "VT", "VZ", "AX", "AZ"]
+              "required": [
+                "X",
+                "Z",
+                "ELEV",
+                "VX",
+                "VCX",
+                "VT",
+                "VZ",
+                "AX",
+                "AZ"
+              ]
             }
           }
         },
@@ -440,7 +532,17 @@
                   "type": "number"
                 }
               },
-              "required": ["X", "Z", "ELEV", "VX", "VCX", "VT", "VZ", "AX", "AZ"]
+              "required": [
+                "X",
+                "Z",
+                "ELEV",
+                "VX",
+                "VCX",
+                "VT",
+                "VZ",
+                "AX",
+                "AZ"
+              ]
             }
           }
         },
@@ -455,12 +557,24 @@
         "CREST": {
           "description": "Crest critical position selection. Case-insensitive: \"MXM\" (max moment), \"MNM\" (min moment), \"MXS\" (max shear), \"MNS\" (min shear), \"MUP\" (max uplift), \"MDN\" (max downward), \"ALL\" (all positions).",
           "type": "string",
-          "enum": ["MXM", "MNM", "MXS", "MNS", "MUP", "MDN", "ALL"]
+          "enum": [
+            "MXM",
+            "MNM",
+            "MXS",
+            "MNS",
+            "MUP",
+            "MDN",
+            "ALL"
+          ]
         },
         "UNIT": {
           "description": "Unit of the crest position values (INITAL_POS/STEP). Case-insensitive: \"LENGTH\" (length [L]), \"PHASE\" (phase [deg]), \"TIME\" (time [sec]).",
           "type": "string",
-          "enum": ["LENGTH", "PHASE", "TIME"]
+          "enum": [
+            "LENGTH",
+            "PHASE",
+            "TIME"
+          ]
         },
         "INITAL_POS": {
           "description": "Initial crest position, in the unit selected by UNIT.",
@@ -559,8 +673,14 @@
           "CUR_DIR": 0,
           "CUR_FACTOR": 1,
           "GRID_DATA": [
-            { "D": 0, "V": 2 },
-            { "D": 10, "V": 2 }
+            {
+              "D": 0,
+              "V": 2
+            },
+            {
+              "D": 10,
+              "V": 2
+            }
           ]
         },
         "FLOOD_GRUP": [],

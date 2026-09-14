@@ -1,6 +1,7 @@
 {
   "_group": "design",
   "_name": "CRCM",
+  "product": "gen",
   "uri": "design/STEEL/KDS-41-30-2022/CRCM",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {
@@ -11,11 +12,16 @@
       "properties": {
         "METHOD": {
           "type": "string",
-          "enum": ["SRSS", "Linear Sum"],
+          "enum": [
+            "SRSS",
+            "Linear Sum"
+          ],
           "description": "Combined Strength Method. Enum values are matched case-insensitively. SRSS = square-root-sum-of-squares combination; Linear Sum = linear (arithmetic) sum combination."
         }
       },
-      "required": ["METHOD"],
+      "required": [
+        "METHOD"
+      ],
       "additionalProperties": false
     }
   },

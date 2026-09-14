@@ -1,6 +1,7 @@
 {
   "_group": "db",
   "_name": "PLCB",
+  "product": "civil",
   "uri": "db/PLCB",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {

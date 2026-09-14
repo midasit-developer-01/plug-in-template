@@ -1,6 +1,7 @@
 {
   "_group": "db",
   "_name": "DYLA",
+  "product": "civil",
   "uri": "db/DYLA",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {

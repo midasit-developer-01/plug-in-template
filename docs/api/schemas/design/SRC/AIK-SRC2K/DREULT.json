@@ -1,6 +1,7 @@
 {
   "_group": "design",
   "_name": "DREULT",
+  "product": "gen",
   "uri": "design/SRC/AIK-SRC2K/DREULT",
   "methods": "POST",
   "schema": {
@@ -2253,6 +2254,22 @@
               ],
               "description": "Color table. Case-insensitive.",
               "default": "vrgb"
+            },
+            "CONTOUR_LINE_COLOR": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/RGB_BODY"
+                }
+              ],
+              "description": "Contour line color (RGB, 0-255 each). Applied only when this object is given; if omitted, the dialog default RGB(0,120,0) (dark green) is used. Also applies to mode-shape contours."
+            },
+            "ELEMENT_EDGE_COLOR": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/RGB_BODY"
+                }
+              ],
+              "description": "Element boundary (edge) line color (RGB, 0-255 each). Applied only when this object is given; if omitted, the dialog default RGB(128,128,0) (olive) is used. Also applies to mode-shape contours."
             },
             "OPTIONS": {
               "$ref": "#/definitions/RG_TOD_CONTOUR_OPTIONS"

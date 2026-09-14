@@ -1,6 +1,7 @@
 {
   "_group": "db",
   "_name": "POGD-M1",
+  "product": "civil",
   "uri": "db/POGD-M1",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {
@@ -11,13 +12,20 @@
       "properties": {
         "GEO_NONL_TYPE": {
           "type": "integer",
-          "enum": [0, 1, 2],
+          "enum": [
+            0,
+            1,
+            2
+          ],
           "default": 0,
           "description": "Geometric nonlinearity type (None:0, Large Displacements:1, P-Delta:2). If set to 1 or 2, INIT_LOAD_TYPE must be 0 (hard-validated)."
         },
         "INIT_LOAD_TYPE": {
           "type": "integer",
-          "enum": [0, 1],
+          "enum": [
+            0,
+            1
+          ],
           "default": 0,
           "description": "Initial load method (Perform Nonlinear Static Analysis:0, Import Static Analysis/Construction Stage results:1). When 0, IGNORE_ELEM is applied; when 1, IGNORE_ELEM is ignored."
         },
@@ -34,7 +42,10 @@
               },
               "LC_TYPE": {
                 "type": "string",
-                "enum": ["STATIC", "STAGE"],
+                "enum": [
+                  "STATIC",
+                  "STAGE"
+                ],
                 "description": "Load case type; case-insensitive (STATIC = static load case, STAGE = construction stage load case)."
               },
               "SF": {
@@ -42,7 +53,11 @@
                 "description": "Scale factor applied to the referenced load case."
               }
             },
-            "required": ["LC_NAME", "LC_TYPE", "SF"]
+            "required": [
+              "LC_NAME",
+              "LC_TYPE",
+              "SF"
+            ]
           }
         },
         "IGNORE_ELEM": {
@@ -68,7 +83,9 @@
                   "description": "[OPT_USE=true] Apply to Beam/Column. Required when OPT_USE is true."
                 }
               },
-              "required": ["OPT_USE"]
+              "required": [
+                "OPT_USE"
+              ]
             },
             "AXIAL_YIELD": {
               "type": "object",
@@ -88,7 +105,9 @@
                   "description": "[OPT_USE=true] Apply to Truss. Required when OPT_USE is true."
                 }
               },
-              "required": ["OPT_USE"]
+              "required": [
+                "OPT_USE"
+              ]
             },
             "SUPPORT_DZ_DIR": {
               "type": "object",
@@ -108,7 +127,9 @@
                   "description": "[OPT_USE=true] Stop on support collapse. Required when OPT_USE is true."
                 }
               },
-              "required": ["OPT_USE"]
+              "required": [
+                "OPT_USE"
+              ]
             }
           }
         },
@@ -145,7 +166,9 @@
                       "description": "[OPT_USE=true] Displacement norm tolerance. Required when the norm is enabled."
                     }
                   },
-                  "required": ["OPT_USE"]
+                  "required": [
+                    "OPT_USE"
+                  ]
                 },
                 "FORCE": {
                   "type": "object",
@@ -161,7 +184,9 @@
                       "description": "[OPT_USE=true] Force norm tolerance. Required when the norm is enabled."
                     }
                   },
-                  "required": ["OPT_USE"]
+                  "required": [
+                    "OPT_USE"
+                  ]
                 },
                 "ENERGY": {
                   "type": "object",
@@ -177,13 +202,19 @@
                       "description": "[OPT_USE=true] Energy norm tolerance. Required when the norm is enabled."
                     }
                   },
-                  "required": ["OPT_USE"]
+                  "required": [
+                    "OPT_USE"
+                  ]
                 }
               }
             },
             "STIFF_UPD_SCHEME": {
               "type": "integer",
-              "enum": [0, 1, 2],
+              "enum": [
+                0,
+                1,
+                2
+              ],
               "default": 1,
               "description": "Stiffness update scheme (Custom:0, Full Newton-Raphson:1, Initial Stiffness:2). When 0, ITER_BEF_UPDATE is required."
             },
@@ -217,7 +248,10 @@
                 },
                 "LINE_SEARCH_OPT": {
                   "type": "integer",
-                  "enum": [0, 1],
+                  "enum": [
+                    0,
+                    1
+                  ],
                   "description": "[OPT_USE=true] Line search option (AUTO:0, USER:1). Required when OPT_USE is true."
                 },
                 "START_ITER_NO": {
@@ -233,10 +267,14 @@
                   "description": "[OPT_USE=true, LINE_SEARCH_OPT=1] Line search tolerance. Required only when user-defined."
                 }
               },
-              "required": ["OPT_USE"]
+              "required": [
+                "OPT_USE"
+              ]
             }
           },
-          "required": ["MAX_ITER"]
+          "required": [
+            "MAX_ITER"
+          ]
         },
         "PO_HINGE_OPT": {
           "type": "object",
@@ -254,16 +292,25 @@
               "properties": {
                 "PSPRING_SUP": {
                   "type": "integer",
-                  "enum": [0, 1],
+                  "enum": [
+                    0,
+                    1
+                  ],
                   "description": "Point spring support handling (Apply Nonlinear:0, Linear:1)."
                 },
                 "EL": {
                   "type": "integer",
-                  "enum": [0, 1],
+                  "enum": [
+                    0,
+                    1
+                  ],
                   "description": "Elastic link handling (Apply Nonlinear:0, Linear:1)."
                 }
               },
-              "required": ["PSPRING_SUP", "EL"]
+              "required": [
+                "PSPRING_SUP",
+                "EL"
+              ]
             },
             "TRILINEAR": {
               "type": "object",
@@ -287,7 +334,12 @@
                   "description": "Trilinear compression a2 stiffness reduction ratio."
                 }
               },
-              "required": ["TENS_A1", "TENS_A2", "COMP_A1", "COMP_A2"]
+              "required": [
+                "TENS_A1",
+                "TENS_A2",
+                "COMP_A1",
+                "COMP_A2"
+              ]
             },
             "BILINEAR": {
               "type": "object",
@@ -303,11 +355,18 @@
                   "description": "Bilinear compression a1 stiffness reduction ratio."
                 }
               },
-              "required": ["TENS_A1", "COMP_A1"]
+              "required": [
+                "TENS_A1",
+                "COMP_A1"
+              ]
             },
             "LOC_BEAM": {
               "type": "integer",
-              "enum": [0, 1, 2],
+              "enum": [
+                0,
+                1,
+                2
+              ],
               "description": "Reference location of beam/distributed hinges (I:0, M/Mid-span:1, J:2)."
             },
             "CALC_YIELDS": {
@@ -315,7 +374,14 @@
               "description": "Calculate yield surface of beam considering buckling."
             }
           },
-          "required": ["ASSIGN_BY_MEMBER", "NONL_TYPE", "TRILINEAR", "BILINEAR", "LOC_BEAM", "CALC_YIELDS"]
+          "required": [
+            "ASSIGN_BY_MEMBER",
+            "NONL_TYPE",
+            "TRILINEAR",
+            "BILINEAR",
+            "LOC_BEAM",
+            "CALC_YIELDS"
+          ]
         },
         "MISC": {
           "type": "object",
@@ -331,10 +397,15 @@
               "description": "Show pushover curve during analysis."
             }
           },
-          "required": ["SHOW_GRAPH_AFTER", "SHOW_GRAPH_DURING"]
+          "required": [
+            "SHOW_GRAPH_AFTER",
+            "SHOW_GRAPH_DURING"
+          ]
         }
       },
-      "required": ["ITER_CTRL"]
+      "required": [
+        "ITER_CTRL"
+      ]
     }
   },
   "example": {

@@ -1,6 +1,7 @@
 {
   "_group": "design",
   "_name": "TABLE",
+  "product": "gen",
   "uri": "design/RC/KDS-41-20-2022/TABLE",
   "methods": "POST",
   "schema": {

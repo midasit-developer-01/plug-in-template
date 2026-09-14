@@ -1,6 +1,7 @@
 {
   "_group": "design",
   "_name": "KFAC",
+  "product": "civil",
   "uri": "design/STEEL/JAPAN-ROAD-II-H14/KFAC",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {

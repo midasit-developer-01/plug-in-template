@@ -1,6 +1,7 @@
 {
   "_group": "design",
   "_name": "PSC-ANAL",
+  "product": "civil",
   "uri": "design/PSC/AASHTO-LRFD24/PSC-ANAL",
   "methods": "POST",
   "schema": {

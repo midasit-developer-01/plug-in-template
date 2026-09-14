@@ -1,0 +1,78 @@
+{
+  "_group": "design",
+  "_name": "CODE-ANAL",
+  "product": "gen",
+  "uri": "design/STEEL/AIJ-ASD02/CODE-ANAL",
+  "methods": "POST",
+  "schema": {
+    "CODE-ANAL": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "description": "Steel Code Check Analysis (CODE-ANAL) for AIJ-ASD02. Runs the steel design code check over a set of targets selected by PERFORM_TYPE; the request body is wrapped in Argument. Prerequisites: analysis results must exist (errors with 'Please perform analysis.' otherwise) and the steel design code must be set to AIJ-ASD02 first via PUT /TEMP/DESIGN/STEEL/AIJ-ASD02/DCO. Runs SYNCHRONOUSLY in the MIDAS instance: failure is reported in-band (HTTP 200 with an error/SUCCESS=false body, e.g. a 'failed:' message), and a large model can exceed the ~60s client read timeout, which stalls subsequent requests. Response is a single message string. Run this before querying CODE-TABLE / CODE-REPORT / DREULT.",
+      "properties": {
+        "Argument": {
+          "type": "object",
+          "description": "Steel code check request. Fields drive which elements/sections are checked based on PERFORM_TYPE.",
+          "properties": {
+            "PERFORM_TYPE": {
+              "type": "string",
+              "enum": [
+                "ALL",
+                "ELEMS",
+                "SECTIONS"
+              ],
+              "default": "ALL",
+              "description": "Perform Target - All Elements: ALL / By Element No.: ELEMS / By Section No.: SECTIONS. Case-insensitive. Calling POST without a body checks ALL elements."
+            },
+            "ELEMS": {
+              "type": "object",
+              "description": "[PERFORM_TYPE=ELEMS] Element No. selection object.",
+              "properties": {
+                "KEYS": {
+                  "type": "array",
+                  "description": "Specify Each ID - Element No.",
+                  "items": {
+                    "type": "integer"
+                  }
+                },
+                "TO": {
+                  "type": "string",
+                  "description": "Specify ID Range - Element Range (e.g. 1-10)."
+                },
+                "STRUCTURE_GROUP_NAME": {
+                  "type": "string",
+                  "description": "Structure Group Name."
+                }
+              }
+            },
+            "SECTIONS": {
+              "type": "array",
+              "description": "[PERFORM_TYPE=SECTIONS] Section No. list.",
+              "items": {
+                "type": "integer"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "example": {
+    "Argument": {
+      "PERFORM_TYPE": "ELEMS",
+      "ELEMS": {
+        "KEYS": [
+          1,
+          2,
+          3
+        ],
+        "TO": "1-10",
+        "STRUCTURE_GROUP_NAME": "Beam Group"
+      },
+      "SECTIONS": [
+        1,
+        2
+      ]
+    }
+  }
+}

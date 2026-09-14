@@ -1,6 +1,7 @@
 {
   "_group": "design",
   "_name": "EQCT",
+  "product": "gen",
   "uri": "design/SRC/AIK-SRC2K/EQCT",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {

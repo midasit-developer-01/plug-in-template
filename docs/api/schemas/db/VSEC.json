@@ -14,7 +14,7 @@
         },
         "CENT_CALC_TYPE": {
           "type": "integer",
-          "description": "Centroid calculation type code (integer). Governs how the centroid point is determined; 0 is the typical value."
+          "description": "Centroid calculation type code (integer). Governs how the centroid point is determined; 0 is the typical value. When 0 (auto), GET returns CEN_PT_X/Y/Z recomputed from the section (matching the GUI/analysis), not the stored input values."
         },
         "CEN_PT_X": {
           "type": "number",

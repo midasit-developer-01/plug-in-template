@@ -1,6 +1,7 @@
 {
   "_group": "design",
   "_name": "WC-REPORT",
+  "product": "gen",
   "uri": "design/RC/KDS-41-20-2022/WC-REPORT",
   "methods": "POST",
   "schema": {
@@ -15,7 +16,10 @@
             "REPORT_TYPE": {
               "type": "string",
               "description": "Report Type: WID+STORY or WID. Case-insensitive.",
-              "enum": ["WID+STORY", "WID"]
+              "enum": [
+                "WID+STORY",
+                "WID"
+              ]
             },
             "EXPORT_PATH": {
               "type": "string",
@@ -28,12 +32,22 @@
             "CURRENT_MODE_WID_STORY": {
               "type": "string",
               "description": "[REPORT_TYPE=WID+STORY] Report Mode used when REPORT_TYPE is WID+STORY. Case-insensitive.",
-              "enum": ["Graphic", "Detail", "Summary", "PMCurve"]
+              "enum": [
+                "Graphic",
+                "Detail",
+                "Summary",
+                "PMCurve"
+              ]
             },
             "CURRENT_MODE_WID": {
               "type": "string",
               "description": "[REPORT_TYPE=WID] Report Mode used when REPORT_TYPE is WID. Case-insensitive.",
-              "enum": ["Graphic", "Detail", "Summary", "PMCurve"]
+              "enum": [
+                "Graphic",
+                "Detail",
+                "Summary",
+                "PMCurve"
+              ]
             },
             "SELECTIONS": {
               "type": "array",
@@ -49,7 +63,9 @@
                       "KEYS": {
                         "type": "array",
                         "description": "Specify Each Wall ID.",
-                        "items": { "type": "integer" }
+                        "items": {
+                          "type": "integer"
+                        }
                       },
                       "TO": {
                         "type": "string",
@@ -60,13 +76,19 @@
                   "STORY": {
                     "type": "array",
                     "description": "Story names to filter design analysis. If omitted, all stories are included.",
-                    "items": { "type": "string" }
+                    "items": {
+                      "type": "string"
+                    }
                   }
                 }
               }
             }
           },
-          "required": ["REPORT_TYPE", "EXPORT_PATH", "OUTPUT_NAME"]
+          "required": [
+            "REPORT_TYPE",
+            "EXPORT_PATH",
+            "OUTPUT_NAME"
+          ]
         }
       }
     }
@@ -79,8 +101,17 @@
       "CURRENT_MODE_WID_STORY": "Detail",
       "SELECTIONS": [
         {
-          "WALL_IDS": { "KEYS": [1, 2, 3] },
-          "STORY": ["1F", "2F"]
+          "WALL_IDS": {
+            "KEYS": [
+              1,
+              2,
+              3
+            ]
+          },
+          "STORY": [
+            "1F",
+            "2F"
+          ]
         }
       ]
     }

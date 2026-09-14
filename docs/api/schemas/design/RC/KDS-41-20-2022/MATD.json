@@ -1,6 +1,7 @@
 {
   "_group": "design",
   "_name": "MATD",
+  "product": "gen",
   "uri": "design/RC/KDS-41-20-2022/MATD",
   "methods": "GET, PUT, DELETE",
   "schema": {

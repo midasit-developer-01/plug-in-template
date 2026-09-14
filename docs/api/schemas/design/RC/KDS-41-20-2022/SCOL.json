@@ -1,6 +1,7 @@
 {
   "_group": "design",
   "_name": "SCOL",
+  "product": "gen",
   "uri": "design/RC/KDS-41-20-2022/SCOL",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {
@@ -11,11 +12,16 @@
       "properties": {
         "TYPE": {
           "type": "string",
-          "enum": ["PILOTI", "SOFT_STORY"],
+          "enum": [
+            "PILOTI",
+            "SOFT_STORY"
+          ],
           "description": "Column Type classifying the special column: PILOTI or SOFT_STORY. Enum values are case-insensitive."
         }
       },
-      "required": ["TYPE"],
+      "required": [
+        "TYPE"
+      ],
       "additionalProperties": false
     }
   },

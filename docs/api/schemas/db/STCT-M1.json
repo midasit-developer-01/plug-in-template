@@ -1,6 +1,7 @@
 {
   "_group": "db",
   "_name": "STCT-M1",
+  "product": "civil",
   "uri": "db/STCT-M1",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {
@@ -27,10 +28,14 @@
             "RESTART_STAGE": {
               "type": "array",
               "description": "Names of construction stages to restart from; used only when OPT_USE is true. Each must reference an existing stage.",
-              "items": { "type": "string" }
+              "items": {
+                "type": "string"
+              }
             }
           },
-          "required": ["OPT_USE"]
+          "required": [
+            "OPT_USE"
+          ]
         },
         "ANAL_TYPE": {
           "type": "object",
@@ -58,7 +63,9 @@
               "description": "[iINC_NLA=1 and iNLA_TYPE=0] Include Equilibrium Member Force."
             }
           },
-          "required": ["iINC_NLA"]
+          "required": [
+            "iINC_NLA"
+          ]
         },
         "ERECTION_LOAD": {
           "type": "array",
@@ -73,15 +80,32 @@
               "EREC": {
                 "type": "string",
                 "description": "Erection load type (case-insensitive): D=Dead, DC=Dead Component, DW=Dead Wearing, EP=Erection Permanent, L=Live, W=Wind, T=Temperature, TPG=Temp Gradient, E=Earthquake, ER=Erection.",
-                "enum": ["D", "DC", "DW", "EP", "L", "W", "T", "TPG", "E", "ER"]
+                "enum": [
+                  "D",
+                  "DC",
+                  "DW",
+                  "EP",
+                  "L",
+                  "W",
+                  "T",
+                  "TPG",
+                  "E",
+                  "ER"
+                ]
               },
               "vLCNAME": {
                 "type": "array",
                 "description": "List of load case names assigned to this erection type; each must reference an existing load case.",
-                "items": { "type": "string" }
+                "items": {
+                  "type": "string"
+                }
               }
             },
-            "required": ["LTYPECC", "EREC", "vLCNAME"]
+            "required": [
+              "LTYPECC",
+              "EREC",
+              "vLCNAME"
+            ]
           }
         },
         "bSDLE": {
@@ -91,7 +115,9 @@
         "vSDLE": {
           "type": "array",
           "description": "[iINC_NLA=0 and iNLA_TYPE=1] SDL load case names; required by the handler when bSDLE is true. Each must reference an existing load case.",
-          "items": { "type": "string" }
+          "items": {
+            "type": "string"
+          }
         },
         "TIME_DEP_CONTROL": {
           "type": "object",
@@ -108,7 +134,11 @@
                 "TYPE": {
                   "type": "string",
                   "description": "Creep & Shrinkage type (case-insensitive): CREEP, SHRINKAGE, or BOTH.",
-                  "enum": ["CREEP", "SHRINKAGE", "BOTH"]
+                  "enum": [
+                    "CREEP",
+                    "SHRINKAGE",
+                    "BOTH"
+                  ]
                 },
                 "bOUCC": {
                   "type": "boolean",
@@ -127,7 +157,9 @@
                       "description": "Number of internal time steps; used when OPT_USE is true."
                     }
                   },
-                  "required": ["OPT_USE"]
+                  "required": [
+                    "OPT_USE"
+                  ]
                 },
                 "AUTO_TIME_STEP": {
                   "type": "object",
@@ -158,7 +190,9 @@
                       "description": "Number of steps for time gap > 10000 (default 20)."
                     }
                   },
-                  "required": ["OPT_USE"]
+                  "required": [
+                    "OPT_USE"
+                  ]
                 },
                 "bTTLE_CS": {
                   "type": "boolean",
@@ -169,7 +203,9 @@
                   "description": "Consider confinement by reinforcement."
                 }
               },
-              "required": ["OPT_USE"]
+              "required": [
+                "OPT_USE"
+              ]
             },
             "bVAR": {
               "type": "boolean",
@@ -188,7 +224,9 @@
               "description": "[bTTLE_ES=true] Tendon tension type: 0=Change, 1=Constant."
             }
           },
-          "required": ["CREEP_SHRINKAGE"]
+          "required": [
+            "CREEP_SHRINKAGE"
+          ]
         },
         "CABLE_CONTROL": {
           "type": "object",
@@ -197,7 +235,10 @@
             "CPFC": {
               "type": "string",
               "description": "Cable pretension force type (case-insensitive): INTERNAL or EXTERNAL.",
-              "enum": ["INTERNAL", "EXTERNAL"],
+              "enum": [
+                "INTERNAL",
+                "EXTERNAL"
+              ],
               "default": "INTERNAL"
             },
             "bEXT_REPL": {
@@ -247,7 +288,10 @@
                 "ITD": {
                   "type": "string",
                   "description": "Application scope (case-insensitive): ALL elements or GROUP.",
-                  "enum": ["ALL", "GROUP"]
+                  "enum": [
+                    "ALL",
+                    "GROUP"
+                  ]
                 },
                 "GROUP": {
                   "type": "string",
@@ -262,7 +306,9 @@
                   "description": "[LFFC_OPT_USE=true] Lack-of-fit force structure group name; must reference an existing structure group."
                 }
               },
-              "required": ["OPT_USE"]
+              "required": [
+                "OPT_USE"
+              ]
             },
             "bCAMBER": {
               "type": "boolean",
@@ -326,7 +372,10 @@
             "INTOUT": {
               "type": "string",
               "description": "Intermediate output request (case-insensitive): EVERY increment or LAST increment.",
-              "enum": ["EVERY", "LAST"]
+              "enum": [
+                "EVERY",
+                "LAST"
+              ]
             },
             "ADVANCED": {
               "type": "object",
@@ -379,7 +428,10 @@
                     "LINE_SEARCH_TYPE": {
                       "type": "string",
                       "description": "Line search type (case-insensitive): AUTO or USER.",
-                      "enum": ["AUTO", "USER"]
+                      "enum": [
+                        "AUTO",
+                        "USER"
+                      ]
                     },
                     "MAX_LN_SRCH_ITER": {
                       "type": "integer",
@@ -390,10 +442,14 @@
                       "description": "[LINE_SEARCH_TYPE=USER] Line search tolerance."
                     }
                   },
-                  "required": ["OPT_USE"]
+                  "required": [
+                    "OPT_USE"
+                  ]
                 }
               },
-              "required": ["USE_DEF_SETTINGS"]
+              "required": [
+                "USE_DEF_SETTINGS"
+              ]
             },
             "DISP": {
               "type": "object",
@@ -408,7 +464,9 @@
                   "description": "Tolerance value; required by the handler when OPT_USE is true."
                 }
               },
-              "required": ["OPT_USE"]
+              "required": [
+                "OPT_USE"
+              ]
             },
             "LOAD": {
               "type": "object",
@@ -423,7 +481,9 @@
                   "description": "Tolerance value; required by the handler when OPT_USE is true."
                 }
               },
-              "required": ["OPT_USE"]
+              "required": [
+                "OPT_USE"
+              ]
             },
             "WORK": {
               "type": "object",
@@ -438,12 +498,16 @@
                   "description": "Tolerance value; required by the handler when OPT_USE is true."
                 }
               },
-              "required": ["OPT_USE"]
+              "required": [
+                "OPT_USE"
+              ]
             }
           }
         }
       },
-      "required": ["bLAST_FINAL"]
+      "required": [
+        "bLAST_FINAL"
+      ]
     }
   },
   "example": {
@@ -463,11 +527,16 @@
           {
             "LTYPECC": "Erection Group 1",
             "EREC": "D",
-            "vLCNAME": ["Self Weight", "Dead Load"]
+            "vLCNAME": [
+              "Self Weight",
+              "Dead Load"
+            ]
           }
         ],
         "bSDLE": true,
-        "vSDLE": ["SDL"],
+        "vSDLE": [
+          "SDL"
+        ],
         "TIME_DEP_CONTROL": {
           "CREEP_SHRINKAGE": {
             "OPT_USE": true,

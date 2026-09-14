@@ -1,6 +1,7 @@
 {
   "_group": "db",
   "_name": "GCMB",
+  "product": "civil",
   "uri": "db/GCMB",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {
@@ -27,14 +28,24 @@
               "DIRECTION": {
                 "description": "Camber reference direction (case-insensitive). Hard-enforced against the enum; an invalid value is rejected by the handler.",
                 "type": "string",
-                "enum": ["+DX", "-DX", "+DY", "-DY"]
+                "enum": [
+                  "+DX",
+                  "-DX",
+                  "+DY",
+                  "-DY"
+                ]
               }
             },
-            "required": ["GRUP_NAME", "DIRECTION"]
+            "required": [
+              "GRUP_NAME",
+              "DIRECTION"
+            ]
           }
         }
       },
-      "required": ["GCMB_BASE_ITEMS"]
+      "required": [
+        "GCMB_BASE_ITEMS"
+      ]
     }
   },
   "example": {

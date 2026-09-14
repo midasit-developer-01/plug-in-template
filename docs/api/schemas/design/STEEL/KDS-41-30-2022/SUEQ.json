@@ -1,6 +1,7 @@
 {
   "_group": "design",
   "_name": "SUEQ",
+  "product": "gen",
   "uri": "design/STEEL/KDS-41-30-2022/SUEQ",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {

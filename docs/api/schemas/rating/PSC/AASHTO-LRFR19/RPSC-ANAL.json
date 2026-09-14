@@ -1,6 +1,7 @@
 {
   "_group": "rating",
   "_name": "RPSC-ANAL",
+  "product": "civil",
   "uri": "rating/PSC/AASHTO-LRFR19/RPSC-ANAL",
   "methods": "POST",
   "schema": {
@@ -14,11 +15,15 @@
           "properties": {
             "TYPE": {
               "type": "string",
-              "enum": ["PERFORM_RATING"],
+              "enum": [
+                "PERFORM_RATING"
+              ],
               "description": "Analysis mode selector (case-insensitive on the wire). The handler hard-rejects any value other than PERFORM_RATING for this rating endpoint (throws LV_WRONG_FIELD). Wire values of the underlying enum are PSC_PERFORM_DESIGN and PERFORM_RATING."
             }
           },
-          "required": ["TYPE"]
+          "required": [
+            "TYPE"
+          ]
         }
       }
     }

@@ -1,6 +1,7 @@
 {
   "_group": "rating",
   "_name": "OPE_MEMB",
+  "product": "civil",
   "uri": "rating/PSC/AASHTO-LRFR19/OPE_MEMB",
   "methods": "POST",
   "schema": {

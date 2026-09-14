@@ -1,6 +1,7 @@
 {
   "_group": "design",
   "_name": "CD-TABLE",
+  "product": "gen",
   "uri": "design/RC/KDS-41-20-2022/CD-TABLE",
   "methods": "POST",
   "schema": {

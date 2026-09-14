@@ -1,6 +1,7 @@
 {
   "_group": "design",
   "_name": "CMFT",
+  "product": "gen",
   "uri": "design/STEEL/KDS-41-30-2022/CMFT",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {

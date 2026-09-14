@@ -1,6 +1,7 @@
 {
   "_group": "db",
   "_name": "IEHG-PSS-M1",
+  "product": "civil",
   "uri": "db/IEHG-PSS-M1",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {

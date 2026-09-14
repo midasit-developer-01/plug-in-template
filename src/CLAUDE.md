@@ -141,7 +141,7 @@ Communication with the Midas server uses one of **two methods**.
 
 > ### ⛔ Never write an API call from memory
 >
-> There are **540 endpoints**, each with its own body shape, and the names are 4-letter
+> There are **551 endpoints**, each with its own body shape, and the names are 4-letter
 > abbreviations. A field list you recalled rather than read is a bug waiting to happen —
 > and the server rejects the whole request, so it fails at the user, not at compile time.
 >
@@ -170,8 +170,8 @@ There are two body conventions, and `INDEX.md`'s `body` column tells you which o
 
 | Convention | Count | Functions |
 | --- | --- | --- |
-| `Assign` | 402 | `dbCreate`, `dbCreateItem`, `dbRead`, `dbReadItem`, `dbUpdate`, `dbUpdateItem`, `dbDelete` |
-| `Argument` | 138 | `command(group, name, argument?, method?, body?)` |
+| `Assign` | 405 | `dbCreate`, `dbCreateItem`, `dbRead`, `dbReadItem`, `dbUpdate`, `dbUpdateItem`, `dbDelete` |
+| `Argument` | 146 | `command(group, name, argument?, method?, body?)` |
 
 ```ts
 import { dbRead, dbCreate, command } from "../utils_api";

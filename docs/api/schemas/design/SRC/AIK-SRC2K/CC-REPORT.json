@@ -1,6 +1,7 @@
 {
   "_group": "design",
   "_name": "CC-REPORT",
+  "product": "gen",
   "uri": "design/SRC/AIK-SRC2K/CC-REPORT",
   "methods": "POST",
   "schema": {
@@ -15,7 +16,10 @@
             "REPORT_TYPE": {
               "type": "string",
               "description": "Report Type. Case-insensitive.",
-              "enum": ["MEMB", "PROP"]
+              "enum": [
+                "MEMB",
+                "PROP"
+              ]
             },
             "EXPORT_PATH": {
               "type": "string",
@@ -28,17 +32,32 @@
             "CURRENT_MODE": {
               "type": "string",
               "description": "Report Mode. Case-insensitive.",
-              "enum": ["Graphic", "Detail", "Summary", "PMCurve"]
+              "enum": [
+                "Graphic",
+                "Detail",
+                "Summary",
+                "PMCurve"
+              ]
             },
             "CURRENT_MODE_MEMB": {
               "type": "string",
               "description": "Report Mode used when REPORT_TYPE=MEMB. Case-insensitive.",
-              "enum": ["Graphic", "Detail", "Summary", "PMCurve"]
+              "enum": [
+                "Graphic",
+                "Detail",
+                "Summary",
+                "PMCurve"
+              ]
             },
             "CURRENT_MODE_PROP": {
               "type": "string",
               "description": "Report Mode used when REPORT_TYPE=PROP. Case-insensitive.",
-              "enum": ["Graphic", "Detail", "Summary", "PMCurve"]
+              "enum": [
+                "Graphic",
+                "Detail",
+                "Summary",
+                "PMCurve"
+              ]
             },
             "ELEMS": {
               "type": "object",
@@ -90,7 +109,11 @@
               }
             }
           },
-          "required": ["REPORT_TYPE", "EXPORT_PATH", "OUTPUT_NAME"]
+          "required": [
+            "REPORT_TYPE",
+            "EXPORT_PATH",
+            "OUTPUT_NAME"
+          ]
         }
       }
     }
@@ -102,10 +125,17 @@
       "OUTPUT_NAME": "SRC_Column_Check_Report",
       "CURRENT_MODE": "Detail",
       "ELEMS": {
-        "KEYS": [1, 2, 3],
+        "KEYS": [
+          1,
+          2,
+          3
+        ],
         "TO": "1-10"
       },
-      "SECTIONS": [1, 2],
+      "SECTIONS": [
+        1,
+        2
+      ],
       "DETAIL_POSITIONS": {
         "END_I": true,
         "MID": false,

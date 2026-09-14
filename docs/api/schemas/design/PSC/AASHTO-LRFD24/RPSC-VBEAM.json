@@ -1,6 +1,7 @@
 {
   "_group": "design",
   "_name": "RPSC-VBEAM",
+  "product": "civil",
   "uri": "design/PSC/AASHTO-LRFD24/RPSC-VBEAM",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {
@@ -31,7 +32,7 @@
         },
         "SBAR_ITEMS": {
           "type": "array",
-          "description": "Shear Reinforcement Properties. One entry per end (I, and J when not same); at most 2 are processed.",
+          "description": "Shear Reinforcement Properties. One entry per end (I, and J when not same); at most 2 are processed. Never send more than 2 entries: the C++ copies into a fixed Sbar[2] array without bounds checking (3+ entries corrupt memory).",
           "items": {
             "type": "object",
             "additionalProperties": false,
@@ -122,7 +123,8 @@
                 "description": "[OPT_LBAR_FLG=true] Include Flange/Cantilever."
               }
             }
-          }
+          },
+          "maxItems": 2
         },
         "MBARS": {
           "type": "array",
@@ -151,7 +153,10 @@
                   "properties": {
                     "IJ": {
                       "type": "string",
-                      "enum": ["I", "J"],
+                      "enum": [
+                        "I",
+                        "J"
+                      ],
                       "description": "I / J end (case-insensitive)."
                     },
                     "NAME": {

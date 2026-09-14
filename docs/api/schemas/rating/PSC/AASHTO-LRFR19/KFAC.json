@@ -1,6 +1,7 @@
 {
   "_group": "rating",
   "_name": "KFAC",
+  "product": "civil",
   "uri": "rating/PSC/AASHTO-LRFR19/KFAC",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {

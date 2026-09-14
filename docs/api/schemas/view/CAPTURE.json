@@ -2343,6 +2343,48 @@
                           "description": "Color table (case-insensitive).",
                           "default": "vrgb"
                         },
+                        "CONTOUR_LINE_COLOR": {
+                          "type": "object",
+                          "description": "Contour line color as RGB components. Applied only when this object is given; if omitted, the dialog default RGB(0,120,0) (dark green) is used. Also applies to mode-shape contours.",
+                          "properties": {
+                            "R": {
+                              "type": "integer",
+                              "description": "Red component (0-255).",
+                              "default": 0
+                            },
+                            "G": {
+                              "type": "integer",
+                              "description": "Green component (0-255).",
+                              "default": 0
+                            },
+                            "B": {
+                              "type": "integer",
+                              "description": "Blue component (0-255).",
+                              "default": 0
+                            }
+                          }
+                        },
+                        "ELEMENT_EDGE_COLOR": {
+                          "type": "object",
+                          "description": "Element boundary (edge) line color as RGB components. Applied only when this object is given; if omitted, the dialog default RGB(128,128,0) (olive) is used. Also applies to mode-shape contours.",
+                          "properties": {
+                            "R": {
+                              "type": "integer",
+                              "description": "Red component (0-255).",
+                              "default": 0
+                            },
+                            "G": {
+                              "type": "integer",
+                              "description": "Green component (0-255).",
+                              "default": 0
+                            },
+                            "B": {
+                              "type": "integer",
+                              "description": "Blue component (0-255).",
+                              "default": 0
+                            }
+                          }
+                        },
                         "OPTIONS": {
                           "type": "object",
                           "description": "Contour options.",
@@ -3315,7 +3357,17 @@
         },
         "TYPE_OF_DISPLAY": {
           "CONTOUR": {
-            "OPT_CHECK": true
+            "OPT_CHECK": true,
+            "CONTOUR_LINE_COLOR": {
+              "R": 0,
+              "G": 120,
+              "B": 0
+            },
+            "ELEMENT_EDGE_COLOR": {
+              "R": 128,
+              "G": 128,
+              "B": 0
+            }
           },
           "LEGEND": {
             "OPT_CHECK": true

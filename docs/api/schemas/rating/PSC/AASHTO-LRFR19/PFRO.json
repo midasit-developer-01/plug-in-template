@@ -1,6 +1,7 @@
 {
   "_group": "rating",
   "_name": "PFRO",
+  "product": "civil",
   "uri": "rating/PSC/AASHTO-LRFR19/PFRO",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {
@@ -11,7 +12,11 @@
       "properties": {
         "PART": {
           "type": "integer",
-          "enum": [0, 1, 2],
+          "enum": [
+            0,
+            1,
+            2
+          ],
           "description": "Print check position. 0 = I-end, 1 = J-end, 2 = Both ends. Handler validates the value is in the range 0-2 and throws otherwise.",
           "minimum": 0,
           "maximum": 2

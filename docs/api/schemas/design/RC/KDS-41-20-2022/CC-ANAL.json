@@ -1,6 +1,7 @@
 {
   "_group": "design",
   "_name": "CC-ANAL",
+  "product": "gen",
   "uri": "design/RC/KDS-41-20-2022/CC-ANAL",
   "methods": "POST",
   "schema": {
@@ -15,7 +16,11 @@
             "PERFORM_TYPE": {
               "type": "string",
               "description": "Perform Target - All Elements: ALL / By Element No.: ELEMS / By Section No.: SECTIONS. Case-insensitive.",
-              "enum": ["ALL", "ELEMS", "SECTIONS"],
+              "enum": [
+                "ALL",
+                "ELEMS",
+                "SECTIONS"
+              ],
               "default": "ALL"
             },
             "ELEMS": {
@@ -55,7 +60,11 @@
     "Argument": {
       "PERFORM_TYPE": "ELEMS",
       "ELEMS": {
-        "KEYS": [1, 2, 3],
+        "KEYS": [
+          1,
+          2,
+          3
+        ],
         "TO": "1-10",
         "STRUCTURE_GROUP_NAME": "Column Group"
       }

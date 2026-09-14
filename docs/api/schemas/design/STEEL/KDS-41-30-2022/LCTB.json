@@ -1,6 +1,7 @@
 {
   "_group": "design",
   "_name": "LCTB",
+  "product": "gen",
   "uri": "design/STEEL/KDS-41-30-2022/LCTB",
   "methods": "GET, DELETE",
   "schema": {

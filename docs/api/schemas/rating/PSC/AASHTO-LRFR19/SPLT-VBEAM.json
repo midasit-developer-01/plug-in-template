@@ -1,6 +1,7 @@
 {
   "_group": "rating",
   "_name": "SPLT-VBEAM",
+  "product": "civil",
   "uri": "rating/PSC/AASHTO-LRFR19/SPLT-VBEAM",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {

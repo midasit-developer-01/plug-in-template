@@ -1,6 +1,7 @@
 {
   "_group": "db",
   "_name": "HHCT-M1",
+  "product": "civil",
   "uri": "db/HHCT-M1",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {
@@ -24,7 +25,11 @@
         },
         "EVAL": {
           "type": "string",
-          "enum": ["CENTER", "GAUSS", "NODAL"],
+          "enum": [
+            "CENTER",
+            "GAUSS",
+            "NODAL"
+          ],
           "default": "GAUSS",
           "description": "Element stress evaluation location: CENTER, GAUSS, or NODAL. Case-insensitive."
         },
@@ -54,7 +59,11 @@
           "properties": {
             "TYPE": {
               "type": "string",
-              "enum": ["CREEP", "SHRINKAGE", "BOTH"],
+              "enum": [
+                "CREEP",
+                "SHRINKAGE",
+                "BOTH"
+              ],
               "default": "BOTH",
               "description": "Which time-dependent effects to consider: CREEP only, SHRINKAGE only, or BOTH. Case-insensitive."
             },
@@ -84,7 +93,12 @@
                   "description": "Second age point in days."
                 }
               },
-              "required": ["PHI1", "DAY1", "PHI2", "DAY2"]
+              "required": [
+                "PHI1",
+                "DAY1",
+                "PHI2",
+                "DAY2"
+              ]
             }
           }
         },
@@ -166,7 +180,7 @@
           },
           "WORK": {
             "OPT_CHECK": true,
-            "VALUE": 0.000001
+            "VALUE": 1e-06
           }
         }
       },

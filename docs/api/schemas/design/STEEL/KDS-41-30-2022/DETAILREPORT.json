@@ -1,6 +1,7 @@
 {
   "_group": "design",
   "_name": "DETAILREPORT",
+  "product": "gen",
   "uri": "design/STEEL/KDS-41-30-2022/DETAILREPORT",
   "methods": "POST",
   "schema": {
@@ -14,12 +15,19 @@
           "properties": {
             "REPORT_TYPE": {
               "type": "string",
-              "enum": ["PROP", "MEMB"],
+              "enum": [
+                "PROP",
+                "MEMB"
+              ],
               "description": "Table Type. Case-insensitive. PROP = report by section property (uses SECTION_LIST); MEMB = report by member (uses ELEM_NO_LIST)."
             },
             "CURRENT_MODE": {
               "type": "string",
-              "enum": ["Detail", "Summary", "Graphic"],
+              "enum": [
+                "Detail",
+                "Summary",
+                "Graphic"
+              ],
               "description": "Report Mode. Case-insensitive. Selects the level of detail of the generated report."
             },
             "EXPORT_PATH": {
@@ -47,7 +55,12 @@
               "description": "[REPORT_TYPE=PROP] Section Numbers. Required (must be assigned) when REPORT_TYPE is PROP."
             }
           },
-          "required": ["REPORT_TYPE", "CURRENT_MODE", "EXPORT_PATH", "OUTPUT_NAME"]
+          "required": [
+            "REPORT_TYPE",
+            "CURRENT_MODE",
+            "EXPORT_PATH",
+            "OUTPUT_NAME"
+          ]
         }
       }
     }
@@ -58,7 +71,11 @@
       "CURRENT_MODE": "Detail",
       "EXPORT_PATH": "C:/Reports/",
       "OUTPUT_NAME": "steel_check.mcb",
-      "ELEM_NO_LIST": [1, 2, 3]
+      "ELEM_NO_LIST": [
+        1,
+        2,
+        3
+      ]
     }
   }
 }

@@ -1,6 +1,7 @@
 {
   "_group": "db",
   "_name": "EWSF",
+  "product": "civil",
   "uri": "db/EWSF",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {

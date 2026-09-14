@@ -1,6 +1,7 @@
 {
   "_group": "db",
   "_name": "EVGP",
+  "product": "civil",
   "uri": "db/EVGP",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {
@@ -14,7 +15,10 @@
         },
         "TYPE": {
           "type": "string",
-          "enum": ["PIER", "ABUTMENT"],
+          "enum": [
+            "PIER",
+            "ABUTMENT"
+          ],
           "description": "Group type. Case-insensitive. PIER=0, ABUTMENT=1. Determines applicability of link fields."
         },
         "bPIERCAP": {
@@ -24,7 +28,9 @@
         },
         "PIER_ELEM_LIST": {
           "type": "array",
-          "items": { "type": "integer" },
+          "items": {
+            "type": "integer"
+          },
           "description": "Pier cap element list. Required (non-empty) when bPIERCAP is true."
         },
         "EVGP_COLM_LIST": {
@@ -39,11 +45,16 @@
               },
               "ELEM_LIST": {
                 "type": "array",
-                "items": { "type": "integer" },
+                "items": {
+                  "type": "integer"
+                },
                 "description": "Element list for this column."
               }
             },
-            "required": ["NAME", "ELEM_LIST"]
+            "required": [
+              "NAME",
+              "ELEM_LIST"
+            ]
           }
         },
         "bLINK": {
@@ -53,17 +64,25 @@
         },
         "LINK_TYPE": {
           "type": "string",
-          "enum": ["LINK", "SUPPORT"],
+          "enum": [
+            "LINK",
+            "SUPPORT"
+          ],
           "default": "LINK",
           "description": "Link type for abutment. Case-insensitive. Wire values: \"LINK\"=Elastic Link (index 0), \"SUPPORT\"=Support (index 1). Required when TYPE=ABUTMENT (hard-enforced)."
         },
         "LINK_NODE_LIST": {
           "type": "array",
-          "items": { "type": "integer" },
+          "items": {
+            "type": "integer"
+          },
           "description": "Link node list. Required (non-empty) when TYPE=PIER and bLINK is true, or when TYPE=ABUTMENT."
         }
       },
-      "required": ["NAME", "TYPE"]
+      "required": [
+        "NAME",
+        "TYPE"
+      ]
     }
   },
   "example": {
@@ -72,19 +91,36 @@
         "NAME": "Pier Group 1",
         "TYPE": "PIER",
         "bPIERCAP": true,
-        "PIER_ELEM_LIST": [1, 2, 3],
+        "PIER_ELEM_LIST": [
+          1,
+          2,
+          3
+        ],
         "EVGP_COLM_LIST": [
-          { "NAME": "Column A", "ELEM_LIST": [4, 5] }
+          {
+            "NAME": "Column A",
+            "ELEM_LIST": [
+              4,
+              5
+            ]
+          }
         ],
         "bLINK": true,
-        "LINK_NODE_LIST": [10, 11, 12]
+        "LINK_NODE_LIST": [
+          10,
+          11,
+          12
+        ]
       },
       "2": {
         "NAME": "Abutment Group 1",
         "TYPE": "ABUTMENT",
         "bPIERCAP": false,
         "LINK_TYPE": "SUPPORT",
-        "LINK_NODE_LIST": [20, 21]
+        "LINK_NODE_LIST": [
+          20,
+          21
+        ]
       }
     }
   }

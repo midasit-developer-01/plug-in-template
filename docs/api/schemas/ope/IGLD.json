@@ -1,0 +1,141 @@
+{
+  "_group": "ope",
+  "_name": "IGLD",
+  "product": "civil",
+  "uri": "ope/IGLD",
+  "methods": "POST",
+  "schema": {
+    "IGLD": {
+      "type": "object",
+      "description": "Influence Line General Link Force/Moment Data (IGLD). Returns the GENERAL LINK FORCE/MOMENT influence line: one force/moment component of the general link between two nodes as a unit load moves along a traffic line lane. Driven by LANE_NAME (the traffic line lane) and GENERAL_LINK_NODES; the component is chosen via COMPONENTS. Requires moving-load (influence line) analysis results: the model must be analyzed and in post-processing state, otherwise the request FAILS with an error (e.g. 'post mode is required', 'failed to set influence data; check that the analysis has been performed', or 'no influence line data was produced') - it never returns an empty table. Response: a table named INFLL_GENERAL LINK FORCES/MOMENTS with columns ELEM, POSITION, DISTANCE, INFLUENCE (one row per evaluated position of the unit load along the lane) plus a SUMMARY sub-table giving the MINIMUM/MAXIMUM influence value and its DISTANCE, and the FORCE/DIST units of the values.",
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "properties": {
+        "Argument": {
+          "type": "object",
+          "description": "Influence Line General Link Force/Moment Data request (DTO_IGLD_REQUEST).",
+          "properties": {
+            "LANE_NAME": {
+              "type": "string",
+              "description": "Line Lane Name. Must name an existing moving-load traffic LINE lane (only Line Lane type is accepted; other lane types fail with 'only a Line Lane can be used for influence lines')."
+            },
+            "EXPORT_PATH": {
+              "type": "string",
+              "description": "Optional export file path; extension MUST be .txt or .json (anything else fails with 'EXPORT_PATH extension must be .txt or .json'). A .json path re-exports the returned table to that file; a .txt path writes the legacy GUI text output. The table is returned in the response either way."
+            },
+            "UNIT": {
+              "type": "object",
+              "description": "Optional output unit override. Omitted sub-units keep the document's current unit system; the units actually used are echoed in the response table's FORCE/DIST fields.",
+              "properties": {
+                "FORCE": {
+                  "type": "string",
+                  "description": "Force unit (case-insensitive).",
+                  "enum": [
+                    "KGF",
+                    "TONF",
+                    "N",
+                    "KN",
+                    "LBF",
+                    "KIPS"
+                  ]
+                },
+                "DIST": {
+                  "type": "string",
+                  "description": "Length unit (case-insensitive).",
+                  "enum": [
+                    "MM",
+                    "CM",
+                    "M",
+                    "IN",
+                    "FT"
+                  ]
+                },
+                "HEAT": {
+                  "type": "string",
+                  "description": "Heat unit (case-insensitive). Not used by influence-line values; accepted for unit-system completeness.",
+                  "enum": [
+                    "CAL",
+                    "KCAL",
+                    "J",
+                    "BTU",
+                    "KJ"
+                  ]
+                },
+                "TEMP": {
+                  "type": "string",
+                  "description": "Temperature unit (case-insensitive). Not used by influence-line values; accepted for unit-system completeness.",
+                  "enum": [
+                    "C",
+                    "F"
+                  ]
+                }
+              }
+            },
+            "OPT_INCLUDE_IMPACT_FACTOR": {
+              "type": "boolean",
+              "description": "Include Impact Factor. If true but the active moving-load code does not support an impact factor, the request fails with 'impact factor is not supported by the current moving-load code'.",
+              "default": false
+            },
+            "GENERAL_LINK_NODES": {
+              "type": "array",
+              "description": "The general link identified by its two end nodes [Node1, Node2]. Must contain exactly 2 node numbers; exactly one general link must exist between them (fails with 'no link exists between the requested nodes' or 'multiple links exist between the requested nodes').",
+              "items": {
+                "type": "integer"
+              },
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "COMPONENTS": {
+              "type": "object",
+              "description": "Result component selection. Omitted entirely: COMP=Fx at PART=i.",
+              "properties": {
+                "PART": {
+                  "type": "string",
+                  "description": "Position on the element where the result component is evaluated (case-insensitive).",
+                  "enum": [
+                    "i",
+                    "j"
+                  ],
+                  "default": "i"
+                },
+                "COMP": {
+                  "type": "string",
+                  "description": "Link force/moment component (case-insensitive).",
+                  "enum": [
+                    "Fx",
+                    "Fy",
+                    "Fz",
+                    "Mx",
+                    "My",
+                    "Mz"
+                  ],
+                  "default": "Fx"
+                }
+              }
+            }
+          },
+          "required": [
+            "LANE_NAME",
+            "GENERAL_LINK_NODES"
+          ]
+        }
+      },
+      "required": [
+        "Argument"
+      ]
+    }
+  },
+  "example": {
+    "Argument": {
+      "LANE_NAME": "Lane1",
+      "GENERAL_LINK_NODES": [
+        1,
+        2
+      ],
+      "COMPONENTS": {
+        "PART": "i",
+        "COMP": "Fz"
+      },
+      "OPT_INCLUDE_IMPACT_FACTOR": false
+    }
+  }
+}

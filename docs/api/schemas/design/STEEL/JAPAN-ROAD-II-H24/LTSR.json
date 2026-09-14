@@ -1,6 +1,7 @@
 {
   "_group": "design",
   "_name": "LTSR",
+  "product": "civil",
   "uri": "design/STEEL/JAPAN-ROAD-II-H24/LTSR",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {

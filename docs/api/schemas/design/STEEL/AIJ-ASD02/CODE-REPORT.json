@@ -1,0 +1,141 @@
+{
+  "_group": "design",
+  "_name": "CODE-REPORT",
+  "product": "gen",
+  "uri": "design/STEEL/AIJ-ASD02/CODE-REPORT",
+  "methods": "POST",
+  "schema": {
+    "CODE-REPORT": {
+      "type": "object",
+      "description": "Steel Code Check Report (CODE-REPORT) for AIJ-ASD02. The request (wrapped in Argument) selects report type, export destination, mode, and element/section selection. SIDE EFFECT: writes the report file (e.g. .xlsx) on the HOST machine running MIDAS, at the path built from EXPORT_PATH + OUTPUT_NAME in the request - the client never receives the file, only its path. Prerequisites: analysis results and AIJ-ASD02 code-check results must exist (run PUT /TEMP/DESIGN/STEEL/AIJ-ASD02/DCO, analysis, then CODE-ANAL first); with no design results the request fails in-band with 'No design results found for the requested elements/sections.' (HTTP 200 error body, not an HTTP error). Runs synchronously - a large selection can exceed the ~60s client read timeout. For steel a report mode is effectively required: MEMB reports use CURRENT_MODE_MEMB (falling back to CURRENT_MODE), PROP reports use CURRENT_MODE_PROP (falling back to CURRENT_MODE); if neither is assigned the request fails. Response: {SUCCESS, FILE_PATH (generated file full path on the host), MESSAGE}.",
+      "properties": {
+        "Argument": {
+          "type": "object",
+          "description": "Report generation request (REPORT_REQUEST DTO).",
+          "properties": {
+            "REPORT_TYPE": {
+              "type": "string",
+              "enum": [
+                "MEMB",
+                "PROP"
+              ],
+              "description": "Report Type: MEMB (by member) or PROP (by section property). Case-insensitive."
+            },
+            "EXPORT_PATH": {
+              "type": "string",
+              "description": "Export Path on the HOST machine (e.g. C:\\MIDAS\\Report\\). The report file is written there, not returned to the client."
+            },
+            "OUTPUT_NAME": {
+              "type": "string",
+              "description": "Output File Name (without directory)."
+            },
+            "CURRENT_MODE": {
+              "type": "string",
+              "enum": [
+                "Graphic",
+                "Detail",
+                "Summary",
+                "PMCurve"
+              ],
+              "description": "Report Mode fallback used when the type-specific mode field is not assigned. Case-insensitive. For steel, set this (or the matching CURRENT_MODE_MEMB/CURRENT_MODE_PROP) - omitting all mode fields fails the request."
+            },
+            "CURRENT_MODE_MEMB": {
+              "type": "string",
+              "enum": [
+                "Graphic",
+                "Detail",
+                "Summary",
+                "PMCurve"
+              ],
+              "description": "[REPORT_TYPE=MEMB] Report Mode; takes precedence over CURRENT_MODE. Case-insensitive."
+            },
+            "CURRENT_MODE_PROP": {
+              "type": "string",
+              "enum": [
+                "Graphic",
+                "Detail",
+                "Summary",
+                "PMCurve"
+              ],
+              "description": "[REPORT_TYPE=PROP] Report Mode; takes precedence over CURRENT_MODE. Case-insensitive."
+            },
+            "ELEMS": {
+              "type": "object",
+              "description": "Element Numbers selection. Combined with SECTIONS when both are given; omit both to report all designed members.",
+              "properties": {
+                "KEYS": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer"
+                  },
+                  "description": "Specify Each ID - Element No."
+                },
+                "TO": {
+                  "type": "string",
+                  "description": "Specify ID Range - Element Range (e.g. 1-10)."
+                },
+                "STRUCTURE_GROUP_NAME": {
+                  "type": "string",
+                  "description": "Structure Group Name."
+                }
+              }
+            },
+            "SECTIONS": {
+              "type": "array",
+              "items": {
+                "type": "integer"
+              },
+              "description": "Section Numbers."
+            },
+            "DETAIL_POSITIONS": {
+              "type": "object",
+              "description": "Detail Print Positions (used by RC Beam Design MEMB mode; not meaningful for steel).",
+              "properties": {
+                "END_I": {
+                  "type": "boolean",
+                  "default": true,
+                  "description": "Include End I position."
+                },
+                "MID": {
+                  "type": "boolean",
+                  "default": false,
+                  "description": "Include Mid position."
+                },
+                "END_J": {
+                  "type": "boolean",
+                  "default": false,
+                  "description": "Include End J position."
+                }
+              }
+            }
+          },
+          "required": [
+            "REPORT_TYPE",
+            "EXPORT_PATH",
+            "OUTPUT_NAME"
+          ]
+        }
+      }
+    }
+  },
+  "example": {
+    "Argument": {
+      "REPORT_TYPE": "MEMB",
+      "EXPORT_PATH": "C:\\MIDAS\\Report\\",
+      "OUTPUT_NAME": "AijSteelCodeCheck",
+      "CURRENT_MODE": "Summary",
+      "ELEMS": {
+        "KEYS": [
+          1,
+          2,
+          3
+        ],
+        "TO": "1-10"
+      },
+      "SECTIONS": [
+        1,
+        2
+      ]
+    }
+  }
+}

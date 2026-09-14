@@ -1,0 +1,68 @@
+{
+  "_group": "design",
+  "_name": "LCTB",
+  "product": "gen",
+  "uri": "design/STEEL/AIJ-ASD02/LCTB",
+  "methods": "GET, DELETE",
+  "schema": {
+    "LCTB": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "description": "Load Contribution (LCTB). Read-only view of a named load contribution set whose members are load-case factor items (BASE_ITEM). Requires the AIJ-ASD02 steel design code to be activated first via PUT /TEMP/DESIGN/STEEL/AIJ-ASD02/DCO. Only GET and DELETE are routed; the handler's write bodies are empty, so writes are silent no-ops - load contributions cannot be created or modified through this endpoint (use the UI or the model file). DELETE removes the load contribution.",
+      "properties": {
+        "NAME": {
+          "type": "string",
+          "description": "Load Contribution Name."
+        },
+        "DESC": {
+          "type": "string",
+          "default": "",
+          "description": "Description of the load contribution."
+        },
+        "BASE_ITEM": {
+          "type": "array",
+          "description": "Load Contribution Items; each item pairs a factor with a load case.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "FACTOR": {
+                "type": "number",
+                "description": "Factor applied to the load case."
+              },
+              "LOAD_CASE_NAME": {
+                "type": "string",
+                "default": "",
+                "description": "Load Case Name (resolved from the load case key on read)."
+              }
+            },
+            "required": [
+              "FACTOR"
+            ]
+          }
+        }
+      },
+      "required": [
+        "NAME",
+        "BASE_ITEM"
+      ]
+    }
+  },
+  "example": {
+    "Assign": {
+      "1": {
+        "NAME": "LC Group 1",
+        "DESC": "Dead and live load contribution",
+        "BASE_ITEM": [
+          {
+            "FACTOR": 1.2,
+            "LOAD_CASE_NAME": "Dead Load"
+          },
+          {
+            "FACTOR": 1.6,
+            "LOAD_CASE_NAME": "Live Load"
+          }
+        ]
+      }
+    }
+  }
+}

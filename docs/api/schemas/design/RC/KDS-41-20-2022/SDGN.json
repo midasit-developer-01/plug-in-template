@@ -1,6 +1,7 @@
 {
   "_group": "design",
   "_name": "SDGN",
+  "product": "gen",
   "uri": "design/RC/KDS-41-20-2022/SDGN",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {
@@ -11,11 +12,17 @@
       "properties": {
         "NTYPE": {
           "type": "string",
-          "enum": ["Seismic", "Non-Seismic", "Non-Seismic-Force-Resisting"],
+          "enum": [
+            "Seismic",
+            "Non-Seismic",
+            "Non-Seismic-Force-Resisting"
+          ],
           "description": "Seismic Design Type. Case-insensitive enum (matched on wire strings). Drives whether the member is treated as seismic, non-seismic, or non-seismic force-resisting in the design."
         }
       },
-      "required": ["NTYPE"],
+      "required": [
+        "NTYPE"
+      ],
       "additionalProperties": false
     }
   },

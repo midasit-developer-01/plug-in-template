@@ -1,21 +1,32 @@
 {
   "_group": "design",
   "_name": "DSPSC",
+  "product": "civil",
   "uri": "design/PSC/DSPSC",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {
     "DSPSC": {
       "$schema": "http://json-schema.org/draft-07/schema#",
       "type": "object",
-      "description": "PSC Design Code (DSPSC). The only field is the design code name, which OnSet enforces to be exactly \"AASHTO-LRFD24\".",
+      "description": "PSC Design Code (DSPSC). The only field is the design code name; writes accept the AASHTO LRFD family only (National Annex is forced to Amend_Recommended; the LRFD17 Amendment is chosen via DPSC instead).",
       "properties": {
         "DGNCODE": {
           "type": "string",
-          "enum": ["AASHTO-LRFD24"],
-          "description": "Design code name. OnSet throws LV_WRONG_FIELD unless this equals \"AASHTO-LRFD24\"; on GET other codes may be read back but only \"AASHTO-LRFD24\" can be set."
+          "enum": [
+            "AASHTO-LRFD07",
+            "AASHTO-LRFD12",
+            "AASHTO-LRFD14",
+            "AASHTO-LRFD16",
+            "AASHTO-LRFD17",
+            "AASHTO-LRFD20",
+            "AASHTO-LRFD24"
+          ],
+          "description": "Design code name. OnSet accepts only the AASHTO LRFD family listed here (any other code is rejected with LV_WRONG_FIELD); GET is unrestricted and may return a non-AASHTO code set through the UI."
         }
       },
-      "required": ["DGNCODE"],
+      "required": [
+        "DGNCODE"
+      ],
       "additionalProperties": false
     }
   },

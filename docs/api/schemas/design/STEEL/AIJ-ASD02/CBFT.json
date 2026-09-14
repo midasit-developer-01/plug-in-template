@@ -1,0 +1,38 @@
+{
+  "_group": "design",
+  "_name": "CBFT",
+  "product": "gen",
+  "uri": "design/STEEL/AIJ-ASD02/CBFT",
+  "methods": "POST, GET, PUT, DELETE",
+  "schema": {
+    "CBFT": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "description": "Bending Coefficient Cb (CBFT). Keyed by element id; sets the lateral-torsional buckling bending coefficient Cb, either auto-calculated by the program or as a user value. Requires the AIJ-ASD02 steel design code to be activated first via PUT /TEMP/DESIGN/STEEL/AIJ-ASD02/DCO. DELETE removes the Cb assignment from the element.",
+      "properties": {
+        "AUTO_CAL": {
+          "type": "boolean",
+          "default": false,
+          "description": "Auto Calculate by Program. If true, Cb is computed by the program and VALUE is ignored (stored as 0.0)."
+        },
+        "VALUE": {
+          "type": "number",
+          "default": 1.0,
+          "description": "[AUTO_CAL=false] Bending Coefficient (Cb) value. Must satisfy 1.0 <= VALUE <= 2.3 (out-of-range is rejected); ignored when AUTO_CAL is true."
+        }
+      },
+      "required": []
+    }
+  },
+  "example": {
+    "Assign": {
+      "1": {
+        "AUTO_CAL": false,
+        "VALUE": 1.5
+      },
+      "2": {
+        "AUTO_CAL": true
+      }
+    }
+  }
+}

@@ -1,6 +1,7 @@
 {
   "_group": "design",
   "_name": "LENG",
+  "product": "civil",
   "uri": "design/STEEL/JAPAN-ROAD-II-H29/LENG",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {

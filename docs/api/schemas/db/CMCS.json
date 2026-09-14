@@ -1,6 +1,7 @@
 {
   "_group": "db",
   "_name": "CMCS",
+  "product": "civil",
   "uri": "db/CMCS",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {

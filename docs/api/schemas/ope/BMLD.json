@@ -1,0 +1,266 @@
+{
+  "_group": "ope",
+  "_name": "BMLD",
+  "uri": "ope/BMLD",
+  "methods": "POST",
+  "schema": {
+    "BMLD": {
+      "type": "object",
+      "description": "Beam Detail Analysis (BMLD). Runs the Beam Detail Analysis of one beam element for one load case/combination and returns displacement (Dy/Dz), shear (Fy/Fz), bending moment (My/Mz), longitudinal and cross-section stress, and applied force/moment results, each evaluated at the I-end, J-end, max/min positions and the requested ELEM_POS_RATIO. Driven by LOAD_CASE_COMB (which result to evaluate), ELEMENT and STRESS_TYPE. Requires analysis results for the requested load case; on any failure the endpoint throws an error with a message, it does not return partial data. Sections in the response can be turned off via OUTPUT_OPTS (disabled items are simply absent); *_DIAGRAM flags additionally export each panel as a BMP file and then EXPORT_PATH (existing directory) and OUTPUT_NAME (base file name) become required. The response echoes the resolved load case, section name, element LENGTH, solver used (EXACT or APPROX_5POINT) and the LENGTH/FORCE units of the returned values.",
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "properties": {
+        "Argument": {
+          "type": "object",
+          "description": "Beam detail analysis request (DTO_BMLD_OPE_REQUEST).",
+          "properties": {
+            "LOAD_CASE_COMB": {
+              "type": "object",
+              "description": "Load case / combination to evaluate.",
+              "properties": {
+                "TYPE": {
+                  "type": "string",
+                  "description": "Load case type prefix (case-insensitive): ST static, CS construction stage, RS response spectrum, TH time history, CB..CBLN load combinations (general/steel/CFT/concrete/foundation/SRC/aluminum/steel-composite/seismic/linear-eval), NRS nonlinear response spectrum, ES/NES eccentricity spectrum, CN crane, EN envelope. HY, MV, SM, GI and PO cases are not supported.",
+                  "enum": [
+                    "ST",
+                    "CS",
+                    "RS",
+                    "TH",
+                    "CB",
+                    "CBS",
+                    "CBCF",
+                    "CBC",
+                    "CBF",
+                    "CBR",
+                    "CBA",
+                    "CBSC",
+                    "CBSM",
+                    "CBLN",
+                    "NRS",
+                    "ES",
+                    "NES",
+                    "CN",
+                    "EN"
+                  ]
+                },
+                "NAME": {
+                  "type": "string",
+                  "description": "Load case / combination name (without the type prefix), e.g. 'DL' for the case shown as 'ST: DL'."
+                },
+                "STAGE_NAME": {
+                  "type": "string",
+                  "description": "Construction stage name used as the evaluation context. Must NOT be an empty string when given. When TYPE=CS and STAGE_NAME is omitted, the stage/step the document currently stands on is used."
+                },
+                "STEP_INDEX": {
+                  "type": "integer",
+                  "description": "Step index within the stage, 1 or greater. Allowed only together with STAGE_NAME, or when TYPE is CS (fails with 'STEP_INDEX needs STAGE_NAME unless TYPE is CS').",
+                  "minimum": 1
+                },
+                "MINMAX": {
+                  "type": "string",
+                  "description": "Envelope selection for enveloped results (case-insensitive): NORMAL single value, MAX/MIN envelope extreme, ALL both.",
+                  "enum": [
+                    "NORMAL",
+                    "MAX",
+                    "MIN",
+                    "ALL"
+                  ],
+                  "default": "NORMAL"
+                }
+              },
+              "required": [
+                "TYPE",
+                "NAME"
+              ]
+            },
+            "ELEMENT": {
+              "type": "integer",
+              "description": "Beam element number to analyze, 1 or greater.",
+              "minimum": 1
+            },
+            "STRESS_TYPE": {
+              "type": "string",
+              "description": "Stress type for the longitudinal/cross-section stress outputs (case-insensitive). Also determines which force/moment COMPS are allowed: Normal -> Fx/My/Mz; Tauxy -> Fy/Mx; Tauxz -> Fz/Mx; VonMises/MaxShear/Princmax/Princmin -> all six.",
+              "enum": [
+                "Normal",
+                "VonMises",
+                "Tauxy",
+                "MaxShear",
+                "Tauxz",
+                "Princmax",
+                "Princmin"
+              ]
+            },
+            "ELEM_POS_RATIO": {
+              "type": "number",
+              "description": "Position along the element from I-end (0.0) to J-end (1.0) at which the 'user' values (DUSER/FUSER/MUSER/SIG_USER and cross-section stress) are evaluated.",
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "default": 0.0
+            },
+            "COMPS": {
+              "type": "array",
+              "description": "Force/moment components to include (case-insensitive), a NON-EMPTY subset of the set allowed by STRESS_TYPE (see STRESS_TYPE); a component outside the allowed set is rejected. Omit to use the full allowed set. Mb/Mt/Mw (7th-DOF) are not selectable.",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "Fx",
+                  "Fy",
+                  "Fz",
+                  "Mx",
+                  "My",
+                  "Mz"
+                ]
+              },
+              "minItems": 1
+            },
+            "OUTPUT_OPTS": {
+              "type": "object",
+              "description": "Which result sections to return and which diagrams to export as BMP files. Omit to return all sections and export nothing.",
+              "properties": {
+                "DISP_DZ": {
+                  "type": "boolean",
+                  "description": "Return Displacement Dz section.",
+                  "default": true
+                },
+                "SHEAR_FZ": {
+                  "type": "boolean",
+                  "description": "Return Shear Force Fz section.",
+                  "default": true
+                },
+                "MOMENT_MY": {
+                  "type": "boolean",
+                  "description": "Return Bending Moment My section.",
+                  "default": true
+                },
+                "DISP_DY": {
+                  "type": "boolean",
+                  "description": "Return Displacement Dy section.",
+                  "default": true
+                },
+                "SHEAR_FY": {
+                  "type": "boolean",
+                  "description": "Return Shear Force Fy section.",
+                  "default": true
+                },
+                "MOMENT_MZ": {
+                  "type": "boolean",
+                  "description": "Return Bending Moment Mz section.",
+                  "default": true
+                },
+                "LONG_SECT_STRESS": {
+                  "type": "boolean",
+                  "description": "Return Longitudinal Section Stress section. For tapered sections only the value at ELEM_POS_RATIO is available (SIG_I/J/MAX/MIN are omitted).",
+                  "default": true
+                },
+                "CROSS_SECT_STRESS": {
+                  "type": "boolean",
+                  "description": "Return Cross Section Stress section (stress at section outline points at ELEM_POS_RATIO).",
+                  "default": true
+                },
+                "APPLIED_FORCE_MOM": {
+                  "type": "boolean",
+                  "description": "Return Applied Forces/Moments section (Fx..Mz at ELEM_POS_RATIO; Mb/Mt/Mw are always 0.0).",
+                  "default": true
+                },
+                "CROSS_SECT_POINTS": {
+                  "type": "array",
+                  "description": "Extra user cross-section points to evaluate; NON-EMPTY and allowed only when CROSS_SECT_STRESS is true (fails with 'CROSS_SECT_POINTS requires CROSS_SECT_STRESS to be true').",
+                  "items": {
+                    "type": "object",
+                    "description": "Point in the section's local y/z frame measured from the section center.",
+                    "properties": {
+                      "PY": {
+                        "type": "number",
+                        "description": "Local y from section center.",
+                        "default": 0.0
+                      },
+                      "PZ": {
+                        "type": "number",
+                        "description": "Local z from section center.",
+                        "default": 0.0
+                      }
+                    }
+                  },
+                  "minItems": 1
+                },
+                "DISP_DZ_DIAGRAM": {
+                  "type": "boolean",
+                  "description": "Export the Displacement Dz panel as a BMP file.",
+                  "default": false
+                },
+                "SHEAR_FZ_DIAGRAM": {
+                  "type": "boolean",
+                  "description": "Export the Shear Force Fz panel as a BMP file.",
+                  "default": false
+                },
+                "MOMENT_MY_DIAGRAM": {
+                  "type": "boolean",
+                  "description": "Export the Bending Moment My panel as a BMP file.",
+                  "default": false
+                },
+                "DISP_DY_DIAGRAM": {
+                  "type": "boolean",
+                  "description": "Export the Displacement Dy panel as a BMP file.",
+                  "default": false
+                },
+                "SHEAR_FY_DIAGRAM": {
+                  "type": "boolean",
+                  "description": "Export the Shear Force Fy panel as a BMP file.",
+                  "default": false
+                },
+                "MOMENT_MZ_DIAGRAM": {
+                  "type": "boolean",
+                  "description": "Export the Bending Moment Mz panel as a BMP file.",
+                  "default": false
+                },
+                "LONG_STRESS_DIAGRAM": {
+                  "type": "boolean",
+                  "description": "Export the Longitudinal Section Stress panel as a BMP file.",
+                  "default": false
+                },
+                "CROSS_STRESS_DIAGRAM": {
+                  "type": "boolean",
+                  "description": "Export the Cross Section Stress panel as a BMP file.",
+                  "default": false
+                },
+                "APPLIED_FM_DIAGRAM": {
+                  "type": "boolean",
+                  "description": "Export the Applied Forces/Moments panel as a BMP file.",
+                  "default": false
+                }
+              }
+            },
+            "EXPORT_PATH": {
+              "type": "string",
+              "description": "[any *_DIAGRAM=true] Existing directory the BMP diagram files are written to. Required (non-empty) when any *_DIAGRAM flag is true; the saved file paths are returned in the response FILES array."
+            },
+            "OUTPUT_NAME": {
+              "type": "string",
+              "description": "[any *_DIAGRAM=true] Output file base name without path or extension. Required (non-empty) when any *_DIAGRAM flag is true."
+            }
+          },
+          "required": [
+            "LOAD_CASE_COMB",
+            "ELEMENT",
+            "STRESS_TYPE"
+          ]
+        }
+      },
+      "required": [
+        "Argument"
+      ]
+    }
+  },
+  "example": {
+    "Argument": {
+      "LOAD_CASE_COMB": {
+        "TYPE": "ST",
+        "NAME": "DL",
+        "MINMAX": "NORMAL"
+      },
+      "ELEMENT": 1,
+      "STRESS_TYPE": "Normal",
+      "ELEM_POS_RATIO": 0.5
+    }
+  }
+}

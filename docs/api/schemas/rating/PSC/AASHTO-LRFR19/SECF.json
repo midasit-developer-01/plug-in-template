@@ -1,6 +1,7 @@
 {
   "_group": "rating",
   "_name": "SECF",
+  "product": "civil",
   "uri": "rating/PSC/AASHTO-LRFR19/SECF",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {

@@ -1,6 +1,7 @@
 {
   "_group": "design",
   "_name": "WD-REPORT",
+  "product": "gen",
   "uri": "design/RC/KDS-41-20-2022/WD-REPORT",
   "methods": "POST",
   "schema": {
@@ -14,7 +15,10 @@
           "properties": {
             "REPORT_TYPE": {
               "type": "string",
-              "enum": ["WID+STORY", "WID"],
+              "enum": [
+                "WID+STORY",
+                "WID"
+              ],
               "description": "Report type (case-insensitive). WID+STORY groups results by wall ID and story; WID groups by wall ID only."
             },
             "EXPORT_PATH": {
@@ -27,12 +31,22 @@
             },
             "CURRENT_MODE_WID_STORY": {
               "type": "string",
-              "enum": ["Graphic", "Detail", "Summary", "PMCurve"],
+              "enum": [
+                "Graphic",
+                "Detail",
+                "Summary",
+                "PMCurve"
+              ],
               "description": "[REPORT_TYPE=WID+STORY] Report mode (case-insensitive) used when REPORT_TYPE is WID+STORY."
             },
             "CURRENT_MODE_WID": {
               "type": "string",
-              "enum": ["Graphic", "Detail", "Summary", "PMCurve"],
+              "enum": [
+                "Graphic",
+                "Detail",
+                "Summary",
+                "PMCurve"
+              ],
               "description": "[REPORT_TYPE=WID] Report mode (case-insensitive) used when REPORT_TYPE is WID."
             },
             "SELECTIONS": {
@@ -70,7 +84,11 @@
               }
             }
           },
-          "required": ["REPORT_TYPE", "EXPORT_PATH", "OUTPUT_NAME"]
+          "required": [
+            "REPORT_TYPE",
+            "EXPORT_PATH",
+            "OUTPUT_NAME"
+          ]
         }
       }
     }
@@ -84,9 +102,16 @@
       "SELECTIONS": [
         {
           "WALL_IDS": {
-            "KEYS": [1, 2, 3]
+            "KEYS": [
+              1,
+              2,
+              3
+            ]
           },
-          "STORY": ["1F", "2F"]
+          "STORY": [
+            "1F",
+            "2F"
+          ]
         }
       ]
     }

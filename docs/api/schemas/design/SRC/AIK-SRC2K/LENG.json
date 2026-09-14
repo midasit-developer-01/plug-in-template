@@ -1,6 +1,7 @@
 {
   "_group": "design",
   "_name": "LENG",
+  "product": "gen",
   "uri": "design/SRC/AIK-SRC2K/LENG",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {

@@ -1,6 +1,7 @@
 {
   "_group": "design",
   "_name": "LLRF",
+  "product": "gen",
   "uri": "design/RC/KDS-41-20-2022/LLRF",
   "methods": "GET, PUT, DELETE",
   "schema": {
@@ -11,7 +12,10 @@
       "properties": {
         "CALC_RULE": {
           "type": "integer",
-          "enum": [0, 1],
+          "enum": [
+            0,
+            1
+          ],
           "description": "Calculation Rule. Must be 0 or 1 (values outside this range are rejected). 0: reduction uses the per-story RANGE_MAX/RANGE_MIN limits; 1: reduction range fields are ignored."
         },
         "APPLIED_COMP": {
@@ -19,7 +23,12 @@
           "description": "Applied Components: force components to which the reduction is applied. Enum values are case-insensitive. Use ALL for all components, or any combination of AXIAL, MOMENTS, SHEAR.",
           "items": {
             "type": "string",
-            "enum": ["ALL", "AXIAL", "MOMENTS", "SHEAR"]
+            "enum": [
+              "ALL",
+              "AXIAL",
+              "MOMENTS",
+              "SHEAR"
+            ]
           }
         },
         "LIVE_LOAD_CASES": {
@@ -59,29 +68,69 @@
               "RANGE_MAX": {
                 "type": "number",
                 "default": 1.0,
-                "enum": [1.0, 0.95, 0.9, 0.85, 0.8, 0.75, 0.7, 0.65, 0.6, 0.55, 0.5],
+                "enum": [
+                  1.0,
+                  0.95,
+                  0.9,
+                  0.85,
+                  0.8,
+                  0.75,
+                  0.7,
+                  0.65,
+                  0.6,
+                  0.55,
+                  0.5
+                ],
                 "description": "[CALC_RULE=0] Max(Rmax): upper reduction limit. One of 1, 0.95, 0.9, 0.85, 0.8, 0.75, 0.7, 0.65, 0.6, 0.55, 0.5. Must be greater than or equal to RANGE_MIN."
               },
               "RANGE_MIN": {
                 "type": "number",
                 "default": 0.5,
-                "enum": [1.0, 0.95, 0.9, 0.85, 0.8, 0.75, 0.7, 0.65, 0.6, 0.55, 0.5],
+                "enum": [
+                  1.0,
+                  0.95,
+                  0.9,
+                  0.85,
+                  0.8,
+                  0.75,
+                  0.7,
+                  0.65,
+                  0.6,
+                  0.55,
+                  0.5
+                ],
                 "description": "[CALC_RULE=0] Min(Rmin): lower reduction limit. One of 1, 0.95, 0.9, 0.85, 0.8, 0.75, 0.7, 0.65, 0.6, 0.55, 0.5. Must be less than or equal to RANGE_MAX."
               }
             },
-            "required": ["STORY", "XMIN", "XMAX", "YMIN", "YMAX"]
+            "required": [
+              "STORY",
+              "XMIN",
+              "XMAX",
+              "YMIN",
+              "YMAX"
+            ]
           }
         }
       },
-      "required": ["CALC_RULE", "APPLIED_COMP", "LIVE_LOAD_CASES", "REDUCTION_DATA"]
+      "required": [
+        "CALC_RULE",
+        "APPLIED_COMP",
+        "LIVE_LOAD_CASES",
+        "REDUCTION_DATA"
+      ]
     }
   },
   "example": {
     "Assign": {
       "1": {
         "CALC_RULE": 0,
-        "APPLIED_COMP": ["AXIAL", "MOMENTS"],
-        "LIVE_LOAD_CASES": ["LL"],
+        "APPLIED_COMP": [
+          "AXIAL",
+          "MOMENTS"
+        ],
+        "LIVE_LOAD_CASES": [
+          "LL"
+        ],
         "REDUCTION_DATA": [
           {
             "STORY": "1F",

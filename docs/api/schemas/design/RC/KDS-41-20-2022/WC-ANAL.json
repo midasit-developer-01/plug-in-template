@@ -1,6 +1,7 @@
 {
   "_group": "design",
   "_name": "WC-ANAL",
+  "product": "gen",
   "uri": "design/RC/KDS-41-20-2022/WC-ANAL",
   "methods": "POST",
   "schema": {

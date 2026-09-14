@@ -1,6 +1,7 @@
 {
   "_group": "design",
   "_name": "BD-TABLE",
+  "product": "gen",
   "uri": "design/RC/KDS-41-20-2022/BD-TABLE",
   "methods": "POST",
   "schema": {

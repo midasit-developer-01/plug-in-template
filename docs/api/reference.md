@@ -403,17 +403,10 @@ Basics: `GET /db/{ITEM}` (all), `GET /db/{ITEM}/{id}` (single), `POST` (create),
 ### 5-23. Design
 | Path | Role | article |
 | --- | --- | --- |
-| `/db/DCON` | RC Design Code | 35993633394969 |
 | `/db/MATD` | Concrete material modification | 35993732216985 |
-| `/db/RCHK` | Rebar Input - Beam/Column | 35993850335897 |
-| `/db/LENG` | Unbraced Length | 49513511154329 |
 | `/db/MEMB` | Member Assignment | 49513603328793 |
-| `/db/DCTL` | Definition of Frame | 49513652948377 |
-| `/db/LTSR` | Limiting Slenderness Ratio | 49513681377689 |
-| `/db/ULCT` | Underground Load Combination Type | 49513792356505 |
 | `/db/MBTP` | Modify Member Type | 49513816193689 |
 | `/db/WMAK` | Modify Wall Mark Design | 49513846785817 |
-| `/db/DSTL` | Steel Design Code | 52149417728665 |
 
 ---
 
@@ -487,14 +480,10 @@ Each feature can be used independently. `CAPTURE` can be combined with `ANGLE`/`
 | --- | --- | --- |
 | `/post/PM` | P-M interaction diagram | 36021337973017 |
 | `/post/STEELCODECHECK` | Steel code check | 44662732910233 |
-| `/post/BEAMDESIGNFORCES` | Concrete Design - Beam Design Force | 49514295460889 |
-| `/post/COLUMNDESIGNFORCES` | Concrete Design - Column Design Forces | 49514320078489 |
-| `/post/BRACEDESIGNFORCES` | Concrete Design - Brace Design Forces | 49514395318041 |
 | `/post/WALLDESIGNFORCES` | Concrete Design - Wall Design Forces | 49514433321881 |
 | `/post/STEELMEMBERDESIGNFORCES` | Steel Design - Member Design Forces | 49514496461593 |
 | `/post/SRCBEAMDESIGNFORCES` | SRC Design - Beam Design Forces | 49514560567961 |
 | `/post/SRCCOLUMNDESIGNFORCES` | SRC Design - Column Design Forces | 49514609393049 |
-| `/post/COLDFORMEDSTEELMEMBERDESIGNFORCES` | Cold Formed Steel - Member Design Forces | 49514621265305 |
 
 ---
 
@@ -521,7 +510,7 @@ For every non-db group, use `command()`:
 | `command("design", "RC/KDS-41-20-2022/DCRM", arg)` | `POST /design/RC/KDS-41-20-2022/DCRM` | `{ Argument: arg }` |
 
 `command()`'s 5th parameter (`body`) bypasses the wrapping and is sent verbatim. Every one of the
-540 bundled endpoints uses `Assign` or `Argument`, so it is an escape hatch, not a routine argument.
+bundled endpoints uses `Assign` or `Argument`, so it is an escape hatch, not a routine argument.
 
 The db helpers also accept a full uri, so db-shaped tables outside `/db` are reachable:
 `dbRead("design/PSC/AASHTO-LRFD24/MEMB")` → `GET /design/PSC/AASHTO-LRFD24/MEMB`.
@@ -556,26 +545,3 @@ The article (35808653964185) lists `VALUE` as a `SECTTYPE` but **does not docume
 - **`DESIGN`** (optional on POST, server fills 0): `YBAR`/`ZBAR`=centroid · `ZYY`/`ZZZ`=section moduli. `PERIIN`/`PERIOUT`=inner/outer perimeter.
 - Because you supply **exact J, Asy, Asz** directly, VALUE preserves torsion/shear constants perfectly — the correct choice when a rectangle-shape + scale-factor workaround would distort dynamic-analysis results.
 - Example payload: the `"6003"` key inside [`schemas/db/SECT.json`](./schemas/db/SECT.json).
-
-### 10-3. `doc/ANAL` hangs — the Save dialog blocks the request
-
-Observed in the field (2026-08): `POST /doc/ANAL` sometimes never returns, and the plug-in only sees the `REQUEST_TIMEOUT_MS` (60 s) timeout from `utils_api.ts`. It is **not an API failure** — a modal dialog is holding the program.
-
-- `doc/ANAL` saves the model to file before solving. If the open model **has no file path yet** (never-saved new model) or **has unsaved edits**, the NX app pops its **Save / Save As dialog**.
-- That dialog is modal, and Open API requests are served on the same message loop, so the response is withheld **until a human closes the dialog**. Retrying does not help — the retries just queue behind it.
-- Fix: finish the save through the API first, so there is nothing left for the dialog to ask.
-
-```ts
-await command("doc", "SAVE");     // model that already has a file path
-await command("doc", "ANAL");
-```
-
-- `doc/SAVE` has no path to save to on a never-saved model, and falls back to the same Save As dialog. For plug-ins that may run on a fresh model, name the path explicitly:
-
-```ts
-await command("doc", "SAVEAS", "C:/temp/plugin_run.mcb");
-await command("doc", "ANAL");
-```
-
-- ⚠️ Both calls **overwrite the user's working file** (see the `doc` group warning in [`cookbook.md`](./cookbook.md) §7) — confirm with the user, or use `SAVEAS` with a scratch path.
-- Save time adds to solve time; on large models raise `REQUEST_TIMEOUT_MS` rather than assuming a hang.

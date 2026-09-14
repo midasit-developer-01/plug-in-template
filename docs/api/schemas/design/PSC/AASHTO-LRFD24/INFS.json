@@ -1,6 +1,7 @@
 {
   "_group": "design",
   "_name": "INFS",
+  "product": "civil",
   "uri": "design/PSC/AASHTO-LRFD24/INFS",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {

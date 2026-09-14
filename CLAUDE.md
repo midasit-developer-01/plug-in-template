@@ -38,10 +38,10 @@ template/
 │
 ├─ docs/api/             # ★ API knowledge base — read this before writing any API call
 │  ├─ README.md          #   Entry point: the lookup procedure and the body conventions
-│  ├─ INDEX.md           #   540 endpoints, one per line — GREP this, don't Read it
-│  ├─ INDEX-design.md    #   design / rating (nested by code standard)
-│  ├─ schemas/<uri>.json #   Per-endpoint JSON Schema + a working example (540)
-│  ├─ features/<uri>.json#   Per-endpoint GUI guide: menu path + field usage (155)
+│  ├─ INDEX.md           #   349 core endpoints, one per line — GREP this, don't Read it
+│  ├─ INDEX-design.md    #   202 design / rating endpoints (nested by code standard)
+│  ├─ schemas/<uri>.json #   Per-endpoint JSON Schema + a working example (551)
+│  ├─ features/<uri>.json#   Per-endpoint GUI guide: menu path + field usage (150)
 │  ├─ cookbook.md        #   Ready-made recipes for common plug-in tasks
 │  └─ reference.md       #   Structure/auth/conventions overview + §10 gotchas
 │
@@ -143,13 +143,13 @@ REACT_APP_BASE_URL=https://moa-engineers.midasit.com:443/civil  # (optional) inc
 
 ## 6. API Requests (Summary)
 
-**Never write an API call from memory.** 540 endpoints, each with its own body shape.
+**Never write an API call from memory.** 551 endpoints, each with its own body shape.
 Grep [`docs/api/INDEX.md`](./docs/api/INDEX.md) → read `docs/api/schemas/<uri>.json` → copy its
 `example`. Start at [`docs/api/README.md`](./docs/api/README.md).
 
 | Method | File | Notes |
 | --- | --- | --- |
-| **Recommended (no pyscript)** | `src/utils_api.ts` | `fetch`-based. `dbCreate/dbRead/dbUpdate/dbDelete…` for the `Assign` convention (402 endpoints), `command()` for `Argument` (138) |
+| **Recommended (no pyscript)** | `src/utils_api.ts` | `fetch`-based. `dbCreate/dbRead/dbUpdate/dbDelete…` for the `Assign` convention (405 endpoints), `command()` for `Argument` (146) |
 | (old) using pyscript | `src/utils_pyscript.ts` | Fully commented out. To re-enable, see section 7 below / `src/CLAUDE.md` |
 
 For detailed call examples, see the "API Request Guide" in [`src/CLAUDE.md`](./src/CLAUDE.md)

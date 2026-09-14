@@ -1,6 +1,7 @@
 {
   "_group": "design",
   "_name": "LCTB",
+  "product": "gen",
   "uri": "design/RC/KDS-41-20-2022/LCTB",
   "methods": "GET, DELETE",
   "schema": {

@@ -1,6 +1,7 @@
 {
   "_group": "db",
   "_name": "DYNF",
+  "product": "civil",
   "uri": "db/DYNF",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {

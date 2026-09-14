@@ -1,0 +1,34 @@
+{
+  "_group": "design",
+  "_name": "SERV",
+  "product": "gen",
+  "uri": "design/STEEL/AIJ-ASD02/SERV",
+  "methods": "POST, GET, PUT, DELETE",
+  "schema": {
+    "SERV": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "description": "Serviceability Parameters (SERV). Per-key deflection limit and amplification factor for the serviceability (deflection) check. To use any /DESIGN/STEEL/AIJ-ASD02/* endpoint, first activate the AIJ-ASD02 design code with PUT /TEMP/DESIGN/STEEL/AIJ-ASD02/DCO. Note: PUT overwrites BOTH fields; an omitted field is written with its default value, not preserved. DELETE removes the entry.",
+      "properties": {
+        "DEFLECT_CONTROL": {
+          "type": "number",
+          "default": 300,
+          "description": "Deflection Control limit denominator N: allowable deflection = L/N (e.g. 300 means L/300)."
+        },
+        "DAF": {
+          "type": "number",
+          "default": 1.0,
+          "description": "Deflection Amplification Factor multiplied onto the computed deflection before comparison with the limit."
+        }
+      }
+    }
+  },
+  "example": {
+    "Assign": {
+      "1": {
+        "DEFLECT_CONTROL": 300,
+        "DAF": 1.0
+      }
+    }
+  }
+}

@@ -1,6 +1,7 @@
 {
   "_group": "design",
   "_name": "BRD-REPORT",
+  "product": "gen",
   "uri": "design/RC/KDS-41-20-2022/BRD-REPORT",
   "methods": "POST",
   "schema": {
@@ -13,7 +14,10 @@
           "properties": {
             "REPORT_TYPE": {
               "type": "string",
-              "enum": ["MEMB", "PROP"],
+              "enum": [
+                "MEMB",
+                "PROP"
+              ],
               "description": "Report Type: MEMB or PROP (case-insensitive)."
             },
             "EXPORT_PATH": {
@@ -26,17 +30,32 @@
             },
             "CURRENT_MODE": {
               "type": "string",
-              "enum": ["Graphic", "Detail", "Summary", "PMCurve"],
+              "enum": [
+                "Graphic",
+                "Detail",
+                "Summary",
+                "PMCurve"
+              ],
               "description": "Report Mode (case-insensitive)."
             },
             "CURRENT_MODE_MEMB": {
               "type": "string",
-              "enum": ["Graphic", "Detail", "Summary", "PMCurve"],
+              "enum": [
+                "Graphic",
+                "Detail",
+                "Summary",
+                "PMCurve"
+              ],
               "description": "Report Mode for MEMB report type (case-insensitive)."
             },
             "CURRENT_MODE_PROP": {
               "type": "string",
-              "enum": ["Graphic", "Detail", "Summary", "PMCurve"],
+              "enum": [
+                "Graphic",
+                "Detail",
+                "Summary",
+                "PMCurve"
+              ],
               "description": "Report Mode for PROP report type (case-insensitive)."
             },
             "ELEMS": {
@@ -45,7 +64,9 @@
               "properties": {
                 "KEYS": {
                   "type": "array",
-                  "items": { "type": "integer" },
+                  "items": {
+                    "type": "integer"
+                  },
                   "description": "Specify Each ID - Element No."
                 },
                 "TO": {
@@ -60,7 +81,9 @@
             },
             "SECTIONS": {
               "type": "array",
-              "items": { "type": "integer" },
+              "items": {
+                "type": "integer"
+              },
               "description": "Section Numbers."
             },
             "DETAIL_POSITIONS": {
@@ -85,7 +108,11 @@
               }
             }
           },
-          "required": ["REPORT_TYPE", "EXPORT_PATH", "OUTPUT_NAME"]
+          "required": [
+            "REPORT_TYPE",
+            "EXPORT_PATH",
+            "OUTPUT_NAME"
+          ]
         }
       }
     }
@@ -97,11 +124,18 @@
       "OUTPUT_NAME": "BraceDesignReport",
       "CURRENT_MODE": "Detail",
       "ELEMS": {
-        "KEYS": [1, 2, 3],
+        "KEYS": [
+          1,
+          2,
+          3
+        ],
         "TO": "1-10",
         "STRUCTURE_GROUP_NAME": "Braces"
       },
-      "SECTIONS": [1, 2],
+      "SECTIONS": [
+        1,
+        2
+      ],
       "DETAIL_POSITIONS": {
         "END_I": true,
         "MID": false,

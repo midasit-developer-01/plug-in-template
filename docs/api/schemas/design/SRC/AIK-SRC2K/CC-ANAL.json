@@ -1,6 +1,7 @@
 {
   "_group": "design",
   "_name": "CC-ANAL",
+  "product": "gen",
   "uri": "design/SRC/AIK-SRC2K/CC-ANAL",
   "methods": "POST",
   "schema": {
@@ -13,7 +14,11 @@
           "properties": {
             "PERFORM_TYPE": {
               "type": "string",
-              "enum": ["ALL", "ELEMS", "SECTIONS"],
+              "enum": [
+                "ALL",
+                "ELEMS",
+                "SECTIONS"
+              ],
               "default": "ALL",
               "description": "Perform Target - All Elements: ALL / By Element No.: ELEMS / By Section No.: SECTIONS. Case-insensitive."
             },
@@ -54,7 +59,11 @@
     "Argument": {
       "PERFORM_TYPE": "ELEMS",
       "ELEMS": {
-        "KEYS": [1, 2, 3],
+        "KEYS": [
+          1,
+          2,
+          3
+        ],
         "TO": "1-10",
         "STRUCTURE_GROUP_NAME": "SG1"
       }

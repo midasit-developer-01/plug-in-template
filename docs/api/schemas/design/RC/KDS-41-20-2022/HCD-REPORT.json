@@ -1,6 +1,7 @@
 {
   "_group": "design",
   "_name": "HCD-REPORT",
+  "product": "gen",
   "uri": "design/RC/KDS-41-20-2022/HCD-REPORT",
   "methods": "POST",
   "schema": {
@@ -21,7 +22,12 @@
             },
             "CURRENT_MODE": {
               "type": "string",
-              "enum": ["Graphic", "Detail", "Summary", "PMCurve"],
+              "enum": [
+                "Graphic",
+                "Detail",
+                "Summary",
+                "PMCurve"
+              ],
               "description": "Report Mode. Case-insensitive match; serialized wire strings."
             },
             "ELEMS": {
@@ -46,7 +52,11 @@
               }
             }
           },
-          "required": ["EXPORT_PATH", "OUTPUT_NAME", "CURRENT_MODE"]
+          "required": [
+            "EXPORT_PATH",
+            "OUTPUT_NAME",
+            "CURRENT_MODE"
+          ]
         }
       }
     }
@@ -57,7 +67,11 @@
       "OUTPUT_NAME": "HCD_Report",
       "CURRENT_MODE": "Detail",
       "ELEMS": {
-        "KEYS": [1, 2, 3],
+        "KEYS": [
+          1,
+          2,
+          3
+        ],
         "TO": "1-10",
         "STRUCTURE_GROUP_NAME": "Group1"
       }

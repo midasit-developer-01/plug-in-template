@@ -2326,6 +2326,46 @@
               "type": "boolean",
               "description": "Add centrifugal force.",
               "default": false
+            },
+            "USE_TDM": {
+              "type": "boolean",
+              "description": "Consider two tandems in adjacent spans.",
+              "default": false
+            }
+          }
+        },
+        "PATCH_LOAD": {
+          "type": "object",
+          "description": "Contact area (patch load) settings. Only read for standard vehicles (VEHICLE_LOAD_NUM=1) that support patch loading under the active moving-load code (all Eurocode/BS vehicles; specific AASHTO-LRFD vehicles like HL-93TRK/HL-93TDM/HS20-FTG, KSCE-LSD15 KL-510 family, New Zealand HN/HO, etc.); ignored otherwise. Omit the object (or set USE_PATCH_LOAD=false) to disable patch load. On GET the full per-patch ITEMS list stored in the model is returned.",
+          "properties": {
+            "USE_PATCH_LOAD": {
+              "type": "boolean",
+              "description": "Consider contact area (patch load). When true, ITEMS is required and must be non-empty.",
+              "default": false
+            },
+            "ITEMS": {
+              "type": "array",
+              "description": "[USE_PATCH_LOAD=true] Contact-area items, one per patch position of the standard vehicle. Each WIDTH/LENGTH must be > 0 (0 or negative is rejected with 'Wrong Field'). If fewer items are given than the vehicle's patch count, the last item is copied for the remaining positions (same rule as the dialog).",
+              "items": {
+                "type": "object",
+                "description": "One contact area entry.",
+                "properties": {
+                  "WIDTH": {
+                    "type": "number",
+                    "description": "Contact area width. Must be > 0.",
+                    "exclusiveMinimum": 0
+                  },
+                  "LENGTH": {
+                    "type": "number",
+                    "description": "Contact area length. Must be > 0.",
+                    "exclusiveMinimum": 0
+                  }
+                },
+                "required": [
+                  "WIDTH",
+                  "LENGTH"
+                ]
+              }
             }
           }
         },
@@ -2478,6 +2518,15 @@
             1.0,
             1.0,
             1.0
+          ]
+        },
+        "PATCH_LOAD": {
+          "USE_PATCH_LOAD": true,
+          "ITEMS": [
+            {
+              "WIDTH": 0.4,
+              "LENGTH": 0.4
+            }
           ]
         }
       },

@@ -1,6 +1,7 @@
 {
   "_group": "db",
   "_name": "THIS-M1",
+  "product": "civil",
   "uri": "db/THIS-M1",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {
@@ -23,21 +24,34 @@
           "properties": {
             "ANAL_TYPE": {
               "type": "integer",
-              "enum": [0, 1],
+              "enum": [
+                0,
+                1
+              ],
               "description": "Analysis Type. Linear:0, Nonlinear:1."
             },
             "ANAL_METHOD": {
               "type": "integer",
-              "enum": [0, 1, 2],
+              "enum": [
+                0,
+                1,
+                2
+              ],
               "description": "Analysis Method. Modal:0, Direct Integration:1, Static:2 (Static valid only for Nonlinear)."
             },
             "TH_TYPE": {
               "type": "integer",
-              "enum": [0, 1],
+              "enum": [
+                0,
+                1
+              ],
               "description": "[not Nonlinear-Static] Time History Type. Transient:0, Periodic:1. Ignored when ANAL_TYPE=1 & ANAL_METHOD=2."
             }
           },
-          "required": ["ANAL_TYPE", "ANAL_METHOD"],
+          "required": [
+            "ANAL_TYPE",
+            "ANAL_METHOD"
+          ],
           "additionalProperties": false
         },
         "INC_STEP": {
@@ -59,7 +73,10 @@
         },
         "INIT_METHOD": {
           "type": "string",
-          "enum": ["INIT", "ORDER"],
+          "enum": [
+            "INIT",
+            "ORDER"
+          ],
           "description": "Initial load mode (case-insensitive). INIT = Initial Load; ORDER = Order in Sequence Load. INIT uses USE_INIT_LOAD; ORDER uses SUBSEQ."
         },
         "USE_INIT_LOAD": {
@@ -77,12 +94,20 @@
             },
             "SUBSEQ_LOAD": {
               "type": "integer",
-              "enum": [0, 1, 2],
+              "enum": [
+                0,
+                1,
+                2
+              ],
               "description": "[OPT_USE=true] Subsequent type. Load Case:0, Initial Element Forces:1, Initial Forces for Geometric Stiffness:2. LCTYPE/CASE apply only when 0."
             },
             "LCTYPE": {
               "type": "string",
-              "enum": ["ST", "CS", "TH"],
+              "enum": [
+                "ST",
+                "CS",
+                "TH"
+              ],
               "description": "[OPT_USE=true & SUBSEQ_LOAD=0] Load case type. Static:ST, Construction Stage:CS, Time History:TH. Hard-validated (unknown value rejected)."
             },
             "CASE": {
@@ -109,7 +134,11 @@
         },
         "GEOM_NL_TYPE": {
           "type": "integer",
-          "enum": [0, 1, 2],
+          "enum": [
+            0,
+            1,
+            2
+          ],
           "default": 0,
           "description": "Geometric nonlinearity type. None:0, P-Delta:1, Large Displacements:2 (schema convention)."
         },
@@ -119,7 +148,12 @@
           "properties": {
             "DAMPING_METHOD": {
               "type": "integer",
-              "enum": [0, 1, 2, 3],
+              "enum": [
+                0,
+                1,
+                2,
+                3
+              ],
               "description": "Damping method. Direct Modal:0, Mass & Stiffness Proportional:1, Strain Energy Proportional:2, Element Mass & Stiffness Proportional:3. Hard-validated (unknown value rejected). Values 2 and 3 need no extra fields."
             },
             "ALL_DAMPING_RATIO": {
@@ -141,13 +175,19 @@
                     "description": "Damping ratio for this mode."
                   }
                 },
-                "required": ["MODE_NO", "DAMPING"],
+                "required": [
+                  "MODE_NO",
+                  "DAMPING"
+                ],
                 "additionalProperties": false
               }
             },
             "COEF_INPUT": {
               "type": "integer",
-              "enum": [0, 1],
+              "enum": [
+                0,
+                1
+              ],
               "description": "[DAMPING_METHOD=1] Coefficient input. Direct Specification:0, Calculate from Modal Damping:1."
             },
             "USE_MASS": {
@@ -168,7 +208,10 @@
             },
             "COEF_CALC": {
               "type": "integer",
-              "enum": [0, 1],
+              "enum": [
+                0,
+                1
+              ],
               "description": "[DAMPING_METHOD=1 & COEF_INPUT=1] Coefficient calculation basis. Frequency [Hz]:0, Period [sec]:1."
             },
             "FREQ1": {
@@ -196,7 +239,9 @@
               "description": "[DAMPING_METHOD=1 & COEF_INPUT=1 & USE_MASS & USE_STIFF] Mode 2 damping ratio."
             }
           },
-          "required": ["DAMPING_METHOD"],
+          "required": [
+            "DAMPING_METHOD"
+          ],
           "additionalProperties": false
         },
         "INC_CTRL": {
@@ -205,7 +250,10 @@
           "properties": {
             "INC_METHOD": {
               "type": "integer",
-              "enum": [0, 1],
+              "enum": [
+                0,
+                1
+              ],
               "description": "Increment method. Load Control:0, Displacement Control:1."
             },
             "SF": {
@@ -219,7 +267,10 @@
               "properties": {
                 "CTRL_OPT": {
                   "type": "integer",
-                  "enum": [0, 1],
+                  "enum": [
+                    0,
+                    1
+                  ],
                   "description": "Control option. Global Control:0, Master Node Control:1."
                 },
                 "MAX_TRANS_DISP": {
@@ -232,7 +283,11 @@
                 },
                 "MASTER_DIR": {
                   "type": "integer",
-                  "enum": [0, 1, 2],
+                  "enum": [
+                    0,
+                    1,
+                    2
+                  ],
                   "description": "[CTRL_OPT=1] Master direction. DX:0, DY:1, DZ:2."
                 },
                 "MAX_DISP": {
@@ -240,11 +295,15 @@
                   "description": "[CTRL_OPT=1] Maximum displacement."
                 }
               },
-              "required": ["CTRL_OPT"],
+              "required": [
+                "CTRL_OPT"
+              ],
               "additionalProperties": false
             }
           },
-          "required": ["INC_METHOD"],
+          "required": [
+            "INC_METHOD"
+          ],
           "additionalProperties": false
         },
         "TIME_PARAM": {
@@ -253,12 +312,19 @@
           "properties": {
             "METHOD": {
               "type": "integer",
-              "enum": [0, 1],
+              "enum": [
+                0,
+                1
+              ],
               "description": "Integration method. Hilber-Hughes-Taylor (HHT):0, Newmark:1."
             },
             "NEWMARK_METHOD": {
               "type": "integer",
-              "enum": [0, 1, 2],
+              "enum": [
+                0,
+                1,
+                2
+              ],
               "description": "[METHOD=1] Newmark input type. Constant Acceleration:0, Linear Acceleration:1, User Input:2."
             },
             "GAMMA": {
@@ -272,7 +338,9 @@
               "description": "[METHOD=1 & NEWMARK_METHOD=2] Beta value."
             }
           },
-          "required": ["METHOD"],
+          "required": [
+            "METHOD"
+          ],
           "additionalProperties": false
         },
         "NONL_CTRL_PARAM": {
@@ -314,7 +382,9 @@
                           "description": "[OPT_USE=true] Displacement norm tolerance."
                         }
                       },
-                      "required": ["OPT_USE"],
+                      "required": [
+                        "OPT_USE"
+                      ],
                       "additionalProperties": false
                     },
                     "FORCE": {
@@ -330,7 +400,9 @@
                           "description": "[OPT_USE=true] Force norm tolerance."
                         }
                       },
-                      "required": ["OPT_USE"],
+                      "required": [
+                        "OPT_USE"
+                      ],
                       "additionalProperties": false
                     },
                     "ENERGY": {
@@ -346,7 +418,9 @@
                           "description": "[OPT_USE=true] Energy norm tolerance."
                         }
                       },
-                      "required": ["OPT_USE"],
+                      "required": [
+                        "OPT_USE"
+                      ],
                       "additionalProperties": false
                     }
                   },
@@ -354,7 +428,11 @@
                 },
                 "STIFF_UPD_SCHEME": {
                   "type": "integer",
-                  "enum": [0, 1, 2],
+                  "enum": [
+                    0,
+                    1,
+                    2
+                  ],
                   "default": 0,
                   "description": "Stiffness update scheme. Custom:0, Full Newton-Raphson:1, Initial Stiffness:2."
                 },
@@ -388,7 +466,10 @@
                     },
                     "LINE_SEARCH_OPT": {
                       "type": "integer",
-                      "enum": [0, 1],
+                      "enum": [
+                        0,
+                        1
+                      ],
                       "default": 0,
                       "description": "[OPT_USE=true] Line search option. Auto:0, User Defined:1."
                     },
@@ -408,7 +489,9 @@
                       "description": "[OPT_USE=true & LINE_SEARCH_OPT=1] Line search tolerance."
                     }
                   },
-                  "required": ["OPT_USE"],
+                  "required": [
+                    "OPT_USE"
+                  ],
                   "additionalProperties": false
                 },
                 "BOUNDARY_NL_ANAL": {
@@ -417,25 +500,35 @@
                   "properties": {
                     "METHOD": {
                       "type": "integer",
-                      "enum": [0, 1, 2],
+                      "enum": [
+                        0,
+                        1,
+                        2
+                      ],
                       "default": 0,
                       "description": "Runge-Kutta method. Fehlberg:0, Cash-Karp:1, Dormand-Prince:2."
                     },
                     "TOL": {
                       "type": "number",
-                      "default": 1e-8,
+                      "default": 1e-08,
                       "description": "Tolerance."
                     }
                   },
                   "additionalProperties": false
                 }
               },
-              "required": ["MAX_ITER"],
+              "required": [
+                "MAX_ITER"
+              ],
               "additionalProperties": false
             },
             "DAMP_UPDATE": {
               "type": "integer",
-              "enum": [0, 1, 2],
+              "enum": [
+                0,
+                1,
+                2
+              ],
               "default": 0,
               "description": "Damping matrix update. No (Use Linear Stiffness):0, No (Use Initial Stiffness):1, Yes (Use Current Stiffness):2."
             }
@@ -443,7 +536,12 @@
           "additionalProperties": false
         }
       },
-      "required": ["NAME", "ANAL_CASE", "OUTPUT_STEP", "INIT_METHOD"],
+      "required": [
+        "NAME",
+        "ANAL_CASE",
+        "OUTPUT_STEP",
+        "INIT_METHOD"
+      ],
       "additionalProperties": false
     }
   },
@@ -452,18 +550,29 @@
       "1": {
         "NAME": "TH_LinearModal",
         "DESC": "Linear modal time history",
-        "ANAL_CASE": { "ANAL_TYPE": 0, "ANAL_METHOD": 0, "TH_TYPE": 0 },
+        "ANAL_CASE": {
+          "ANAL_TYPE": 0,
+          "ANAL_METHOD": 0,
+          "TH_TYPE": 0
+        },
         "ENDTIME": 10.0,
         "TIME_INC": 0.01,
         "OUTPUT_STEP": 1,
         "INIT_METHOD": "INIT",
         "USE_INIT_LOAD": false,
         "GEOM_NL_TYPE": 0,
-        "DAMPING": { "DAMPING_METHOD": 0, "ALL_DAMPING_RATIO": 0.05 }
+        "DAMPING": {
+          "DAMPING_METHOD": 0,
+          "ALL_DAMPING_RATIO": 0.05
+        }
       },
       "2": {
         "NAME": "TH_LinearDirect",
-        "ANAL_CASE": { "ANAL_TYPE": 0, "ANAL_METHOD": 1, "TH_TYPE": 0 },
+        "ANAL_CASE": {
+          "ANAL_TYPE": 0,
+          "ANAL_METHOD": 1,
+          "TH_TYPE": 0
+        },
         "ENDTIME": 10.0,
         "TIME_INC": 0.01,
         "OUTPUT_STEP": 1,
@@ -477,16 +586,28 @@
           "MASS_VALUE": 0.5,
           "STIFF_VALUE": 0.01
         },
-        "TIME_PARAM": { "METHOD": 1, "NEWMARK_METHOD": 0 }
+        "TIME_PARAM": {
+          "METHOD": 1,
+          "NEWMARK_METHOD": 0
+        }
       },
       "3": {
         "NAME": "TH_NonlinearDirect",
-        "ANAL_CASE": { "ANAL_TYPE": 1, "ANAL_METHOD": 1, "TH_TYPE": 0 },
+        "ANAL_CASE": {
+          "ANAL_TYPE": 1,
+          "ANAL_METHOD": 1,
+          "TH_TYPE": 0
+        },
         "ENDTIME": 10.0,
         "TIME_INC": 0.01,
         "OUTPUT_STEP": 1,
         "INIT_METHOD": "ORDER",
-        "SUBSEQ": { "OPT_USE": true, "SUBSEQ_LOAD": 0, "LCTYPE": "TH", "CASE": "TH_LinearDirect" },
+        "SUBSEQ": {
+          "OPT_USE": true,
+          "SUBSEQ_LOAD": 0,
+          "LCTYPE": "TH",
+          "CASE": "TH_LinearDirect"
+        },
         "CUM_DVA": true,
         "KEEP_LOAD": false,
         "KEEP_ACC": true,
@@ -495,32 +616,58 @@
           "DAMPING_METHOD": 0,
           "ALL_DAMPING_RATIO": 0.05,
           "MODAL_DAMPING_RATIO": [
-            { "MODE_NO": 1, "DAMPING": 0.05 },
-            { "MODE_NO": 2, "DAMPING": 0.03 }
+            {
+              "MODE_NO": 1,
+              "DAMPING": 0.05
+            },
+            {
+              "MODE_NO": 2,
+              "DAMPING": 0.03
+            }
           ]
         },
-        "TIME_PARAM": { "METHOD": 1, "NEWMARK_METHOD": 2, "GAMMA": 0.5, "BETA": 0.25 },
+        "TIME_PARAM": {
+          "METHOD": 1,
+          "NEWMARK_METHOD": 2,
+          "GAMMA": 0.5,
+          "BETA": 0.25
+        },
         "NONL_CTRL_PARAM": {
           "PERFORM_ITER": true,
           "ITER_CTRL": {
             "PERMIT_FAIL": true,
             "MAX_ITER": 30,
             "NORM_CTRL": {
-              "DISP": { "OPT_USE": true, "VALUE": 0.001 },
-              "FORCE": { "OPT_USE": false },
-              "ENERGY": { "OPT_USE": false }
+              "DISP": {
+                "OPT_USE": true,
+                "VALUE": 0.001
+              },
+              "FORCE": {
+                "OPT_USE": false
+              },
+              "ENERGY": {
+                "OPT_USE": false
+              }
             },
             "STIFF_UPD_SCHEME": 0,
             "ITER_BEF_UPDATE": 5,
-            "LINE_SEARCH": { "OPT_USE": false },
-            "BOUNDARY_NL_ANAL": { "METHOD": 0, "TOL": 1e-8 }
+            "LINE_SEARCH": {
+              "OPT_USE": false
+            },
+            "BOUNDARY_NL_ANAL": {
+              "METHOD": 0,
+              "TOL": 1e-08
+            }
           },
           "DAMP_UPDATE": 0
         }
       },
       "4": {
         "NAME": "TH_NonlinearStatic",
-        "ANAL_CASE": { "ANAL_TYPE": 1, "ANAL_METHOD": 2 },
+        "ANAL_CASE": {
+          "ANAL_TYPE": 1,
+          "ANAL_METHOD": 2
+        },
         "INC_STEP": 10,
         "OUTPUT_STEP": 1,
         "INIT_METHOD": "INIT",
@@ -528,13 +675,23 @@
         "GEOM_NL_TYPE": 2,
         "INC_CTRL": {
           "INC_METHOD": 1,
-          "DISP_CTRL": { "CTRL_OPT": 1, "MASTER_NODE": 5, "MASTER_DIR": 2, "MAX_DISP": 0.1 }
+          "DISP_CTRL": {
+            "CTRL_OPT": 1,
+            "MASTER_NODE": 5,
+            "MASTER_DIR": 2,
+            "MAX_DISP": 0.1
+          }
         },
         "NONL_CTRL_PARAM": {
           "PERFORM_ITER": true,
           "ITER_CTRL": {
             "MAX_ITER": 30,
-            "NORM_CTRL": { "DISP": { "OPT_USE": true, "VALUE": 0.001 } }
+            "NORM_CTRL": {
+              "DISP": {
+                "OPT_USE": true,
+                "VALUE": 0.001
+              }
+            }
           }
         }
       }

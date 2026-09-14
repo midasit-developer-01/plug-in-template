@@ -1,6 +1,7 @@
 {
   "_group": "db",
   "_name": "EIGV-M1",
+  "product": "civil",
   "uri": "db/EIGV-M1",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {

@@ -1,6 +1,7 @@
 {
   "_group": "design",
   "_name": "TABLE",
+  "product": "gen",
   "uri": "design/SRC/AIK-SRC2K/TABLE",
   "methods": "POST",
   "schema": {

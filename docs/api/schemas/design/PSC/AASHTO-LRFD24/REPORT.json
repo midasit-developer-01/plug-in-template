@@ -1,6 +1,7 @@
 {
   "_group": "design",
   "_name": "REPORT",
+  "product": "civil",
   "uri": "design/PSC/AASHTO-LRFD24/REPORT",
   "methods": "POST",
   "schema": {

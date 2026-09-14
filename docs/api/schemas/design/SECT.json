@@ -874,6 +874,11 @@
               "type": "boolean",
               "description": "Use Consider Warping Effect."
             },
+            "USE_HAMBLY_EQ": {
+              "type": "boolean",
+              "default": false,
+              "description": "[SECTTYPE=COMPOSITE or TAPERED with a composite before-type] Use Hambly Eq. for Ixx. Only meaningful for composite sections (shapes B/I/CI/CT/PC/GB/GI/Tub/GT and the equivalent COMPO_* tapered types); on any non-composite section a set forces it back to false. On PUT/POST, SECT_BEFORE.USE_HAMBLY_EQ fills BOTH the Before and After parts; SECT_AFTER.USE_HAMBLY_EQ is honored separately ONLY for Tub shapes (steel Tub / steel-girder Tub) - for every other composite shape After is normalized to equal Before, so send the option in SECT_BEFORE. GET returns it in SECT_BEFORE for composite sections and additionally in SECT_AFTER only for Tub shapes."
+            },
             "SHAPE": {
               "type": "string",
               "description": "Shape."

@@ -1,6 +1,7 @@
 {
   "_group": "db",
   "_name": "THOO-M1",
+  "product": "civil",
   "uri": "db/THOO-M1",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {
@@ -14,7 +15,11 @@
           "properties": {
             "HINGE_OUT": {
               "type": "integer",
-              "enum": [0, 1, 2],
+              "enum": [
+                0,
+                1,
+                2
+              ],
               "description": "Inelastic Hinge Output Option: 0 = All Inelastic Elements, 1 = Selected Elements in Hinge Result Output, 2 = No Step-by-Step Results."
             },
             "COMMON_OPT": {
@@ -23,11 +28,18 @@
             },
             "FIBER_OUT": {
               "type": "integer",
-              "enum": [0, 1, 2],
+              "enum": [
+                0,
+                1,
+                2
+              ],
               "description": "[COMMON_OPT=false] Fiber Section Output Option: 0 = All Inelastic Elements, 1 = Selected Elements in Hinge Result Output, 2 = No Step-by-Step Results. Required when COMMON_OPT is false; hard constraint FIBER_OUT >= HINGE_OUT. Ignored (set equal to HINGE_OUT) when COMMON_OPT is true."
             }
           },
-          "required": ["HINGE_OUT", "COMMON_OPT"]
+          "required": [
+            "HINGE_OUT",
+            "COMMON_OPT"
+          ]
         },
         "RESULT_SELECTION": {
           "type": "object",
@@ -66,7 +78,10 @@
           }
         }
       },
-      "required": ["OUT_OPT", "RESULT_SELECTION"]
+      "required": [
+        "OUT_OPT",
+        "RESULT_SELECTION"
+      ]
     }
   },
   "example": {

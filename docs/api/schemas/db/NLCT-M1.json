@@ -1,6 +1,7 @@
 {
   "_group": "db",
   "_name": "NLCT-M1",
+  "product": "civil",
   "uri": "db/NLCT-M1",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {
@@ -10,7 +11,10 @@
       "properties": {
         "LC_SCOPE": {
           "type": "string",
-          "enum": ["ALL", "SELECT"],
+          "enum": [
+            "ALL",
+            "SELECT"
+          ],
           "default": "ALL",
           "description": "Load case scope (case-insensitive). ALL = one global nonlinear control (key must be 1); SELECT = per static load case (LOAD_CASE required)."
         },
@@ -20,12 +24,20 @@
         },
         "NONLINEAR_TYPE": {
           "type": "string",
-          "enum": ["GEOM", "MATL", "GEOM+MATL"],
+          "enum": [
+            "GEOM",
+            "MATL",
+            "GEOM+MATL"
+          ],
           "description": "Nonlinear type (case-insensitive). GEOM = geometry nonlinear, MATL = material nonlinear, GEOM+MATL = both."
         },
         "ITER_METHOD": {
           "type": "string",
-          "enum": ["FORCE", "ARC", "DISP"],
+          "enum": [
+            "FORCE",
+            "ARC",
+            "DISP"
+          ],
           "description": "Iteration method (case-insensitive). FORCE = force control (Newton-Raphson), ARC = arc-length, DISP = displacement control. Governs which LOAD_STEPS sub-fields apply."
         },
         "LOAD_STEPS": {
@@ -34,7 +46,10 @@
           "properties": {
             "STEP_MODE": {
               "type": "string",
-              "enum": ["AUTO", "MANUAL"],
+              "enum": [
+                "AUTO",
+                "MANUAL"
+              ],
               "description": "Step mode (case-insensitive). AUTO = fixed number of equal increments (uses NUMBER_STEPS, OUTPUT); MANUAL = user-defined step list (uses MANUAL_STEPS)."
             },
             "NUMBER_STEPS": {
@@ -44,13 +59,18 @@
             },
             "OUTPUT": {
               "type": "string",
-              "enum": ["EVERY", "LAST"],
+              "enum": [
+                "EVERY",
+                "LAST"
+              ],
               "default": "EVERY",
               "description": "[STEP_MODE=AUTO] Intermediate output request. EVERY = output at every increment, LAST = only the last increment (case-insensitive)."
             },
             "MANUAL_STEPS": {
               "type": "array",
-              "items": {"type": "number"},
+              "items": {
+                "type": "number"
+              },
               "description": "[STEP_MODE=MANUAL] User-defined list of load increment factors, one per step."
             },
             "MIN_ARC_RATIO": {
@@ -71,7 +91,11 @@
             },
             "DIRECTION": {
               "type": "string",
-              "enum": ["DX", "DY", "DZ"],
+              "enum": [
+                "DX",
+                "DY",
+                "DZ"
+              ],
               "default": "DX",
               "description": "[ITER_METHOD=DISP] Displacement control direction (case-insensitive)."
             },
@@ -92,10 +116,14 @@
                   "description": "Reference node number (meaningful when OPT_USE=true)."
                 }
               },
-              "required": ["OPT_USE"]
+              "required": [
+                "OPT_USE"
+              ]
             }
           },
-          "required": ["STEP_MODE"]
+          "required": [
+            "STEP_MODE"
+          ]
         },
         "CONV_CRITERIA": {
           "type": "object",
@@ -114,7 +142,9 @@
                   "description": "Displacement convergence tolerance (meaningful when OPT_USE=true; internal default 0.001)."
                 }
               },
-              "required": ["OPT_USE"]
+              "required": [
+                "OPT_USE"
+              ]
             },
             "LOAD": {
               "type": "object",
@@ -129,7 +159,9 @@
                   "description": "Load convergence tolerance (meaningful when OPT_USE=true; internal default 0.001)."
                 }
               },
-              "required": ["OPT_USE"]
+              "required": [
+                "OPT_USE"
+              ]
             },
             "WORK": {
               "type": "object",
@@ -144,7 +176,9 @@
                   "description": "Work convergence tolerance (meaningful when OPT_USE=true; internal default 0.000001)."
                 }
               },
-              "required": ["OPT_USE"]
+              "required": [
+                "OPT_USE"
+              ]
             }
           }
         },
@@ -158,7 +192,11 @@
             },
             "STIFF_UPDATE_SCHEME": {
               "type": "string",
-              "enum": ["CUSTOM", "FULL_NEWTON_RAPHSON", "INITIAL_STIFF"],
+              "enum": [
+                "CUSTOM",
+                "FULL_NEWTON_RAPHSON",
+                "INITIAL_STIFF"
+              ],
               "description": "[OPT_USE_DEFAULT=false] Stiffness update scheme (case-insensitive). CUSTOM = update every N iterations (uses ITER_BEFORE_STIFF_UPDATE); FULL_NEWTON_RAPHSON = update every iteration; INITIAL_STIFF = keep initial stiffness."
             },
             "ITER_BEFORE_STIFF_UPDATE": {
@@ -191,7 +229,10 @@
             },
             "LINE_SEARCH_OPTION": {
               "type": "string",
-              "enum": ["AUTO", "MANUAL"],
+              "enum": [
+                "AUTO",
+                "MANUAL"
+              ],
               "description": "[OPT_ENABLE_LINE_SEARCH=true] Line search option (case-insensitive). AUTO = automatic; MANUAL = user-defined (uses MAX_LINE_SEARCH_PER_ITER, LINE_SEARCH_TOL)."
             },
             "MAX_LINE_SEARCH_PER_ITER": {
@@ -203,10 +244,17 @@
               "description": "[LINE_SEARCH_OPTION=MANUAL] Line search tolerance."
             }
           },
-          "required": ["OPT_USE_DEFAULT"]
+          "required": [
+            "OPT_USE_DEFAULT"
+          ]
         }
       },
-      "required": ["NONLINEAR_TYPE", "ITER_METHOD", "LOAD_STEPS", "CONV_CRITERIA"]
+      "required": [
+        "NONLINEAR_TYPE",
+        "ITER_METHOD",
+        "LOAD_STEPS",
+        "CONV_CRITERIA"
+      ]
     }
   },
   "example": {
@@ -221,9 +269,17 @@
           "OUTPUT": "EVERY"
         },
         "CONV_CRITERIA": {
-          "DISP": {"OPT_USE": true, "VALUE": 0.001},
-          "LOAD": {"OPT_USE": true, "VALUE": 0.001},
-          "WORK": {"OPT_USE": false}
+          "DISP": {
+            "OPT_USE": true,
+            "VALUE": 0.001
+          },
+          "LOAD": {
+            "OPT_USE": true,
+            "VALUE": 0.001
+          },
+          "WORK": {
+            "OPT_USE": false
+          }
         },
         "ADVANCED": {
           "OPT_USE_DEFAULT": true
@@ -236,15 +292,28 @@
         "ITER_METHOD": "ARC",
         "LOAD_STEPS": {
           "STEP_MODE": "MANUAL",
-          "MANUAL_STEPS": [0.1, 0.2, 0.3, 0.4, 1.0],
+          "MANUAL_STEPS": [
+            0.1,
+            0.2,
+            0.3,
+            0.4,
+            1.0
+          ],
           "MIN_ARC_RATIO": 0.25,
           "MAX_ARC_RATIO": 4.0,
           "MAX_ARC_INCREMENTS": 100
         },
         "CONV_CRITERIA": {
-          "DISP": {"OPT_USE": true, "VALUE": 0.001},
-          "LOAD": {"OPT_USE": false},
-          "WORK": {"OPT_USE": false}
+          "DISP": {
+            "OPT_USE": true,
+            "VALUE": 0.001
+          },
+          "LOAD": {
+            "OPT_USE": false
+          },
+          "WORK": {
+            "OPT_USE": false
+          }
         },
         "ADVANCED": {
           "OPT_USE_DEFAULT": false,
@@ -273,12 +342,24 @@
           "MASTER_NODE": 15,
           "DIRECTION": "DZ",
           "MAX_DISP": 0.05,
-          "REF_NODE": {"OPT_USE": true, "NODE": 1}
+          "REF_NODE": {
+            "OPT_USE": true,
+            "NODE": 1
+          }
         },
         "CONV_CRITERIA": {
-          "DISP": {"OPT_USE": true, "VALUE": 0.001},
-          "LOAD": {"OPT_USE": true, "VALUE": 0.001},
-          "WORK": {"OPT_USE": true, "VALUE": 0.000001}
+          "DISP": {
+            "OPT_USE": true,
+            "VALUE": 0.001
+          },
+          "LOAD": {
+            "OPT_USE": true,
+            "VALUE": 0.001
+          },
+          "WORK": {
+            "OPT_USE": true,
+            "VALUE": 1e-06
+          }
         },
         "ADVANCED": {
           "OPT_USE_DEFAULT": false,

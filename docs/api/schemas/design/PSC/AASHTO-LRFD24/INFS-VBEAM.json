@@ -1,6 +1,7 @@
 {
   "_group": "design",
   "_name": "INFS-VBEAM",
+  "product": "civil",
   "uri": "design/PSC/AASHTO-LRFD24/INFS-VBEAM",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {

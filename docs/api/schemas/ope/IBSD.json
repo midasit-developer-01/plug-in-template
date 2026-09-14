@@ -1,0 +1,146 @@
+{
+  "_group": "ope",
+  "_name": "IBSD",
+  "product": "civil",
+  "uri": "ope/IBSD",
+  "methods": "POST",
+  "schema": {
+    "IBSD": {
+      "type": "object",
+      "description": "Influence Line Beam Stress Data (IBSD). Returns the BEAM STRESS influence line: the combined section stress at a chosen stress point and position of one beam element as a unit load moves along a traffic line lane. Driven by LANE_NAME (the traffic line lane) and KEY_ELEM; the component is chosen via COMPONENTS. Requires moving-load (influence line) analysis results: the model must be analyzed and in post-processing state, otherwise the request FAILS with an error (e.g. 'post mode is required', 'failed to set influence data; check that the analysis has been performed', or 'no influence line data was produced') - it never returns an empty table. Response: a table named INFLL_BEAM STRESSES with columns ELEM, POSITION, DISTANCE, INFLUENCE (one row per evaluated position of the unit load along the lane) plus a SUMMARY sub-table giving the MINIMUM/MAXIMUM influence value and its DISTANCE, and the FORCE/DIST units of the values.",
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "properties": {
+        "Argument": {
+          "type": "object",
+          "description": "Influence Line Beam Stress Data request (DTO_IBSD_REQUEST).",
+          "properties": {
+            "LANE_NAME": {
+              "type": "string",
+              "description": "Line Lane Name. Must name an existing moving-load traffic LINE lane (only Line Lane type is accepted; other lane types fail with 'only a Line Lane can be used for influence lines')."
+            },
+            "EXPORT_PATH": {
+              "type": "string",
+              "description": "Optional export file path; extension MUST be .txt or .json (anything else fails with 'EXPORT_PATH extension must be .txt or .json'). A .json path re-exports the returned table to that file; a .txt path writes the legacy GUI text output. The table is returned in the response either way."
+            },
+            "UNIT": {
+              "type": "object",
+              "description": "Optional output unit override. Omitted sub-units keep the document's current unit system; the units actually used are echoed in the response table's FORCE/DIST fields.",
+              "properties": {
+                "FORCE": {
+                  "type": "string",
+                  "description": "Force unit (case-insensitive).",
+                  "enum": [
+                    "KGF",
+                    "TONF",
+                    "N",
+                    "KN",
+                    "LBF",
+                    "KIPS"
+                  ]
+                },
+                "DIST": {
+                  "type": "string",
+                  "description": "Length unit (case-insensitive).",
+                  "enum": [
+                    "MM",
+                    "CM",
+                    "M",
+                    "IN",
+                    "FT"
+                  ]
+                },
+                "HEAT": {
+                  "type": "string",
+                  "description": "Heat unit (case-insensitive). Not used by influence-line values; accepted for unit-system completeness.",
+                  "enum": [
+                    "CAL",
+                    "KCAL",
+                    "J",
+                    "BTU",
+                    "KJ"
+                  ]
+                },
+                "TEMP": {
+                  "type": "string",
+                  "description": "Temperature unit (case-insensitive). Not used by influence-line values; accepted for unit-system completeness.",
+                  "enum": [
+                    "C",
+                    "F"
+                  ]
+                }
+              }
+            },
+            "OPT_INCLUDE_IMPACT_FACTOR": {
+              "type": "boolean",
+              "description": "Include Impact Factor. If true but the active moving-load code does not support an impact factor, the request fails with 'impact factor is not supported by the current moving-load code'.",
+              "default": false
+            },
+            "KEY_ELEM": {
+              "type": "integer",
+              "description": "Beam element number. Must exist and be a beam-type element ('the key element type does not match the requested result type' otherwise)."
+            },
+            "COMPONENTS": {
+              "type": "object",
+              "description": "Result component selection following the GUI dialog: COMP picks the combined stress kind, COMP_SUB the section stress point under it. Omitted entirely: Combined(Normal) at stress point Maximum, PART=i.",
+              "properties": {
+                "PART": {
+                  "type": "string",
+                  "description": "Position on the element where the result component is evaluated (case-insensitive).",
+                  "enum": [
+                    "i",
+                    "1/4",
+                    "1/2",
+                    "3/4",
+                    "j"
+                  ],
+                  "default": "i"
+                },
+                "COMP": {
+                  "type": "string",
+                  "description": "Combined stress kind (case-insensitive): Combined(Normal) = axial+bending normal stress, Combined(Ssy)/Combined(Ssz) = combined shear stress.",
+                  "enum": [
+                    "Combined(Normal)",
+                    "Combined(Ssy)",
+                    "Combined(Ssz)"
+                  ],
+                  "default": "Combined(Normal)"
+                },
+                "COMP_SUB": {
+                  "type": "string",
+                  "description": "Section stress point for the chosen COMP (case-insensitive): Maximum, or one of the four section corner points 1(-y,+z) / 2(+y,+z) / 3(+y,-z) / 4(-y,-z).",
+                  "enum": [
+                    "Maximum",
+                    "1(-y,+z)",
+                    "2(+y,+z)",
+                    "3(+y,-z)",
+                    "4(-y,-z)"
+                  ],
+                  "default": "Maximum"
+                }
+              }
+            }
+          },
+          "required": [
+            "LANE_NAME",
+            "KEY_ELEM"
+          ]
+        }
+      },
+      "required": [
+        "Argument"
+      ]
+    }
+  },
+  "example": {
+    "Argument": {
+      "LANE_NAME": "Lane1",
+      "KEY_ELEM": 1,
+      "COMPONENTS": {
+        "PART": "1/2",
+        "COMP": "Combined(Normal)",
+        "COMP_SUB": "Maximum"
+      },
+      "OPT_INCLUDE_IMPACT_FACTOR": false
+    }
+  }
+}

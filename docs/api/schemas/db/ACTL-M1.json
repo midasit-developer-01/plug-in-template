@@ -1,6 +1,7 @@
 {
   "_group": "db",
   "_name": "ACTL-M1",
+  "product": "civil",
   "uri": "db/ACTL-M1",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {
@@ -55,7 +56,10 @@
         },
         "BSCHG": {
           "type": "string",
-          "enum": ["CONSTANT", "CHANGE"],
+          "enum": [
+            "CONSTANT",
+            "CHANGE"
+          ],
           "default": "CHANGE",
           "description": "Beam Section Property Changes (case-insensitive). CONSTANT = keep the original section, CHANGE = allow the section property to change."
         },
@@ -70,7 +74,10 @@
             },
             "INTOUT": {
               "type": "string",
-              "enum": ["EVERY", "LAST"],
+              "enum": [
+                "EVERY",
+                "LAST"
+              ],
               "default": "LAST",
               "description": "Intermediate Output Request (case-insensitive). EVERY = output at every increment, LAST = output at the last increment only."
             },
@@ -91,7 +98,9 @@
                       "description": "Convergence Tolerance Value. Used when OPT_USE is true (handler default 0.001 if omitted)."
                     }
                   },
-                  "required": ["OPT_USE"]
+                  "required": [
+                    "OPT_USE"
+                  ]
                 },
                 "LOAD": {
                   "type": "object",
@@ -106,7 +115,9 @@
                       "description": "Convergence Tolerance Value. Required by the handler when OPT_USE is true (a missing VALUE with OPT_USE=true is rejected)."
                     }
                   },
-                  "required": ["OPT_USE"]
+                  "required": [
+                    "OPT_USE"
+                  ]
                 },
                 "WORK": {
                   "type": "object",
@@ -121,7 +132,9 @@
                       "description": "Convergence Tolerance Value. Required by the handler when OPT_USE is true (a missing VALUE with OPT_USE=true is rejected)."
                     }
                   },
-                  "required": ["OPT_USE"]
+                  "required": [
+                    "OPT_USE"
+                  ]
                 }
               }
             }

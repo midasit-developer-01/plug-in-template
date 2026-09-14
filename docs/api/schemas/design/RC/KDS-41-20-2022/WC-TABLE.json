@@ -1,6 +1,7 @@
 {
   "_group": "design",
   "_name": "WC-TABLE",
+  "product": "gen",
   "uri": "design/RC/KDS-41-20-2022/WC-TABLE",
   "methods": "POST",
   "schema": {

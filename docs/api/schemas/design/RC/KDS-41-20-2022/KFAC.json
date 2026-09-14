@@ -1,6 +1,7 @@
 {
   "_group": "design",
   "_name": "KFAC",
+  "product": "gen",
   "uri": "design/RC/KDS-41-20-2022/KFAC",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {

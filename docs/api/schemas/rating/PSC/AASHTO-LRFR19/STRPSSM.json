@@ -1,6 +1,7 @@
 {
   "_group": "rating",
   "_name": "STRPSSM",
+  "product": "civil",
   "uri": "rating/PSC/AASHTO-LRFR19/STRPSSM",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {

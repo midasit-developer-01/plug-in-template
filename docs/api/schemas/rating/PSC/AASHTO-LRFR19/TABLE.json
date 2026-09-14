@@ -1,6 +1,7 @@
 {
   "_group": "rating",
   "_name": "TABLE",
+  "product": "civil",
   "uri": "rating/PSC/AASHTO-LRFR19/TABLE",
   "methods": "POST",
   "schema": {

@@ -1,6 +1,7 @@
 {
   "_group": "design",
   "_name": "DCRM-BRACE",
+  "product": "gen",
   "uri": "design/RC/KDS-41-20-2022/DCRM-BRACE",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {
@@ -12,12 +13,52 @@
         "MAIN_REBAR": {
           "type": "string",
           "description": "Main Rebar for Brace (rebar size name). Case-insensitive.",
-          "enum": ["D4", "D5", "D6", "D7", "D8", "D10", "D13", "D16", "D19", "D22", "D25", "D29", "D32", "D35", "D38", "D41", "D43", "D51", "D57"]
+          "enum": [
+            "D4",
+            "D5",
+            "D6",
+            "D7",
+            "D8",
+            "D10",
+            "D13",
+            "D16",
+            "D19",
+            "D22",
+            "D25",
+            "D29",
+            "D32",
+            "D35",
+            "D38",
+            "D41",
+            "D43",
+            "D51",
+            "D57"
+          ]
         },
         "TIES_SPIRALS": {
           "type": "string",
           "description": "Ties/Spirals for Brace (rebar size name). Case-insensitive.",
-          "enum": ["D4", "D5", "D6", "D7", "D8", "D10", "D13", "D16", "D19", "D22", "D25", "D29", "D32", "D35", "D38", "D41", "D43", "D51", "D57"]
+          "enum": [
+            "D4",
+            "D5",
+            "D6",
+            "D7",
+            "D8",
+            "D10",
+            "D13",
+            "D16",
+            "D19",
+            "D22",
+            "D25",
+            "D29",
+            "D32",
+            "D35",
+            "D38",
+            "D41",
+            "D43",
+            "D51",
+            "D57"
+          ]
         },
         "ARRANGEMENT_Y": {
           "type": "integer",
@@ -40,11 +81,20 @@
         "SPLICED_BARS": {
           "type": "string",
           "description": "Spliced Bars option. Case-insensitive.",
-          "enum": ["None", "50%", "100%"],
+          "enum": [
+            "None",
+            "50%",
+            "100%"
+          ],
           "default": "50%"
         }
       },
-      "required": ["MAIN_REBAR", "TIES_SPIRALS", "ARRANGEMENT_Y", "ARRANGEMENT_Z"]
+      "required": [
+        "MAIN_REBAR",
+        "TIES_SPIRALS",
+        "ARRANGEMENT_Y",
+        "ARRANGEMENT_Z"
+      ]
     }
   },
   "example": {

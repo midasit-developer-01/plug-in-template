@@ -18,8 +18,9 @@
           "type": "string"
         },
         "SCALEX": {
-          "description": "X-direction scale factor applied to the X function.",
-          "type": "number"
+          "description": "X-direction scale factor applied to the X function. Only stored when FUNCX resolves to a valid function.",
+          "type": "number",
+          "default": 1
         },
         "ATIMEX": {
           "description": "X-direction arrival time.",
@@ -31,8 +32,9 @@
           "type": "string"
         },
         "SCALEY": {
-          "description": "Y-direction scale factor applied to the Y function.",
-          "type": "number"
+          "description": "Y-direction scale factor applied to the Y function. Only stored when FUNCY resolves to a valid function.",
+          "type": "number",
+          "default": 1
         },
         "ATIMEY": {
           "description": "Y-direction arrival time.",
@@ -47,7 +49,7 @@
         "SCALEZ": {
           "description": "Z-direction scale factor applied to the Z function. Only used when FUNCZ references a valid function.",
           "type": "number",
-          "default": 0
+          "default": 1
         },
         "ATIMEZ": {
           "description": "Z-direction arrival time. Only used when FUNCZ references a valid function.",
@@ -63,9 +65,7 @@
       "required": [
         "NAME",
         "FUNCX",
-        "SCALEX",
-        "FUNCY",
-        "SCALEY"
+        "FUNCY"
       ]
     }
   },

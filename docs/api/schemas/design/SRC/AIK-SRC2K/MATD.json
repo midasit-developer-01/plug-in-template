@@ -1,6 +1,7 @@
 {
   "_group": "design",
   "_name": "MATD",
+  "product": "gen",
   "uri": "design/SRC/AIK-SRC2K/MATD",
   "methods": "GET, PUT, DELETE",
   "schema": {

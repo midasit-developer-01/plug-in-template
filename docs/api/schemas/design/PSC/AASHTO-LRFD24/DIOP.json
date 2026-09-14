@@ -1,6 +1,7 @@
 {
   "_group": "design",
   "_name": "DIOP",
+  "product": "civil",
   "uri": "design/PSC/AASHTO-LRFD24/DIOP",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {

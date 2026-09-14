@@ -1,6 +1,7 @@
 {
   "_group": "rating",
   "_name": "LENG",
+  "product": "civil",
   "uri": "rating/PSC/AASHTO-LRFR19/LENG",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {

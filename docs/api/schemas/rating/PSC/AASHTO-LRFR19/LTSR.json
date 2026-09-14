@@ -1,6 +1,7 @@
 {
   "_group": "rating",
   "_name": "LTSR",
+  "product": "civil",
   "uri": "rating/PSC/AASHTO-LRFR19/LTSR",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {

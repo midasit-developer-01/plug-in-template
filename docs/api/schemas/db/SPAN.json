@@ -1,6 +1,7 @@
 {
   "_group": "db",
   "_name": "SPAN",
+  "product": "civil",
   "uri": "db/SPAN",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {

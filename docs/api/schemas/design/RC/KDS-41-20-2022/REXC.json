@@ -1,6 +1,7 @@
 {
   "_group": "design",
   "_name": "REXC",
+  "product": "gen",
   "uri": "design/RC/KDS-41-20-2022/REXC",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {
@@ -11,11 +12,16 @@
       "properties": {
         "EXPOSURE": {
           "type": "string",
-          "enum": ["Dry", "Etc"],
+          "enum": [
+            "Dry",
+            "Etc"
+          ],
           "description": "Exposure Condition. Case-insensitive enum (wire values). Dry = dry environment; Etc = other exposure environment."
         }
       },
-      "required": ["EXPOSURE"],
+      "required": [
+        "EXPOSURE"
+      ],
       "additionalProperties": false
     }
   },

@@ -39,14 +39,6 @@
   "feature_name": "Plate Cutting Line Diagram",
   "menu_path": "From the Main Menu select [Results] tab > [Type : Analysis Result] > [Result Display] group > [ Forces] > [Plate Cutting Line Diagram]"
  },
- "db/DCON": {
-  "feature_name": "Design Code Option",
-  "menu_path": "From the Main Menu select [Design] tab > [Type : RC Design] > [Design Input Data] > [Design Code Option]"
- },
- "db/DCTL": {
-  "feature_name": "Definition of Frame",
-  "menu_path": "From the Main Menu select [Design] tab > [Type : Steel Design] > [Design Input Data] group > [Design Parameters] > [Definition of Frame] From the Main Menu select [Design] tab > [Type : RC Design] > [Design Input Data] group > [Design Parameters] > [Definition of Frame] From the Main Menu select [Design] tab > [Type : SRC Design] > [Design Input Data] group > [Design Parameters] > [Definition of Frame] From the Main Menu select [Design] tab > [Type : Cold Formed Steel Design] > [Design Input Data] > [Design Parameters] > [Definition of Frame]"
- },
  "db/DOEL": {
   "feature_name": "Define Domain",
   "menu_path": "From the Main Menu select [Node/Element] tab > [Mesh] group > [Domain] > [Define Domain]"
@@ -54,10 +46,6 @@
  "db/DRLS": {
   "feature_name": "Diaphragm Disconnect",
   "menu_path": "From the Main Menu select [Boundary] tab > [Advanced] group > [Diaphragm Disconnect]"
- },
- "db/DSTL": {
-  "feature_name": "Design Code Option",
-  "menu_path": "From the Main Menu select [Design] tab > [Type : Steel Design] > [Design Input Data] group > [Design Code Option]"
  },
  "db/EDMP": {
   "feature_name": "Change Property",
@@ -167,10 +155,6 @@
   "feature_name": "Define Load Group",
   "menu_path": "From the Main Menu select [Structure] tab > [Group] group > [Group] > [Define Load Group]"
  },
- "db/LENG": {
-  "feature_name": "Unbraced Length (L,Lb)",
-  "menu_path": "From the Main Menu select [Design] tab > [Type : Steel Design] > [Design Input Data] group > [Design Parameters] > [Unbraced Length (L,Lb)] From the Main Menu select [Design] tab > [Type : RC Design] > [Design Input Data] group > [Design Parameters] > [Unbraced Length (L,Lb)] From the Main Menu select [Design] tab > [Type : SRC Design] > [Design Input Data] group > [Design Parameters] > [Unbraced Length (L,Lb)] From the Main Menu select [Design] tab > [Type : Cold Formed Steel Design] > [Design Input Data] group] > [Design Parameters] > [Unbraced Length (L,Lb)]"
- },
  "db/LLAN": {
   "feature_name": "Traffic Line Lanes",
   "menu_path": "From the Main Menu select [Load] tab > [Type : Moving Load] > [Moving Load Analysis Data] group > [Traffic Line Lanes]"
@@ -194,10 +178,6 @@
  "db/LTOM": {
   "feature_name": "Loads to Masses",
   "menu_path": "From the Main Menu select [Load] tab > [Type : Static Loads] > [Masses] group > [Masses] > [ Loads to Masses]"
- },
- "db/LTSR": {
-  "feature_name": "Limiting Slenderness Ratio",
-  "menu_path": "From the Main Menu select [Design] tab > [Type : Steel Design] > [Design Input Data] group > [Design Parameters] > [Limiting Slenderness Ratio] From the Main Menu select [Design] tab > [Type : SRC Design] > [Design Input Data] group > [Design Parameters] > [Limiting Slenderness Ratio] From the Main Menu select [Design] tab > [Type : Cold Formed Steel Design] > [Design Input Data] group > [Design Parameters] > [Limiting Slenderness Ratio]"
  },
  "db/MADO": {
   "feature_name": "Define Domain",

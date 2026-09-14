@@ -1,6 +1,7 @@
 {
   "_group": "design",
   "_name": "HCD-TABLE",
+  "product": "gen",
   "uri": "design/RC/KDS-41-20-2022/HCD-TABLE",
   "methods": "POST",
   "schema": {

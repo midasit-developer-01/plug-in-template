@@ -1,6 +1,7 @@
 {
   "_group": "db",
   "_name": "POLC-M1",
+  "product": "civil",
   "uri": "db/POLC-M1",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {
@@ -33,7 +34,11 @@
         },
         "NLTYPE": {
           "type": "string",
-          "enum": ["NONE", "PDELTA", "LARGE"],
+          "enum": [
+            "NONE",
+            "PDELTA",
+            "LARGE"
+          ],
           "description": "Geometric nonlinearity type. NONE = none, PDELTA = P-Delta, LARGE = large displacements. Case-insensitive."
         },
         "bUSEINITIAL": {
@@ -46,7 +51,10 @@
         },
         "INCRE_METHOD": {
           "type": "string",
-          "enum": ["LOAD", "DISP"],
+          "enum": [
+            "LOAD",
+            "DISP"
+          ],
           "description": "Increment method. LOAD = load control, DISP = displacement control. Determines which CTRL_OPT sub-fields are required. Case-insensitive."
         },
         "CTRL_OPT": {
@@ -55,7 +63,11 @@
           "properties": {
             "STEPCTRLOPTION": {
               "type": "string",
-              "enum": ["AUTO", "EQUAL", "INC_FUNC"],
+              "enum": [
+                "AUTO",
+                "EQUAL",
+                "INC_FUNC"
+              ],
               "description": "[INCRE_METHOD=LOAD] Stepping control option, required for LOAD method. AUTO = auto-stepping, EQUAL = equal step, INC_FUNC = incremental control function. Case-insensitive."
             },
             "INCFUNC_NAME": {
@@ -68,7 +80,10 @@
             },
             "DISPCTRLOPTION": {
               "type": "string",
-              "enum": ["GLOBAL", "NODE"],
+              "enum": [
+                "GLOBAL",
+                "NODE"
+              ],
               "description": "[INCRE_METHOD=DISP] Displacement control option, required for DISP method. GLOBAL = global max displacement, NODE = master node control. Case-insensitive."
             },
             "GLOBAL_MAX_DISP": {
@@ -81,7 +96,11 @@
             },
             "MASTERDIRECTION": {
               "type": "string",
-              "enum": ["DX", "DY", "DZ"],
+              "enum": [
+                "DX",
+                "DY",
+                "DZ"
+              ],
               "description": "[DISPCTRLOPTION=NODE] Master node direction, required when DISPCTRLOPTION is NODE. Case-insensitive."
             },
             "MASTERMAXDISP": {
@@ -92,7 +111,12 @@
         },
         "LOADPATTERNTYPE": {
           "type": "string",
-          "enum": ["LOAD", "ACC", "MODE", "NOR_MODE"],
+          "enum": [
+            "LOAD",
+            "ACC",
+            "MODE",
+            "NOR_MODE"
+          ],
           "description": "Load pattern type. LOAD = static load cases, ACC = uniform acceleration, MODE = mode shape, NOR_MODE = normalized mode shape. Determines which per-item fields of LOADPATTERN apply. Case-insensitive."
         },
         "LOADPATTERN": {
@@ -101,7 +125,9 @@
           "description": "Load pattern data list. Must contain at least one item. Which item field applies depends on LOADPATTERNTYPE.",
           "items": {
             "type": "object",
-            "required": ["SF"],
+            "required": [
+              "SF"
+            ],
             "properties": {
               "LCNAME": {
                 "type": "string",
@@ -109,7 +135,11 @@
               },
               "DIR": {
                 "type": "string",
-                "enum": ["DX", "DY", "DZ"],
+                "enum": [
+                  "DX",
+                  "DY",
+                  "DZ"
+                ],
                 "description": "[LOADPATTERNTYPE=ACC] Acceleration direction, required for ACC pattern. Case-insensitive."
               },
               "MODE": {
@@ -142,8 +172,14 @@
         },
         "LOADPATTERNTYPE": "LOAD",
         "LOADPATTERN": [
-          { "LCNAME": "DL", "SF": 1.0 },
-          { "LCNAME": "LL", "SF": 0.5 }
+          {
+            "LCNAME": "DL",
+            "SF": 1.0
+          },
+          {
+            "LCNAME": "LL",
+            "SF": 0.5
+          }
         ]
       },
       "2": {
@@ -160,7 +196,10 @@
         },
         "LOADPATTERNTYPE": "ACC",
         "LOADPATTERN": [
-          { "DIR": "DX", "SF": 1.0 }
+          {
+            "DIR": "DX",
+            "SF": 1.0
+          }
         ]
       },
       "3": {
@@ -176,7 +215,10 @@
         },
         "LOADPATTERNTYPE": "MODE",
         "LOADPATTERN": [
-          { "MODE": 1, "SF": 1.0 }
+          {
+            "MODE": 1,
+            "SF": 1.0
+          }
         ]
       },
       "4": {
@@ -195,7 +237,10 @@
         },
         "LOADPATTERNTYPE": "NOR_MODE",
         "LOADPATTERN": [
-          { "MODE": 2, "SF": 1.0 }
+          {
+            "MODE": 2,
+            "SF": 1.0
+          }
         ]
       }
     }

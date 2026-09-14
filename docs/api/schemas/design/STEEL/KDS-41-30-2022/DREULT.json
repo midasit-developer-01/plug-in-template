@@ -1,6 +1,7 @@
 {
   "_group": "design",
   "_name": "CAPTURE",
+  "product": "gen",
   "uri": "design/STEEL/KDS-41-30-2022/DREULT",
   "methods": "POST",
   "schema": {
@@ -2338,6 +2339,48 @@
                           ],
                           "description": "Color Table. Case-insensitive.",
                           "default": "vrgb"
+                        },
+                        "CONTOUR_LINE_COLOR": {
+                          "type": "object",
+                          "description": "Contour line color as RGB components. Applied only when this object is given; if omitted, the dialog default RGB(0,120,0) (dark green) is used. Also applies to mode-shape contours.",
+                          "properties": {
+                            "R": {
+                              "type": "integer",
+                              "description": "Red component (0-255).",
+                              "default": 0
+                            },
+                            "G": {
+                              "type": "integer",
+                              "description": "Green component (0-255).",
+                              "default": 0
+                            },
+                            "B": {
+                              "type": "integer",
+                              "description": "Blue component (0-255).",
+                              "default": 0
+                            }
+                          }
+                        },
+                        "ELEMENT_EDGE_COLOR": {
+                          "type": "object",
+                          "description": "Element boundary (edge) line color as RGB components. Applied only when this object is given; if omitted, the dialog default RGB(128,128,0) (olive) is used. Also applies to mode-shape contours.",
+                          "properties": {
+                            "R": {
+                              "type": "integer",
+                              "description": "Red component (0-255).",
+                              "default": 0
+                            },
+                            "G": {
+                              "type": "integer",
+                              "description": "Green component (0-255).",
+                              "default": 0
+                            },
+                            "B": {
+                              "type": "integer",
+                              "description": "Blue component (0-255).",
+                              "default": 0
+                            }
+                          }
                         },
                         "OPTIONS": {
                           "type": "object",

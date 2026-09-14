@@ -1,6 +1,7 @@
 {
   "_group": "design",
   "_name": "DCTL",
+  "product": "gen",
   "uri": "design/SRC/AIK-SRC2K/DCTL",
   "methods": "GET, PUT, DELETE",
   "schema": {
@@ -11,13 +12,19 @@
       "properties": {
         "FRAMEX": {
           "type": "string",
-          "enum": ["Braced Non-sway", "Unbraced Sway"],
+          "enum": [
+            "Braced Non-sway",
+            "Unbraced Sway"
+          ],
           "default": "Braced Non-sway",
           "description": "X-Direction of Frame. Sway classification of the frame along the X direction. Enum values are case-insensitive."
         },
         "FRAMEY": {
           "type": "string",
-          "enum": ["Braced Non-sway", "Unbraced Sway"],
+          "enum": [
+            "Braced Non-sway",
+            "Unbraced Sway"
+          ],
           "default": "Braced Non-sway",
           "description": "Y-Direction of Frame. Sway classification of the frame along the Y direction. Enum values are case-insensitive."
         },
@@ -28,7 +35,12 @@
         },
         "DT": {
           "type": "string",
-          "enum": ["3D", "XZ", "YZ", "XY"],
+          "enum": [
+            "3D",
+            "XZ",
+            "YZ",
+            "XY"
+          ],
           "default": "3D",
           "description": "Design Type. Dimensional design type. Enum values are case-insensitive."
         }

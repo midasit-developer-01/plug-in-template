@@ -1,6 +1,7 @@
 {
   "_group": "design",
   "_name": "DIDP",
+  "product": "civil",
   "uri": "design/PSC/AASHTO-LRFD24/DIDP",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {
@@ -11,12 +12,22 @@
       "properties": {
         "MOMENT_TYPE": {
           "type": "integer",
-          "enum": [0, 1, 2, 3],
+          "enum": [
+            0,
+            1,
+            2,
+            3
+          ],
           "description": "Moment check position. 0=None, 1=I, 2=J, 3=I&J. Rejected if outside 0..3."
         },
         "SHEAR_TYPE": {
           "type": "integer",
-          "enum": [0, 1, 2, 3],
+          "enum": [
+            0,
+            1,
+            2,
+            3
+          ],
           "description": "Shear check position. 0=None, 1=I, 2=J, 3=I&J. Rejected if outside 0..3."
         }
       },

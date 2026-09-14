@@ -1,6 +1,7 @@
 {
   "_group": "design",
   "_name": "FMAG",
+  "product": "gen",
   "uri": "design/SRC/AIK-SRC2K/FMAG",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {

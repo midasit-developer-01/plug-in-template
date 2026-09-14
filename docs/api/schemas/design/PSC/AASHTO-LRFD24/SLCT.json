@@ -1,6 +1,7 @@
 {
   "_group": "design",
   "_name": "SLCT",
+  "product": "civil",
   "uri": "design/PSC/AASHTO-LRFD24/SLCT",
   "methods": "GET, PUT, DELETE",
   "schema": {
@@ -15,12 +16,18 @@
         },
         "SL_TYPE": {
           "type": "integer",
-          "enum": [0, 1, 2],
+          "enum": [
+            0,
+            1,
+            2
+          ],
           "default": 0,
           "description": "Serviceability Load Type: 0=Service Limit, 1=Strength Limit1, 2=Strength Limit3. Values outside 0-2 are rejected. Maps internally to nServLcomType (0->0, 1->1, 2->3)."
         }
       },
-      "required": ["LC_NAME"]
+      "required": [
+        "LC_NAME"
+      ]
     }
   },
   "example": {

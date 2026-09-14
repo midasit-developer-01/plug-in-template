@@ -1,6 +1,7 @@
 {
   "_group": "design",
   "_name": "DIDP-VBEAM",
+  "product": "civil",
   "uri": "design/PSC/AASHTO-LRFD24/DIDP-VBEAM",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {

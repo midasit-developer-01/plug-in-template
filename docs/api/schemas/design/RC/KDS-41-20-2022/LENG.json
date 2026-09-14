@@ -1,6 +1,7 @@
 {
   "_group": "design",
   "_name": "LENG",
+  "product": "gen",
   "uri": "design/RC/KDS-41-20-2022/LENG",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {

@@ -1,0 +1,40 @@
+{
+  "_group": "design",
+  "_name": "KFAC",
+  "product": "gen",
+  "uri": "design/STEEL/AIJ-ASD02/KFAC",
+  "methods": "POST, GET, PUT, DELETE",
+  "schema": {
+    "KFAC": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "description": "Effective Length Factor (KFAC). Keyed by element id (the element must already exist in the model); sets the effective length factors about the member's major (Ky) and minor (Kz) axes for AIJ-ASD02 design. Requires the AIJ-ASD02 steel design code to be activated first via PUT /TEMP/DESIGN/STEEL/AIJ-ASD02/DCO. The AIJ-ASD02 handler exposes only Ky and Kz: Kt is neither read nor written by this code. DELETE removes the K-factor assignment from the element.",
+      "properties": {
+        "Ky": {
+          "type": "number",
+          "default": 1.0,
+          "description": "Effective length factor about the major (y) axis."
+        },
+        "Kz": {
+          "type": "number",
+          "default": 1.0,
+          "description": "Effective length factor about the minor (z) axis."
+        },
+        "Kt": {
+          "type": "number",
+          "default": 1.0,
+          "description": "Effective length factor for torsional buckling (ignored by this code: AIJ-ASD02 neither stores nor returns Kt)."
+        }
+      },
+      "required": []
+    }
+  },
+  "example": {
+    "Assign": {
+      "1": {
+        "Ky": 1.0,
+        "Kz": 1.2
+      }
+    }
+  }
+}

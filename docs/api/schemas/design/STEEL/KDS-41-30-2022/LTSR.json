@@ -1,6 +1,7 @@
 {
   "_group": "design",
   "_name": "LTSR",
+  "product": "gen",
   "uri": "design/STEEL/KDS-41-30-2022/LTSR",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {

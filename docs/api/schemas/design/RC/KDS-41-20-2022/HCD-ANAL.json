@@ -1,6 +1,7 @@
 {
   "_group": "design",
   "_name": "HCD-ANAL",
+  "product": "gen",
   "uri": "design/RC/KDS-41-20-2022/HCD-ANAL",
   "methods": "POST",
   "schema": {

@@ -1,6 +1,7 @@
 {
   "_group": "rating",
   "_name": "RCO",
+  "product": "civil",
   "uri": "rating/PSC/AASHTO-LRFR19/RCO",
   "methods": "GET, PUT, DELETE",
   "schema": {
@@ -16,7 +17,10 @@
         },
         "NOMINAL_FLEX_RESIST": {
           "type": "integer",
-          "enum": [0, 1],
+          "enum": [
+            0,
+            1
+          ],
           "default": 0,
           "description": "Nominal Flexural Resistance method: 0=Code, 1=Strain Compatibility. Applies when SLS_FLEX is true."
         },
@@ -27,7 +31,10 @@
         },
         "SLS_SHEAR_TYPE": {
           "type": "integer",
-          "enum": [0, 1],
+          "enum": [
+            0,
+            1
+          ],
           "default": 0,
           "description": "Strength Limit State Shear Type: 0=Non-Segmental Bridge, 1=Segmental Bridge. Applies when SLS_SHEAR is true."
         },
@@ -108,7 +115,10 @@
         },
         "LOAD_TEST_MEASUREMENT": {
           "type": "integer",
-          "enum": [0, 1],
+          "enum": [
+            0,
+            1
+          ],
           "default": 0,
           "description": "Load Test Measurement: 0=Strain, 1=Displacement."
         },

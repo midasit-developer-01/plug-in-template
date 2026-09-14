@@ -1,0 +1,43 @@
+{
+  "_group": "design",
+  "_name": "MEMB",
+  "product": "gen",
+  "uri": "design/STEEL/AIJ-ASD02/MEMB",
+  "methods": "POST, GET, PUT, DELETE",
+  "schema": {
+    "MEMB": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "description": "Design Member Assignment (MEMB). Groups connected elements into a single design member, driven by the AELEM element list. To use any /DESIGN/STEEL/AIJ-ASD02/* endpoint, first activate the AIJ-ASD02 design code with PUT /TEMP/DESIGN/STEEL/AIJ-ASD02/DCO. The handler validates that the listed elements are connected (rejects otherwise) and rejects the write if any element already belongs to a different member (error names the conflicting member keys; DELETE those members first). PUT to the same key is an idempotent update.",
+      "properties": {
+        "AELEM": {
+          "type": "array",
+          "description": "Element list forming the design member. Must be a set of connected elements; a single element is allowed.",
+          "items": {
+            "type": "integer"
+          }
+        },
+        "bREVERSE": {
+          "type": "boolean",
+          "description": "Reverse the member local direction relative to the element direction.",
+          "default": false
+        }
+      },
+      "required": [
+        "AELEM"
+      ]
+    }
+  },
+  "example": {
+    "Assign": {
+      "1": {
+        "AELEM": [
+          1,
+          2,
+          3
+        ],
+        "bREVERSE": false
+      }
+    }
+  }
+}

@@ -1,6 +1,7 @@
 {
   "_group": "db",
   "_name": "THGC-M1",
+  "product": "civil",
   "uri": "db/THGC-M1",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {
@@ -10,12 +11,19 @@
       "properties": {
         "GEO_NONL_TYPE": {
           "type": "integer",
-          "enum": [0, 1, 2],
+          "enum": [
+            0,
+            1,
+            2
+          ],
           "description": "Geometric Nonlinearity Type (None:0, Large Displacement:1, P-Delta:2). Hard-validated to 0-2. When 1 or 2, INIT_LOAD_TYPE must be 0."
         },
         "INIT_LOAD_TYPE": {
           "type": "integer",
-          "enum": [0, 1],
+          "enum": [
+            0,
+            1
+          ],
           "description": "Initial Load Type (Perform NL Static Analysis:0, Import Static/Construction-Stage results:1). Hard-validated to 0-1. Must be 0 when GEO_NONL_TYPE is 1 or 2."
         },
         "INIT_LOAD_LIST": {
@@ -35,11 +43,18 @@
               },
               "LC_TYPE": {
                 "type": "string",
-                "enum": ["ST", "CS"],
+                "enum": [
+                  "ST",
+                  "CS"
+                ],
                 "description": "Load case type: ST = Static, CS = Construction Stage. Compared case-insensitively; any other value is rejected."
               }
             },
-            "required": ["LC_NAME", "SF", "LC_TYPE"]
+            "required": [
+              "LC_NAME",
+              "SF",
+              "LC_TYPE"
+            ]
           }
         },
         "INCREMENT_STEP": {
@@ -53,7 +68,10 @@
             },
             "OUT_TYPE": {
               "type": "integer",
-              "enum": [0, 1],
+              "enum": [
+                0,
+                1
+              ],
               "default": 0,
               "description": "Result Output Type (Final Step only:0, Step Number Increment for output:1). Hard-validated to 0-1. STEP_INC is meaningful only when OUT_TYPE=1."
             },
@@ -94,7 +112,9 @@
                       "description": "Norm tolerance value; used when OPT_USE=true (defaults to 0.001 if omitted)."
                     }
                   },
-                  "required": ["OPT_USE"]
+                  "required": [
+                    "OPT_USE"
+                  ]
                 },
                 "FORCE": {
                   "type": "object",
@@ -109,7 +129,9 @@
                       "description": "Norm tolerance value; used when OPT_USE=true (defaults to 0.001 if omitted)."
                     }
                   },
-                  "required": ["OPT_USE"]
+                  "required": [
+                    "OPT_USE"
+                  ]
                 },
                 "ENERGY": {
                   "type": "object",
@@ -124,13 +146,19 @@
                       "description": "Norm tolerance value; used when OPT_USE=true (defaults to 0.001 if omitted)."
                     }
                   },
-                  "required": ["OPT_USE"]
+                  "required": [
+                    "OPT_USE"
+                  ]
                 }
               }
             },
             "STIFF_UPD_SCHEME": {
               "type": "integer",
-              "enum": [0, 1, 2],
+              "enum": [
+                0,
+                1,
+                2
+              ],
               "default": 1,
               "description": "Stiffness Update Scheme (Custom:0, Full Newton-Raphson:1, Initial Stiffness:2). Hard-validated to 0-2. ITER_BEF_UPDATE is meaningful only when scheme=0."
             },
@@ -164,7 +192,10 @@
                 },
                 "LINE_SEARCH_OPT": {
                   "type": "integer",
-                  "enum": [0, 1],
+                  "enum": [
+                    0,
+                    1
+                  ],
                   "default": 0,
                   "description": "Line Search Option (Automatic:0, User-defined:1). Hard-validated to 0-1. The user-defined fields below apply when OPT_USE=true and this is 1."
                 },
@@ -184,10 +215,14 @@
                   "description": "Line search tolerance."
                 }
               },
-              "required": ["OPT_USE"]
+              "required": [
+                "OPT_USE"
+              ]
             }
           },
-          "required": ["MAX_ITER"]
+          "required": [
+            "MAX_ITER"
+          ]
         },
         "IGNORE_ELEM": {
           "type": "boolean",
@@ -196,7 +231,10 @@
         },
         "SEQ_LOAD_TYPE": {
           "type": "integer",
-          "enum": [0, 1],
+          "enum": [
+            0,
+            1
+          ],
           "default": 1,
           "description": "Sequential loading displacement type - apply specified displacement with respect to Undisplaced Position:0 or Displaced Position:1. Hard-validated to 0-1."
         },
@@ -206,20 +244,30 @@
           "properties": {
             "PSPRING_SUP": {
               "type": "integer",
-              "enum": [0, 1],
+              "enum": [
+                0,
+                1
+              ],
               "default": 0,
               "description": "Point Spring Support (Apply nonlinear properties:0, Assume as Linear:1). Hard-validated to 0-1."
             },
             "EL": {
               "type": "integer",
-              "enum": [0, 1],
+              "enum": [
+                0,
+                1
+              ],
               "default": 1,
               "description": "Elastic Link (Apply nonlinear properties:0, Assume as Linear:1). Hard-validated to 0-1."
             }
           }
         }
       },
-      "required": ["GEO_NONL_TYPE", "INIT_LOAD_TYPE", "ITER_PARAM"]
+      "required": [
+        "GEO_NONL_TYPE",
+        "INIT_LOAD_TYPE",
+        "ITER_PARAM"
+      ]
     }
   },
   "example": {

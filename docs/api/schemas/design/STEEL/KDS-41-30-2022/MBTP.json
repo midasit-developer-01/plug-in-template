@@ -1,6 +1,7 @@
 {
   "_group": "design",
   "_name": "MBTP",
+  "product": "gen",
   "uri": "design/STEEL/KDS-41-30-2022/MBTP",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {
@@ -11,11 +12,17 @@
       "properties": {
         "TYPE": {
           "type": "string",
-          "enum": ["COLUMN", "BEAM", "BRACE"],
+          "enum": [
+            "COLUMN",
+            "BEAM",
+            "BRACE"
+          ],
           "description": "Member type classification (case-insensitive). One of COLUMN, BEAM, BRACE."
         }
       },
-      "required": ["TYPE"],
+      "required": [
+        "TYPE"
+      ],
       "additionalProperties": false
     }
   },

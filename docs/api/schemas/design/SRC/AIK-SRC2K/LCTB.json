@@ -1,6 +1,7 @@
 {
   "_group": "design",
   "_name": "LCTB",
+  "product": "gen",
   "uri": "design/SRC/AIK-SRC2K/LCTB",
   "methods": "GET, DELETE",
   "schema": {

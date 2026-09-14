@@ -1,6 +1,7 @@
 {
   "_group": "design",
   "_name": "MEMB",
+  "product": "civil",
   "uri": "design/PSC/AASHTO-LRFD24/MEMB",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {

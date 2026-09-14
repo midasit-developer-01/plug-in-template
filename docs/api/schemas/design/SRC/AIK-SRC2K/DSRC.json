@@ -1,6 +1,7 @@
 {
   "_group": "design",
   "_name": "DSRC",
+  "product": "gen",
   "uri": "design/SRC/AIK-SRC2K/DSRC",
   "methods": "GET, PUT, DELETE",
   "schema": {
@@ -11,11 +12,15 @@
       "properties": {
         "DGNCODE": {
           "type": "string",
-          "enum": ["AIK-SRC2K"],
+          "enum": [
+            "AIK-SRC2K"
+          ],
           "description": "SRC design code (case-insensitive on input). Serialized wire value for the AIK_SRC2K standard."
         }
       },
-      "required": ["DGNCODE"],
+      "required": [
+        "DGNCODE"
+      ],
       "additionalProperties": false
     }
   },

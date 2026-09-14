@@ -1,6 +1,7 @@
 {
   "_group": "design",
   "_name": "CC-TABLE",
+  "product": "gen",
   "uri": "design/SRC/AIK-SRC2K/CC-TABLE",
   "methods": "POST",
   "schema": {

@@ -1,6 +1,7 @@
 {
   "_group": "design",
   "_name": "ULCT",
+  "product": "gen",
   "uri": "design/STEEL/KDS-41-30-2022/ULCT",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {

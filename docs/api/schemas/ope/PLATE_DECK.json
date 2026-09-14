@@ -1,6 +1,7 @@
 {
   "_group": "ope",
   "_name": "PLATE_DECK",
+  "product": "civil",
   "uri": "ope/PLATE_DECK",
   "methods": "POST",
   "schema": {

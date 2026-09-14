@@ -209,7 +209,7 @@ function renderIndex({ title, intro, rows }) {
 /**
  * 업스트림 reference.md 는 mcp 저장소 기준으로 쓰여 있어 이 저장소에서는 두 군데가 틀린다.
  *   ① "스키마가 필요하면 Zendesk 에서 받아 midas-api-examples.json 에 반영하라" —
- *      이제 540개 스키마가 docs/api/schemas/ 에 로컬로 있으므로 외부 조회가 필요 없다.
+ *      이제 전체 스키마가 docs/api/schemas/ 에 로컬로 있으므로 외부 조회가 필요 없다.
  *   ② 상대 경로와 utils_api 매핑표가 옛 구조를 가리킨다.
  *
  * 앵커를 못 찾으면 조용히 넘어가지 않고 실패시킨다. 업스트림이 바뀌었는데 낡은 안내가
@@ -252,7 +252,7 @@ const REFERENCE_PATCHES = [
       '| `command("design", "RC/KDS-41-20-2022/DCRM", arg)` | `POST /design/RC/KDS-41-20-2022/DCRM` | `{ Argument: arg }` |',
       "",
       "`command()`'s 5th parameter (`body`) bypasses the wrapping and is sent verbatim. Every one of the",
-      "540 bundled endpoints uses `Assign` or `Argument`, so it is an escape hatch, not a routine argument.",
+      "bundled endpoints uses `Assign` or `Argument`, so it is an escape hatch, not a routine argument.",
       "",
       "The db helpers also accept a full uri, so db-shaped tables outside `/db` are reachable:",
       '`dbRead("design/PSC/AASHTO-LRFD24/MEMB")` → `GET /design/PSC/AASHTO-LRFD24/MEMB`.',

@@ -1,6 +1,7 @@
 {
   "_group": "design",
   "_name": "DCRE",
+  "product": "gen",
   "uri": "design/RC/KDS-41-20-2022/DCRE",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {
@@ -20,16 +21,58 @@
               "description": "Main Rebar (1 to 5 sizes). Case-insensitive.",
               "items": {
                 "type": "string",
-                "enum": ["D4", "D5", "D6", "D7", "D8", "D10", "D13", "D16", "D19", "D22", "D25", "D29", "D32", "D35", "D38", "D41", "D43", "D51", "D57"]
+                "enum": [
+                  "D4",
+                  "D5",
+                  "D6",
+                  "D7",
+                  "D8",
+                  "D10",
+                  "D13",
+                  "D16",
+                  "D19",
+                  "D22",
+                  "D25",
+                  "D29",
+                  "D32",
+                  "D35",
+                  "D38",
+                  "D41",
+                  "D43",
+                  "D51",
+                  "D57"
+                ]
               },
               "minItems": 1,
               "maxItems": 5,
-              "default": ["D22"]
+              "default": [
+                "D22"
+              ]
             },
             "STIRRUPS": {
               "type": "string",
               "description": "Stirrups rebar size. Case-insensitive.",
-              "enum": ["D4", "D5", "D6", "D7", "D8", "D10", "D13", "D16", "D19", "D22", "D25", "D29", "D32", "D35", "D38", "D41", "D43", "D51", "D57"],
+              "enum": [
+                "D4",
+                "D5",
+                "D6",
+                "D7",
+                "D8",
+                "D10",
+                "D13",
+                "D16",
+                "D19",
+                "D22",
+                "D25",
+                "D29",
+                "D32",
+                "D35",
+                "D38",
+                "D41",
+                "D43",
+                "D51",
+                "D57"
+              ],
               "default": "D10"
             },
             "STIRRUP_ARRANGEMENT": {
@@ -42,7 +85,27 @@
             "SIDE_BAR": {
               "type": "string",
               "description": "Side Bar rebar size. Case-insensitive.",
-              "enum": ["D4", "D5", "D6", "D7", "D8", "D10", "D13", "D16", "D19", "D22", "D25", "D29", "D32", "D35", "D38", "D41", "D43", "D51", "D57"],
+              "enum": [
+                "D4",
+                "D5",
+                "D6",
+                "D7",
+                "D8",
+                "D10",
+                "D13",
+                "D16",
+                "D19",
+                "D22",
+                "D25",
+                "D29",
+                "D32",
+                "D35",
+                "D38",
+                "D41",
+                "D43",
+                "D51",
+                "D57"
+              ],
               "default": "D13"
             },
             "DT": {
@@ -75,7 +138,11 @@
             "SPLICED_BARS": {
               "type": "string",
               "description": "[SPACING_LIMIT=true] Splice option; applied only when SPACING_LIMIT is true. Case-insensitive.",
-              "enum": ["None", "50%", "100%"],
+              "enum": [
+                "None",
+                "50%",
+                "100%"
+              ],
               "default": "50%"
             }
           }
@@ -90,16 +157,58 @@
               "description": "Main Rebar (1 to 5 sizes). Case-insensitive.",
               "items": {
                 "type": "string",
-                "enum": ["D4", "D5", "D6", "D7", "D8", "D10", "D13", "D16", "D19", "D22", "D25", "D29", "D32", "D35", "D38", "D41", "D43", "D51", "D57"]
+                "enum": [
+                  "D4",
+                  "D5",
+                  "D6",
+                  "D7",
+                  "D8",
+                  "D10",
+                  "D13",
+                  "D16",
+                  "D19",
+                  "D22",
+                  "D25",
+                  "D29",
+                  "D32",
+                  "D35",
+                  "D38",
+                  "D41",
+                  "D43",
+                  "D51",
+                  "D57"
+                ]
               },
               "minItems": 1,
               "maxItems": 5,
-              "default": ["D22"]
+              "default": [
+                "D22"
+              ]
             },
             "TIES_SPIRALS": {
               "type": "string",
               "description": "Ties/Spirals rebar size. Case-insensitive.",
-              "enum": ["D4", "D5", "D6", "D7", "D8", "D10", "D13", "D16", "D19", "D22", "D25", "D29", "D32", "D35", "D38", "D41", "D43", "D51", "D57"],
+              "enum": [
+                "D4",
+                "D5",
+                "D6",
+                "D7",
+                "D8",
+                "D10",
+                "D13",
+                "D16",
+                "D19",
+                "D22",
+                "D25",
+                "D29",
+                "D32",
+                "D35",
+                "D38",
+                "D41",
+                "D43",
+                "D51",
+                "D57"
+              ],
               "default": "D10"
             },
             "ARRANGEMENT_Y": {
@@ -130,7 +239,11 @@
             "SPLICED_BARS": {
               "type": "string",
               "description": "[SPACING_LIMIT=true] Splice option; applied only when SPACING_LIMIT is true. Case-insensitive.",
-              "enum": ["None", "50%", "100%"],
+              "enum": [
+                "None",
+                "50%",
+                "100%"
+              ],
               "default": "50%"
             }
           }
@@ -145,16 +258,58 @@
               "description": "Main Rebar (1 to 5 sizes). Case-insensitive.",
               "items": {
                 "type": "string",
-                "enum": ["D4", "D5", "D6", "D7", "D8", "D10", "D13", "D16", "D19", "D22", "D25", "D29", "D32", "D35", "D38", "D41", "D43", "D51", "D57"]
+                "enum": [
+                  "D4",
+                  "D5",
+                  "D6",
+                  "D7",
+                  "D8",
+                  "D10",
+                  "D13",
+                  "D16",
+                  "D19",
+                  "D22",
+                  "D25",
+                  "D29",
+                  "D32",
+                  "D35",
+                  "D38",
+                  "D41",
+                  "D43",
+                  "D51",
+                  "D57"
+                ]
               },
               "minItems": 1,
               "maxItems": 5,
-              "default": ["D22"]
+              "default": [
+                "D22"
+              ]
             },
             "TIES_SPIRALS": {
               "type": "string",
               "description": "Ties/Spirals rebar size. Case-insensitive.",
-              "enum": ["D4", "D5", "D6", "D7", "D8", "D10", "D13", "D16", "D19", "D22", "D25", "D29", "D32", "D35", "D38", "D41", "D43", "D51", "D57"],
+              "enum": [
+                "D4",
+                "D5",
+                "D6",
+                "D7",
+                "D8",
+                "D10",
+                "D13",
+                "D16",
+                "D19",
+                "D22",
+                "D25",
+                "D29",
+                "D32",
+                "D35",
+                "D38",
+                "D41",
+                "D43",
+                "D51",
+                "D57"
+              ],
               "default": "D10"
             },
             "ARRANGEMENT_Y": {
@@ -185,7 +340,11 @@
             "SPLICED_BARS": {
               "type": "string",
               "description": "[SPACING_LIMIT=true] Splice option; applied only when SPACING_LIMIT is true. Case-insensitive.",
-              "enum": ["None", "50%", "100%"],
+              "enum": [
+                "None",
+                "50%",
+                "100%"
+              ],
               "default": "50%"
             }
           }
@@ -200,28 +359,110 @@
               "description": "Vertical Rebar (1 to 5 sizes). Case-insensitive.",
               "items": {
                 "type": "string",
-                "enum": ["D4", "D5", "D6", "D7", "D8", "D10", "D13", "D16", "D19", "D22", "D25", "D29", "D32", "D35", "D38", "D41", "D43", "D51", "D57"]
+                "enum": [
+                  "D4",
+                  "D5",
+                  "D6",
+                  "D7",
+                  "D8",
+                  "D10",
+                  "D13",
+                  "D16",
+                  "D19",
+                  "D22",
+                  "D25",
+                  "D29",
+                  "D32",
+                  "D35",
+                  "D38",
+                  "D41",
+                  "D43",
+                  "D51",
+                  "D57"
+                ]
               },
               "minItems": 1,
               "maxItems": 5,
-              "default": ["D13"]
+              "default": [
+                "D13"
+              ]
             },
             "HORIZONTAL_REBAR": {
               "type": "string",
               "description": "Horizontal Rebar size. Case-insensitive.",
-              "enum": ["D4", "D5", "D6", "D7", "D8", "D10", "D13", "D16", "D19", "D22", "D25", "D29", "D32", "D35", "D38", "D41", "D43", "D51", "D57"],
+              "enum": [
+                "D4",
+                "D5",
+                "D6",
+                "D7",
+                "D8",
+                "D10",
+                "D13",
+                "D16",
+                "D19",
+                "D22",
+                "D25",
+                "D29",
+                "D32",
+                "D35",
+                "D38",
+                "D41",
+                "D43",
+                "D51",
+                "D57"
+              ],
               "default": "D10"
             },
             "END_REBAR": {
               "type": "string",
               "description": "End Rebar size. Case-insensitive.",
-              "enum": ["D4", "D5", "D6", "D7", "D8", "D10", "D13", "D16", "D19", "D22", "D25", "D29", "D32", "D35", "D38", "D41", "D43", "D51", "D57"],
+              "enum": [
+                "D4",
+                "D5",
+                "D6",
+                "D7",
+                "D8",
+                "D10",
+                "D13",
+                "D16",
+                "D19",
+                "D22",
+                "D25",
+                "D29",
+                "D32",
+                "D35",
+                "D38",
+                "D41",
+                "D43",
+                "D51",
+                "D57"
+              ],
               "default": "D10"
             },
             "BE_HORZ_REBAR": {
               "type": "string",
               "description": "Boundary Element Horizontal Rebar size. Case-insensitive.",
-              "enum": ["D4", "D5", "D6", "D7", "D8", "D10", "D13", "D16", "D19", "D22", "D25", "D29", "D32", "D35", "D38", "D41", "D43", "D51", "D57"],
+              "enum": [
+                "D4",
+                "D5",
+                "D6",
+                "D7",
+                "D8",
+                "D10",
+                "D13",
+                "D16",
+                "D19",
+                "D22",
+                "D25",
+                "D29",
+                "D32",
+                "D35",
+                "D38",
+                "D41",
+                "D43",
+                "D51",
+                "D57"
+              ],
               "default": "D10"
             },
             "BE_HORZ_SPACE": {
@@ -271,7 +512,10 @@
                     "UNIT": {
                       "type": "string",
                       "description": "Unit for spacing values. Case-insensitive.",
-                      "enum": ["mm", "in"],
+                      "enum": [
+                        "mm",
+                        "in"
+                      ],
                       "default": "mm"
                     },
                     "LIST_FOR_DESIGN": {
@@ -283,7 +527,10 @@
                       },
                       "minItems": 1,
                       "maxItems": 50,
-                      "default": [100.0, 150.0]
+                      "default": [
+                        100.0,
+                        150.0
+                      ]
                     }
                   }
                 },
@@ -335,12 +582,42 @@
                       "REBAR_DIAMETER": {
                         "type": "string",
                         "description": "Rebar diameter (e.g. D22). Case-insensitive.",
-                        "enum": ["D4", "D5", "D6", "D7", "D8", "D10", "D13", "D16", "D19", "D22", "D25", "D29", "D32", "D35", "D38", "D41", "D43", "D51", "D57"]
+                        "enum": [
+                          "D4",
+                          "D5",
+                          "D6",
+                          "D7",
+                          "D8",
+                          "D10",
+                          "D13",
+                          "D16",
+                          "D19",
+                          "D22",
+                          "D25",
+                          "D29",
+                          "D32",
+                          "D35",
+                          "D38",
+                          "D41",
+                          "D43",
+                          "D51",
+                          "D57"
+                        ]
                       },
                       "MATERIAL": {
                         "type": "string",
                         "description": "Material grade. Case-insensitive.",
-                        "enum": ["None", "SD300", "SD400", "SD500", "SD600", "SD700", "SD400S", "SD500S", "SD600S"],
+                        "enum": [
+                          "None",
+                          "SD300",
+                          "SD400",
+                          "SD500",
+                          "SD600",
+                          "SD700",
+                          "SD400S",
+                          "SD500S",
+                          "SD600S"
+                        ],
                         "default": "None"
                       }
                     }
@@ -356,12 +633,42 @@
                       "REBAR_DIAMETER": {
                         "type": "string",
                         "description": "Rebar diameter (e.g. D22). Case-insensitive.",
-                        "enum": ["D4", "D5", "D6", "D7", "D8", "D10", "D13", "D16", "D19", "D22", "D25", "D29", "D32", "D35", "D38", "D41", "D43", "D51", "D57"]
+                        "enum": [
+                          "D4",
+                          "D5",
+                          "D6",
+                          "D7",
+                          "D8",
+                          "D10",
+                          "D13",
+                          "D16",
+                          "D19",
+                          "D22",
+                          "D25",
+                          "D29",
+                          "D32",
+                          "D35",
+                          "D38",
+                          "D41",
+                          "D43",
+                          "D51",
+                          "D57"
+                        ]
                       },
                       "MATERIAL": {
                         "type": "string",
                         "description": "Material grade. Case-insensitive.",
-                        "enum": ["None", "SD300", "SD400", "SD500", "SD600", "SD700", "SD400S", "SD500S", "SD600S"],
+                        "enum": [
+                          "None",
+                          "SD300",
+                          "SD400",
+                          "SD500",
+                          "SD600",
+                          "SD700",
+                          "SD400S",
+                          "SD500S",
+                          "SD600S"
+                        ],
                         "default": "None"
                       }
                     }
@@ -378,7 +685,10 @@
     "Assign": {
       "1": {
         "BEAM": {
-          "MAIN_REBAR": ["D22", "D25"],
+          "MAIN_REBAR": [
+            "D22",
+            "D25"
+          ],
           "STIRRUPS": "D10",
           "STIRRUP_ARRANGEMENT": 2,
           "SIDE_BAR": "D13",
@@ -390,7 +700,9 @@
           "SPLICED_BARS": "50%"
         },
         "COLUMN": {
-          "MAIN_REBAR": ["D22"],
+          "MAIN_REBAR": [
+            "D22"
+          ],
           "TIES_SPIRALS": "D10",
           "ARRANGEMENT_Y": 3,
           "ARRANGEMENT_Z": 3,
@@ -399,7 +711,9 @@
           "SPLICED_BARS": "50%"
         },
         "BRACE": {
-          "MAIN_REBAR": ["D22"],
+          "MAIN_REBAR": [
+            "D22"
+          ],
           "TIES_SPIRALS": "D10",
           "ARRANGEMENT_Y": 2,
           "ARRANGEMENT_Z": 2,
@@ -407,7 +721,9 @@
           "SPACING_LIMIT": false
         },
         "WALL": {
-          "VERTICAL_REBAR": ["D13"],
+          "VERTICAL_REBAR": [
+            "D13"
+          ],
           "HORIZONTAL_REBAR": "D10",
           "END_REBAR": "D10",
           "BE_HORZ_REBAR": "D10",
@@ -420,7 +736,10 @@
             "OUT_OF_PLANE_BENDING": false,
             "VERTICAL_REBAR_SPACING": {
               "UNIT": "mm",
-              "LIST_FOR_DESIGN": [100.0, 150.0]
+              "LIST_FOR_DESIGN": [
+                100.0,
+                150.0
+              ]
             },
             "HORIZONTAL_REBAR_SPACING_FROM": 0.05,
             "END_REBAR_METHOD": 2,
@@ -430,10 +749,16 @@
           },
           "MATERIAL_BY_DIAMETER_INPUT": {
             "VERTICAL_END_REBAR": [
-              { "REBAR_DIAMETER": "D13", "MATERIAL": "SD400" }
+              {
+                "REBAR_DIAMETER": "D13",
+                "MATERIAL": "SD400"
+              }
             ],
             "HORIZONTAL_REBAR": [
-              { "REBAR_DIAMETER": "D10", "MATERIAL": "SD400" }
+              {
+                "REBAR_DIAMETER": "D10",
+                "MATERIAL": "SD400"
+              }
             ]
           }
         }

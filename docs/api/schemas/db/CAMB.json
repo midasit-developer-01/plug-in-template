@@ -1,6 +1,7 @@
 {
   "_group": "db",
   "_name": "CAMB",
+  "product": "civil",
   "uri": "db/CAMB",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {

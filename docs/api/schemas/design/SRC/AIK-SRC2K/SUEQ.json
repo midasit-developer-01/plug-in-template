@@ -1,6 +1,7 @@
 {
   "_group": "design",
   "_name": "SUEQ",
+  "product": "gen",
   "uri": "design/SRC/AIK-SRC2K/SUEQ",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {

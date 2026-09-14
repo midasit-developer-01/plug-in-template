@@ -1,6 +1,7 @@
 {
   "_group": "design",
   "_name": "DCTL",
+  "product": "gen",
   "uri": "design/STEEL/KDS-41-30-2022/DCTL",
   "methods": "GET, PUT, DELETE",
   "schema": {
@@ -11,13 +12,19 @@
       "properties": {
         "FRAMEX": {
           "type": "string",
-          "enum": ["Braced Non-sway", "Unbraced Sway"],
+          "enum": [
+            "Braced Non-sway",
+            "Unbraced Sway"
+          ],
           "default": "Braced Non-sway",
           "description": "Frame type in the X-direction. Case-insensitive. 'Braced Non-sway' sets the braced (non-sway) frame flag; 'Unbraced Sway' sets the unbraced (sway) frame."
         },
         "FRAMEY": {
           "type": "string",
-          "enum": ["Braced Non-sway", "Unbraced Sway"],
+          "enum": [
+            "Braced Non-sway",
+            "Unbraced Sway"
+          ],
           "default": "Braced Non-sway",
           "description": "Frame type in the Y-direction. Case-insensitive. 'Braced Non-sway' sets the braced (non-sway) frame flag; 'Unbraced Sway' sets the unbraced (sway) frame."
         },
@@ -28,7 +35,12 @@
         },
         "DT": {
           "type": "string",
-          "enum": ["3D", "XZ", "YZ", "XY"],
+          "enum": [
+            "3D",
+            "XZ",
+            "YZ",
+            "XY"
+          ],
           "default": "3D",
           "description": "Design (dimension) type. Case-insensitive. Selects the analysis dimension used for design: 3D, or the XZ / YZ / XY plane."
         }

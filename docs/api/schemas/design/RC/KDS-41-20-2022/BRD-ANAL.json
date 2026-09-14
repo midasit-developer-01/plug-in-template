@@ -1,6 +1,7 @@
 {
   "_group": "design",
   "_name": "BRD-ANAL",
+  "product": "gen",
   "uri": "design/RC/KDS-41-20-2022/BRD-ANAL",
   "methods": "POST",
   "schema": {
@@ -15,7 +16,11 @@
           "properties": {
             "PERFORM_TYPE": {
               "type": "string",
-              "enum": ["ALL", "ELEMS", "SECTIONS"],
+              "enum": [
+                "ALL",
+                "ELEMS",
+                "SECTIONS"
+              ],
               "default": "ALL",
               "description": "Perform Target - All Elements: ALL / By Element No.: ELEMS / By Section No.: SECTIONS. Enum matching is case-insensitive."
             },
@@ -56,11 +61,18 @@
     "Argument": {
       "PERFORM_TYPE": "ELEMS",
       "ELEMS": {
-        "KEYS": [1, 2, 3],
+        "KEYS": [
+          1,
+          2,
+          3
+        ],
         "TO": "1-10",
         "STRUCTURE_GROUP_NAME": "Braces"
       },
-      "SECTIONS": [1, 2]
+      "SECTIONS": [
+        1,
+        2
+      ]
     }
   }
 }

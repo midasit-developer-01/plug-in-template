@@ -1,6 +1,7 @@
 {
   "_group": "design",
   "_name": "TABLE",
+  "product": "civil",
   "uri": "design/PSC/AASHTO-LRFD24/TABLE",
   "methods": "POST",
   "schema": {

@@ -1,6 +1,7 @@
 {
   "_group": "design",
   "_name": "SRDF",
+  "product": "gen",
   "uri": "design/STEEL/KDS-41-30-2022/SRDF",
   "methods": "GET, PUT, DELETE",
   "schema": {

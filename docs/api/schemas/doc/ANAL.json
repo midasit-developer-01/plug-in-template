@@ -3,11 +3,12 @@
   "_name": "ANAL",
   "uri": "doc/ANAL",
   "methods": "POST",
+  "note": "SAVE THE MODEL FIRST. If the open project has no file path yet (a new/Untitled model, e.g. after doc/NEW), MIDAS pops a modal Save As dialog on the desktop before it starts analysing. That modal blocks the app's request thread, so this call returns nothing and times out (60s client timeout), and every later request to the same instance queues behind it until a human closes the dialog. Call doc/SAVEAS with a full file path once before the first doc/ANAL — afterwards doc/SAVE writes to that path silently and ANAL runs unattended.",
   "schema": {
     "ANAL": {
       "$schema": "http://json-schema.org/draft-07/schema#",
       "type": "object",
-      "description": "Analysis (ANAL). Runs a structural analysis on the currently opened project; the request body selects the analysis type, and if no body is sent a default linear (+time history) analysis is performed.",
+      "description": "Analysis (ANAL). Runs a structural analysis on the currently opened project; the request body selects the analysis type, and if no body is sent a default linear (+time history) analysis is performed. Requires the project to already have a file path — see the endpoint's `note`.",
       "properties": {
         "Argument": {
           "type": "object",

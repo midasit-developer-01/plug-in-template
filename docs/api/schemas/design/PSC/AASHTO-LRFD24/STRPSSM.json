@@ -1,6 +1,7 @@
 {
   "_group": "design",
   "_name": "STRPSSM",
+  "product": "civil",
   "uri": "design/PSC/AASHTO-LRFD24/STRPSSM",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {

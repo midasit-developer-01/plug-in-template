@@ -1,0 +1,58 @@
+{
+  "_group": "design",
+  "_name": "LENG",
+  "product": "gen",
+  "uri": "design/STEEL/AIJ-ASD02/LENG",
+  "methods": "POST, GET, PUT, DELETE",
+  "schema": {
+    "LENG": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "description": "Member Unbraced Length (LENG). Keyed by element id (the element must already exist in the model); sets the unbraced lengths used by the AIJ-ASD02 steel member design check; all fields are optional overrides. Requires the AIJ-ASD02 steel design code to be activated first via PUT /TEMP/DESIGN/STEEL/AIJ-ASD02/DCO. The AIJ-ASD02 handler exposes only LY, LZ, LB and bNOTUSE: LT and bAUTOCALC are neither read nor written by this code. DELETE removes the unbraced-length assignment from the element.",
+      "properties": {
+        "LY": {
+          "type": "number",
+          "default": 0,
+          "description": "Unbraced Length Ly (about the y-axis). 0 = use the member length."
+        },
+        "LZ": {
+          "type": "number",
+          "default": 0,
+          "description": "Unbraced Length Lz (about the z-axis). 0 = use the member length."
+        },
+        "LB": {
+          "type": "number",
+          "default": 0,
+          "description": "Laterally Unbraced Length. 0 = use the member length."
+        },
+        "bNOTUSE": {
+          "type": "boolean",
+          "default": false,
+          "description": "Do not consider the laterally unbraced length."
+        },
+        "bAUTOCALC": {
+          "type": "boolean",
+          "default": false,
+          "description": "Calculate the unbraced length automatically by code (ignored by this code: the AIJ-ASD02 handler neither stores nor returns it)."
+        },
+        "LT": {
+          "type": "number",
+          "default": 0,
+          "description": "Torsional Unbraced Length (ignored by this code: the AIJ-ASD02 handler neither stores nor returns it)."
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    }
+  },
+  "example": {
+    "Assign": {
+      "1": {
+        "LY": 3.5,
+        "LZ": 3.5,
+        "LB": 1.75,
+        "bNOTUSE": false
+      }
+    }
+  }
+}

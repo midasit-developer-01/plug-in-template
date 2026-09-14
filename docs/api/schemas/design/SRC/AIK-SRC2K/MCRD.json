@@ -1,6 +1,7 @@
 {
   "_group": "design",
   "_name": "MCRD",
+  "product": "gen",
   "uri": "design/SRC/AIK-SRC2K/MCRD",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {

@@ -1,6 +1,7 @@
 {
   "_group": "rating",
   "_name": "SPLT",
+  "product": "civil",
   "uri": "rating/PSC/AASHTO-LRFR19/SPLT",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {

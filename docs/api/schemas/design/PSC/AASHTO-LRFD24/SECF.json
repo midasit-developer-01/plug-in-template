@@ -1,6 +1,7 @@
 {
   "_group": "design",
   "_name": "SECF",
+  "product": "civil",
   "uri": "design/PSC/AASHTO-LRFD24/SECF",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {

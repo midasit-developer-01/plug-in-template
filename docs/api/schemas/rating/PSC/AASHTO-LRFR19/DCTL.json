@@ -1,6 +1,7 @@
 {
   "_group": "rating",
   "_name": "DCTL",
+  "product": "civil",
   "uri": "rating/PSC/AASHTO-LRFR19/DCTL",
   "methods": "GET, PUT, DELETE",
   "schema": {
@@ -11,13 +12,19 @@
       "properties": {
         "FRAMEX": {
           "type": "string",
-          "enum": ["Braced Non-sway", "Unbraced Sway"],
+          "enum": [
+            "Braced Non-sway",
+            "Unbraced Sway"
+          ],
           "default": "Braced Non-sway",
           "description": "X-Direction of Frame. Case-insensitive enum (wire strings). BRACED_NONSWAY -> braced non-sway frame; UNBRACED_SWAY -> unbraced sway frame."
         },
         "FRAMEY": {
           "type": "string",
-          "enum": ["Braced Non-sway", "Unbraced Sway"],
+          "enum": [
+            "Braced Non-sway",
+            "Unbraced Sway"
+          ],
           "default": "Braced Non-sway",
           "description": "Y-Direction of Frame. Case-insensitive enum (wire strings). BRACED_NONSWAY -> braced non-sway frame; UNBRACED_SWAY -> unbraced sway frame."
         },
@@ -28,7 +35,12 @@
         },
         "DT": {
           "type": "string",
-          "enum": ["3D", "XZ", "YZ", "XY"],
+          "enum": [
+            "3D",
+            "XZ",
+            "YZ",
+            "XY"
+          ],
           "default": "3D",
           "description": "Design Type. Case-insensitive enum (wire strings)."
         }

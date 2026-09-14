@@ -1,6 +1,7 @@
 {
   "_group": "design",
   "_name": "CMFT",
+  "product": "gen",
   "uri": "design/SRC/AIK-SRC2K/CMFT",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {

@@ -1,0 +1,62 @@
+{
+  "_group": "design",
+  "_name": "DCTL",
+  "product": "gen",
+  "uri": "design/STEEL/AIJ-ASD02/DCTL",
+  "methods": "GET, PUT, DELETE",
+  "schema": {
+    "DCTL": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "description": "Design Control Data (DCTL). Global steel design control settings driving frame sway classification, automatic effective length factor calculation, and the design dimension type; single global record with key = 1, all fields optional (PUT merges only the fields you send). Requires the AIJ-ASD02 steel design code to be activated first via PUT /TEMP/DESIGN/STEEL/AIJ-ASD02/DCO. DELETE does not remove the record: it resets it to defaults (FRAMEX/FRAMEY = 'Braced Non-sway', bAUTOKF = false, DT = '3D'). LLRF shares this same underlying record, so set DCTL before using LLRF.",
+      "properties": {
+        "FRAMEX": {
+          "type": "string",
+          "enum": [
+            "Braced Non-sway",
+            "Unbraced Sway"
+          ],
+          "default": "Braced Non-sway",
+          "description": "Frame type in the X-direction. Case-insensitive. 'Braced Non-sway' sets the braced (non-sway) frame flag; 'Unbraced Sway' sets the unbraced (sway) frame."
+        },
+        "FRAMEY": {
+          "type": "string",
+          "enum": [
+            "Braced Non-sway",
+            "Unbraced Sway"
+          ],
+          "default": "Braced Non-sway",
+          "description": "Frame type in the Y-direction. Case-insensitive. 'Braced Non-sway' sets the braced (non-sway) frame flag; 'Unbraced Sway' sets the unbraced (sway) frame."
+        },
+        "bAUTOKF": {
+          "type": "boolean",
+          "default": false,
+          "description": "Auto-calculate the effective length factor (K factor) when true."
+        },
+        "DT": {
+          "type": "string",
+          "enum": [
+            "3D",
+            "XZ",
+            "YZ",
+            "XY"
+          ],
+          "default": "3D",
+          "description": "Design (dimension) type. Case-insensitive. Selects the analysis dimension used for design: 3D, or the XZ / YZ / XY plane."
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    }
+  },
+  "example": {
+    "Assign": {
+      "1": {
+        "FRAMEX": "Braced Non-sway",
+        "FRAMEY": "Unbraced Sway",
+        "bAUTOKF": true,
+        "DT": "3D"
+      }
+    }
+  }
+}

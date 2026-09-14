@@ -1,6 +1,7 @@
 {
   "_group": "design",
   "_name": "SMODI",
+  "product": "gen",
   "uri": "design/STEEL/KDS-41-30-2022/SMODI",
   "methods": "GET, PUT, DELETE",
   "schema": {
@@ -11,7 +12,10 @@
       "properties": {
         "CODE": {
           "type": "string",
-          "enum": ["None", "Standard"],
+          "enum": [
+            "None",
+            "Standard"
+          ],
           "description": "Steel material code source (case-insensitive). 'None' = user-defined material; 'Standard' = pull material properties from the standard database."
         },
         "ES": {
@@ -28,30 +32,82 @@
         },
         "STANDARD_CODE": {
           "type": "string",
-          "enum": ["KS22(S)"],
+          "enum": [
+            "KS22(S)"
+          ],
           "description": "[CODE=Standard] Standard steel code (case-insensitive). Required by the handler when CODE is 'Standard'. Only KS22(S) is accepted."
         },
         "GRADE": {
           "type": "string",
           "enum": [
-            "SS235", "SS275", "SS315", "SS410", "SS450", "SS550",
-            "SM275", "SM355", "SM420", "SM460",
-            "SM275TMC", "SM355TMC", "SM420TMC", "SM460TMC",
-            "SMA275A", "SMA275B", "SMA275C", "SMA355A", "SMA355B", "SMA355C", "SMA460",
+            "SS235",
+            "SS275",
+            "SS315",
+            "SS410",
+            "SS450",
+            "SS550",
+            "SM275",
+            "SM355",
+            "SM420",
+            "SM460",
+            "SM275TMC",
+            "SM355TMC",
+            "SM420TMC",
+            "SM460TMC",
+            "SMA275A",
+            "SMA275B",
+            "SMA275C",
+            "SMA355A",
+            "SMA355B",
+            "SMA355C",
+            "SMA460",
             "HSM500",
-            "SN275A", "SN275B", "SN275C", "SN355", "SN460",
-            "SHN275", "SHN355", "SHN420", "SHN460",
-            "HSB380", "HSB460", "HSB690", "HSA650",
-            "SGT275", "SGT355", "SGT410", "SGT450", "SGT550",
-            "SRT275", "SRT355", "SRT410", "SRT450", "SRT550",
-            "SNT275", "SNT355", "SNT460",
-            "SHT410", "SHT460",
-            "SNRT295E", "SNRT390E", "SNRT275A", "SNRT355A",
+            "SN275A",
+            "SN275B",
+            "SN275C",
+            "SN355",
+            "SN460",
+            "SHN275",
+            "SHN355",
+            "SHN420",
+            "SHN460",
+            "HSB380",
+            "HSB460",
+            "HSB690",
+            "HSA650",
+            "SGT275",
+            "SGT355",
+            "SGT410",
+            "SGT450",
+            "SGT550",
+            "SRT275",
+            "SRT355",
+            "SRT410",
+            "SRT450",
+            "SRT550",
+            "SNT275",
+            "SNT355",
+            "SNT460",
+            "SHT410",
+            "SHT460",
+            "SNRT295E",
+            "SNRT390E",
+            "SNRT275A",
+            "SNRT355A",
             "SSC275",
-            "SWH275", "SWH355", "SWH420", "SWH460",
-            "SF490", "SF540",
-            "SDP1", "SDP2", "SDP3",
-            "SWPC1", "SWPD1", "SWPC", "SWPD"
+            "SWH275",
+            "SWH355",
+            "SWH420",
+            "SWH460",
+            "SF490",
+            "SF540",
+            "SDP1",
+            "SDP2",
+            "SDP3",
+            "SWPC1",
+            "SWPD1",
+            "SWPC",
+            "SWPD"
           ],
           "description": "[CODE=Standard] Steel material grade (case-insensitive) looked up in the KS22(S) database. Required by the handler when CODE is 'Standard'."
         },
@@ -104,7 +160,9 @@
           "description": "Yield strength Fy10. Returned by GET only; ignored on PUT."
         }
       },
-      "required": ["CODE"]
+      "required": [
+        "CODE"
+      ]
     }
   },
   "example": {

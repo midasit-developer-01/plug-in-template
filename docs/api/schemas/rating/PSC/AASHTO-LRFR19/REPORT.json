@@ -1,6 +1,7 @@
 {
   "_group": "rating",
   "_name": "REPORT",
+  "product": "civil",
   "uri": "rating/PSC/AASHTO-LRFR19/REPORT",
   "methods": "POST",
   "schema": {

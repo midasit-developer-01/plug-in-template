@@ -1,6 +1,7 @@
 {
   "_group": "rating",
   "_name": "DFRC",
+  "product": "civil",
   "uri": "rating/PSC/AASHTO-LRFR19/DFRC",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {
@@ -28,13 +29,18 @@
         "LIMIT_STATE": {
           "type": "integer",
           "description": "Limit State (0=Service Limit State, 1=Strength Limit State). Selects which LOAD_ITEMS variant applies and the default rating factors.",
-          "enum": [0, 1]
+          "enum": [
+            0,
+            1
+          ]
         },
         "PRIMARY_VEH": {
           "type": "object",
           "description": "Primary Vehicle live load case and factor.",
           "additionalProperties": false,
-          "required": ["LOAD_CASE_NAME"],
+          "required": [
+            "LOAD_CASE_NAME"
+          ],
           "properties": {
             "LOAD_CASE_NAME": {
               "type": "string",
@@ -52,7 +58,9 @@
           "type": "object",
           "description": "Adjacent Vehicle live load case and factor.",
           "additionalProperties": false,
-          "required": ["LOAD_CASE_NAME"],
+          "required": [
+            "LOAD_CASE_NAME"
+          ],
           "properties": {
             "LOAD_CASE_NAME": {
               "type": "string",
@@ -70,7 +78,11 @@
           "type": "integer",
           "description": "Eval Live Load Model (0=Design, 1=Legal, 2=Permit) per LRFR19.",
           "default": 0,
-          "enum": [0, 1, 2]
+          "enum": [
+            0,
+            1,
+            2
+          ]
         },
         "LOAD_ITEMS_SER": {
           "type": "object",
@@ -102,7 +114,9 @@
                 "LOAD_CASES": {
                   "type": "array",
                   "description": "Load case names for this item, including type suffix (e.g. \"DC(ST)\").",
-                  "items": { "type": "string" }
+                  "items": {
+                    "type": "string"
+                  }
                 }
               }
             },
@@ -131,7 +145,9 @@
                 "LOAD_CASES": {
                   "type": "array",
                   "description": "Load case names for this item, including type suffix (e.g. \"DC(ST)\").",
-                  "items": { "type": "string" }
+                  "items": {
+                    "type": "string"
+                  }
                 }
               }
             },
@@ -148,7 +164,9 @@
                 "LOAD_CASES": {
                   "type": "array",
                   "description": "Load case names for this item, including type suffix (e.g. \"DC(ST)\").",
-                  "items": { "type": "string" }
+                  "items": {
+                    "type": "string"
+                  }
                 }
               }
             },
@@ -165,7 +183,9 @@
                 "LOAD_CASES": {
                   "type": "array",
                   "description": "Load case names for this item, including type suffix (e.g. \"DC(ST)\").",
-                  "items": { "type": "string" }
+                  "items": {
+                    "type": "string"
+                  }
                 }
               }
             },
@@ -182,7 +202,9 @@
                 "LOAD_CASES": {
                   "type": "array",
                   "description": "Load case names for this item, including type suffix (e.g. \"DC(ST)\").",
-                  "items": { "type": "string" }
+                  "items": {
+                    "type": "string"
+                  }
                 }
               }
             },
@@ -199,7 +221,9 @@
                 "LOAD_CASES": {
                   "type": "array",
                   "description": "Load case names for this item, including type suffix (e.g. \"DC(ST)\").",
-                  "items": { "type": "string" }
+                  "items": {
+                    "type": "string"
+                  }
                 }
               }
             },
@@ -216,7 +240,9 @@
                 "LOAD_CASES": {
                   "type": "array",
                   "description": "Load case names for this item, including type suffix (e.g. \"DC(ST)\").",
-                  "items": { "type": "string" }
+                  "items": {
+                    "type": "string"
+                  }
                 }
               }
             }
@@ -252,7 +278,9 @@
                 "LOAD_CASES": {
                   "type": "array",
                   "description": "Load case names for this item, including type suffix (e.g. \"DC(ST)\").",
-                  "items": { "type": "string" }
+                  "items": {
+                    "type": "string"
+                  }
                 }
               }
             },
@@ -281,7 +309,9 @@
                 "LOAD_CASES": {
                   "type": "array",
                   "description": "Load case names for this item, including type suffix (e.g. \"DC(ST)\").",
-                  "items": { "type": "string" }
+                  "items": {
+                    "type": "string"
+                  }
                 }
               }
             },
@@ -298,7 +328,9 @@
                 "LOAD_CASES": {
                   "type": "array",
                   "description": "Load case names for this item, including type suffix (e.g. \"DC(ST)\").",
-                  "items": { "type": "string" }
+                  "items": {
+                    "type": "string"
+                  }
                 }
               }
             },
@@ -315,7 +347,9 @@
                 "LOAD_CASES": {
                   "type": "array",
                   "description": "Load case names for this item, including type suffix (e.g. \"DC(ST)\").",
-                  "items": { "type": "string" }
+                  "items": {
+                    "type": "string"
+                  }
                 }
               }
             },
@@ -332,7 +366,9 @@
                 "LOAD_CASES": {
                   "type": "array",
                   "description": "Load case names for this item, including type suffix (e.g. \"DC(ST)\").",
-                  "items": { "type": "string" }
+                  "items": {
+                    "type": "string"
+                  }
                 }
               }
             },
@@ -349,7 +385,9 @@
                 "LOAD_CASES": {
                   "type": "array",
                   "description": "Load case names for this item, including type suffix (e.g. \"DC(ST)\").",
-                  "items": { "type": "string" }
+                  "items": {
+                    "type": "string"
+                  }
                 }
               }
             },
@@ -366,7 +404,9 @@
                 "LOAD_CASES": {
                   "type": "array",
                   "description": "Load case names for this item, including type suffix (e.g. \"DC(ST)\").",
-                  "items": { "type": "string" }
+                  "items": {
+                    "type": "string"
+                  }
                 }
               }
             }
@@ -392,16 +432,29 @@
         "EVAL_TYPE": 0,
         "LOAD_ITEMS_SER": {
           "DC": {
-            "FACTOR": { "MAX": 1.0, "MIN": 1.0 },
-            "LOAD_CASES": ["Self(ST)", "SDL(ST)"]
+            "FACTOR": {
+              "MAX": 1.0,
+              "MIN": 1.0
+            },
+            "LOAD_CASES": [
+              "Self(ST)",
+              "SDL(ST)"
+            ]
           },
           "DW": {
-            "FACTOR": { "MAX": 1.0, "MIN": 1.0 },
-            "LOAD_CASES": ["Wearing(ST)"]
+            "FACTOR": {
+              "MAX": 1.0,
+              "MIN": 1.0
+            },
+            "LOAD_CASES": [
+              "Wearing(ST)"
+            ]
           },
           "TEMP": {
             "FACTOR": 1.0,
-            "LOAD_CASES": ["Temp(ST)"]
+            "LOAD_CASES": [
+              "Temp(ST)"
+            ]
           }
         }
       },
@@ -420,16 +473,29 @@
         "EVAL_TYPE": 1,
         "LOAD_ITEMS_STR": {
           "DC": {
-            "FACTOR": { "MAX": 1.25, "MIN": 0.9 },
-            "LOAD_CASES": ["Self(ST)", "SDL(ST)"]
+            "FACTOR": {
+              "MAX": 1.25,
+              "MIN": 0.9
+            },
+            "LOAD_CASES": [
+              "Self(ST)",
+              "SDL(ST)"
+            ]
           },
           "DW": {
-            "FACTOR": { "MAX": 1.5, "MIN": 0.9 },
-            "LOAD_CASES": ["Wearing(ST)"]
+            "FACTOR": {
+              "MAX": 1.5,
+              "MIN": 0.9
+            },
+            "LOAD_CASES": [
+              "Wearing(ST)"
+            ]
           },
           "PERMANENT": {
             "FACTOR": 1.25,
-            "LOAD_CASES": ["Creep(CS)"]
+            "LOAD_CASES": [
+              "Creep(CS)"
+            ]
           },
           "USER_DEFINED": {
             "FACTOR": 1.25

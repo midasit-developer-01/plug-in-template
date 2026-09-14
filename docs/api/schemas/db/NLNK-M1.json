@@ -1,6 +1,7 @@
 {
   "_group": "db",
   "_name": "NLNK-M1",
+  "product": "civil",
   "uri": "db/NLNK-M1",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {
@@ -23,7 +24,10 @@
         "REF_SYSTEM": {
           "type": "integer",
           "description": "Reference coordinate system: 0 = Element (uses BETA_ANGLE), 1 = Global (uses INPUT_METHOD and the matching values array).",
-          "enum": [0, 1]
+          "enum": [
+            0,
+            1
+          ]
         },
         "GROUP_NAME": {
           "type": "string",
@@ -38,7 +42,11 @@
         "INPUT_METHOD": {
           "type": "integer",
           "description": "[REF_SYSTEM=1] Orientation input method for the Global reference system: 0 = Angle (ANGLE_VALUES), 1 = 3 Points (POINT_VALUES), 2 = Vector (VECTOR_VALUES).",
-          "enum": [0, 1, 2]
+          "enum": [
+            0,
+            1,
+            2
+          ]
         },
         "ANGLE_VALUES": {
           "type": "array",
@@ -49,10 +57,14 @@
               "VALUE": {
                 "type": "array",
                 "description": "Angle components [x, y', z\"] in degrees; 3 values.",
-                "items": { "type": "number" }
+                "items": {
+                  "type": "number"
+                }
               }
             },
-            "required": ["VALUE"]
+            "required": [
+              "VALUE"
+            ]
           }
         },
         "POINT_VALUES": {
@@ -64,10 +76,14 @@
               "VALUE": {
                 "type": "array",
                 "description": "Point coordinates [X, Y, Z]; 3 values per point.",
-                "items": { "type": "number" }
+                "items": {
+                  "type": "number"
+                }
               }
             },
-            "required": ["VALUE"]
+            "required": [
+              "VALUE"
+            ]
           }
         },
         "VECTOR_VALUES": {
@@ -79,14 +95,23 @@
               "VALUE": {
                 "type": "array",
                 "description": "Vector components [X, Y, Z]; 3 values per vector.",
-                "items": { "type": "number" }
+                "items": {
+                  "type": "number"
+                }
               }
             },
-            "required": ["VALUE"]
+            "required": [
+              "VALUE"
+            ]
           }
         }
       },
-      "required": ["NODE1", "NODE2", "PROP_NAME", "REF_SYSTEM"]
+      "required": [
+        "NODE1",
+        "NODE2",
+        "PROP_NAME",
+        "REF_SYSTEM"
+      ]
     }
   },
   "example": {
@@ -106,7 +131,13 @@
         "REF_SYSTEM": 1,
         "INPUT_METHOD": 0,
         "ANGLE_VALUES": [
-          { "VALUE": [0.0, 0.0, 0.0] }
+          {
+            "VALUE": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          }
         ]
       },
       "3": {
@@ -116,9 +147,27 @@
         "REF_SYSTEM": 1,
         "INPUT_METHOD": 1,
         "POINT_VALUES": [
-          { "VALUE": [0.0, 0.0, 0.0] },
-          { "VALUE": [1.0, 0.0, 0.0] },
-          { "VALUE": [0.0, 1.0, 0.0] }
+          {
+            "VALUE": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "VALUE": [
+              1.0,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "VALUE": [
+              0.0,
+              1.0,
+              0.0
+            ]
+          }
         ]
       },
       "4": {
@@ -128,8 +177,20 @@
         "REF_SYSTEM": 1,
         "INPUT_METHOD": 2,
         "VECTOR_VALUES": [
-          { "VALUE": [1.0, 0.0, 0.0] },
-          { "VALUE": [0.0, 1.0, 0.0] }
+          {
+            "VALUE": [
+              1.0,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "VALUE": [
+              0.0,
+              1.0,
+              0.0
+            ]
+          }
         ]
       }
     }

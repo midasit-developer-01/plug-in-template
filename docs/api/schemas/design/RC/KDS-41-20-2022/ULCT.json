@@ -1,6 +1,7 @@
 {
   "_group": "design",
   "_name": "ULCT",
+  "product": "gen",
   "uri": "design/RC/KDS-41-20-2022/ULCT",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {

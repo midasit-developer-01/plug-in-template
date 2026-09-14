@@ -1,6 +1,7 @@
 {
   "_group": "db",
   "_name": "EQMF",
+  "product": "civil",
   "uri": "db/EQMF",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {
@@ -10,7 +11,12 @@
       "properties": {
         "ELEM_TYPE": {
           "type": "string",
-          "enum": ["TRUSS", "BEAM", "E-LINK", "G-LINK"],
+          "enum": [
+            "TRUSS",
+            "BEAM",
+            "E-LINK",
+            "G-LINK"
+          ],
           "description": "Element type. Case-insensitive. Determines the required length of NODE_FORCES: [ELEM_TYPE=TRUSS] expects 2 nodal forces (axial at each of the 2 nodes); [ELEM_TYPE=BEAM|E-LINK|G-LINK] expects 12 nodal forces (6 DOF components per node for 2 nodes). Enum wire values: TRUSS, BEAM, E-LINK, G-LINK."
         },
         "ELEM_KEY": {
@@ -26,7 +32,11 @@
           "description": "Nodal force values. [ELEM_TYPE=TRUSS] provide exactly 2 values (axial force at node 1 then node 2). [ELEM_TYPE=BEAM|E-LINK|G-LINK] provide exactly 12 values: the first 6 are the 6 DOF force components at node 1, the next 6 are the 6 DOF force components at node 2. A size below 2 (or below 12 for non-TRUSS types) is rejected by the handler."
         }
       },
-      "required": ["ELEM_TYPE", "ELEM_KEY", "NODE_FORCES"],
+      "required": [
+        "ELEM_TYPE",
+        "ELEM_KEY",
+        "NODE_FORCES"
+      ],
       "additionalProperties": false
     }
   },
@@ -35,12 +45,28 @@
       "1": {
         "ELEM_TYPE": "TRUSS",
         "ELEM_KEY": 1,
-        "NODE_FORCES": [-100.0, 100.0]
+        "NODE_FORCES": [
+          -100.0,
+          100.0
+        ]
       },
       "2": {
         "ELEM_TYPE": "BEAM",
         "ELEM_KEY": 2,
-        "NODE_FORCES": [10.0, 0.0, 0.0, 0.0, 5.0, 2.0, -10.0, 0.0, 0.0, 0.0, -5.0, -2.0]
+        "NODE_FORCES": [
+          10.0,
+          0.0,
+          0.0,
+          0.0,
+          5.0,
+          2.0,
+          -10.0,
+          0.0,
+          0.0,
+          0.0,
+          -5.0,
+          -2.0
+        ]
       }
     }
   }

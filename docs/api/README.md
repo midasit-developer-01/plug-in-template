@@ -1,39 +1,39 @@
-# MIDAS NX Open API — 조회 지식 베이스
+# MIDAS NX Open API — Lookup Knowledge Base
 
-MIDAS CIVIL NX / GEN NX 의 실행 중인 모델을 REST API 로 읽고 고치기 위한 자료입니다.
-**엔드포인트 540개, 각각 바디 모양이 다릅니다.**
+Material for reading and modifying a running MIDAS CIVIL NX / GEN NX model through its REST API.
+**551 endpoints, each with its own body shape.**
 
-> ## 핵심 규칙
-> **API 호출 코드를 기억에 의존해 쓰지 마세요.**
-> 엔드포인트는 이름으로 고르고, 바디 모양은 엔드포인트마다 다릅니다.
-> 반드시 `schemas/<uri>.json` 의 `example` 을 열어 그 모양 그대로 베끼세요.
-> 그 예시가 계약이며, 추론한 필드명은 계약이 아닙니다.
-
----
-
-## 무엇부터 정할 것인가
-
-작업을 시작하기 전에 **결과물이 설명인지 코드인지** 먼저 판단하세요.
-
-- **설명을 원하는 경우** — 이 기능이 무엇인지, 어디에 쓰는지, 제품 어디에 있는지.
-  → `features/<uri>.json` 의 `menu_path`(대화상자 위치)와 `usage`(각 필드의 의미)로 답하세요.
-  사용자가 직접 제품을 조작하는 상황이므로, **플러그인 코드를 쓰는 것은 묻지 않은 답**입니다.
-- **동작하는 플러그인을 원하는 경우** — 아래 절차를 따르세요.
+> ## Core rule
+> **Do not write API calls from memory.**
+> You pick an endpoint by name, and the body shape differs from endpoint to endpoint.
+> Always open the `example` in `schemas/<uri>.json` and copy that shape exactly.
+> That example is the contract; field names you inferred are not.
 
 ---
 
-## 절차
+## Decide this first
+
+Before starting, decide whether the deliverable is **an explanation or code**.
+
+- **The user wants an explanation** — what this feature is, what it is for, where it lives in the product.
+  → Answer from `menu_path` (dialog location) and `usage` (meaning of each field) in `features/<uri>.json`.
+  The user is operating the product themselves, so **writing plug-in code is answering a question nobody asked**.
+- **The user wants a working plug-in** — follow the procedure below.
+
+---
+
+## Procedure
 
 ```
-1. INDEX.md 를 Grep          →  후보 엔드포인트 찾기 (uri + methods + body + desc)
-2. desc 를 읽고 고르기        →  이름은 4글자 약어라 desc 없이는 구분되지 않음
-3. schemas/<uri>.json 을 Read →  전체 스키마 + 동작하는 example
-4. example 모양대로 코드 작성  →  src/utils_api.ts 의 dbXxx / command
+1. Grep INDEX.md               →  find candidate endpoints (uri + methods + body + desc)
+2. Read desc and pick one      →  names are 4-letter abbreviations; indistinguishable without desc
+3. Read schemas/<uri>.json     →  full schema + a working example
+4. Write code in that shape    →  dbXxx / command in src/utils_api.ts
 ```
 
-### 1) 찾기 — `INDEX.md` 를 Grep
+### 1) Find — Grep `INDEX.md`
 
-한 줄이 엔드포인트 하나입니다. **Read 하지 말고 Grep 하세요** (71KB).
+One line is one endpoint. **Grep it, don't Read it** (70KB).
 
 ```bash
 grep -i "spring" docs/api/INDEX.md
@@ -41,16 +41,16 @@ grep -i "reaction\|table"  docs/api/INDEX.md
 grep -i "KDS-41-20-2022"   docs/api/INDEX-design.md
 ```
 
-| 파일 | 대상 | 행 수 |
+| File | Covers | Rows |
 | --- | --- | --- |
-| [`INDEX.md`](./INDEX.md) | db · doc · ope · view · post · requestinfo · config | 354 |
-| [`INDEX-design.md`](./INDEX-design.md) | design · rating (코드 기준별 중첩) | 186 |
+| [`INDEX.md`](./INDEX.md) | db · doc · ope · view · post · requestinfo · config | 349 |
+| [`INDEX-design.md`](./INDEX-design.md) | design · rating (nested by code standard) | 202 |
 
-첫 번째 결과가 정답이 아닐 때가 많습니다. `desc` 열을 읽고 고르세요.
+The first hit is often not the right one. Read the `desc` column before choosing.
 
-### 2) 확인 — `schemas/<uri>.json` 을 Read
+### 2) Confirm — Read `schemas/<uri>.json`
 
-경로가 곧 uri 입니다. `db/NODE` → [`schemas/db/NODE.json`](./schemas/db/NODE.json).
+The path is the uri. `db/NODE` → [`schemas/db/NODE.json`](./schemas/db/NODE.json).
 
 ```json
 {
@@ -62,88 +62,89 @@ grep -i "KDS-41-20-2022"   docs/api/INDEX-design.md
 }
 ```
 
-`example` 이 계약입니다. 필드명·중첩·타입을 그대로 따르세요.
+The `example` is the contract. Follow its field names, nesting and types exactly.
 
-### 3) 필요하면 — `features/<uri>.json` 로 의미 파악
+### 3) If needed — understand the meaning via `features/<uri>.json`
 
-540개 중 **155개**에 GUI 가이드가 있습니다 (`INDEX.md` 의 `feature` 열에 값이 있는 행).
-`function`(무엇을 하는 기능인지), `menu_path`(제품 메뉴 경로), `usage`(각 입력 항목 설명)이 들어 있어
-**필드가 공학적으로 무엇을 뜻하는지** 알아야 할 때 스키마보다 낫습니다.
+**150** of the 551 endpoints have a GUI guide (rows with a value in the `feature` column of `INDEX.md`).
+Each one holds `function` (what the feature does), `menu_path` (menu path in the product) and `usage`
+(description of each input). When you need to know **what a field means in engineering terms**,
+it is better than the schema.
 
-> ⚠️ `menu_path` 의 메뉴 이름은 **영문 UI 기준**입니다. 사용자가 다른 언어 제품을 쓰면
-> 영문 라벨을 그대로 인용하고 그 사실을 밝히세요. 번역을 지어내지 마세요.
+> ⚠️ Menu names in `menu_path` follow the **English UI**. If the user runs the product in another
+> language, quote the English label as-is and say so. Do not invent a translation.
 >
-> design · rating 그룹에는 가이드가 없습니다 (매뉴얼에 해당 문서가 없음).
+> The design · rating groups have no guides (the manual has no matching articles).
 
 ---
 
-## 바디 규약
+## Body conventions
 
-`INDEX.md` 의 `body` 열이 어느 쪽인지 알려줍니다. 540개 전부 둘 중 하나입니다.
+The `body` column of `INDEX.md` tells you which one applies. Every one of the 551 uses one of the two.
 
-| 규약 | 개수 | 모양 | 호출 |
+| Convention | Count | Shape | Call |
 | --- | --- | --- | --- |
-| `Assign` | 402 | `{ "Assign": { "<번호 키>": { …필드 } } }` | `dbCreate` / `dbRead` / `dbUpdate` / `dbDelete` |
-| `Argument` | 138 | `{ "Argument": { …필드 } }` | `command(group, name, argument)` |
+| `Assign` | 405 | `{ "Assign": { "<numeric key>": { …fields } } }` | `dbCreate` / `dbRead` / `dbUpdate` / `dbDelete` |
+| `Argument` | 146 | `{ "Argument": { …fields } }` | `command(group, name, argument)` |
 
-- **`Assign` 은 `/db` 전용이 아닙니다.** design/rating 의 132개도 같은 모양입니다.
-  db 헬퍼에 전체 uri 를 넘기면 그대로 갑니다: `dbRead("design/PSC/AASHTO-LRFD24/MEMB")`.
-- **번호 키의 의미는 데이터마다 다릅니다.** 단면은 단면 ID, 하중조합은 생성 순번입니다.
-  `UNIT` 같은 단일 데이터는 키가 항상 `"1"` 입니다.
-- **GET / DELETE 는 바디를 보내지 않습니다.** `body` 열의 값과 무관합니다.
-- **GET 응답은 항목 이름으로 한 번 감싸여 옵니다** (`{ "NODE": { "1": {…} } }`).
-  `dbRead()` 가 이 껍질을 벗겨 `{ "1": {…} }` 로 돌려줍니다.
+- **`Assign` is not exclusive to `/db`.** 146 endpoints in design/rating use the same shape.
+  Pass the full uri to a db helper and it goes through as-is: `dbRead("design/PSC/AASHTO-LRFD24/MEMB")`.
+- **What the numeric key means depends on the data.** For sections it is the section ID; for load
+  combinations it is the creation order. Single-record data such as `UNIT` always uses key `"1"`.
+- **GET / DELETE send no body**, regardless of the `body` column.
+- **GET responses come wrapped once in the item name** (`{ "NODE": { "1": {…} } }`).
+  `dbRead()` strips that wrapper and returns `{ "1": {…} }`.
 
 ---
 
-## 코드에서 호출하기
+## Calling from code
 
-호출부는 [`src/utils_api.ts`](../../src/utils_api.ts) 하나입니다. 전부 `async` 이므로 `await` 하세요.
+The only call site is [`src/utils_api.ts`](../../src/utils_api.ts). Everything is `async`, so `await` it.
 
 ```ts
 import { dbRead, dbUpdate, command } from "../utils_api";
 
-// Assign 규약 — GET /db/NODE  →  { "1": {...}, "2": {...} }
+// Assign convention — GET /db/NODE  →  { "1": {...}, "2": {...} }
 const nodes = await dbRead("NODE");
 if (nodes.error) { console.error(nodes.error, nodes.body); return; }
 
-// Assign 규약 — PUT /db/SPRING
-await dbUpdate("SPRING", { 1: { /* schemas/db/SPRING.json 의 example 대로 */ } });
+// Assign convention — PUT /db/SPRING
+await dbUpdate("SPRING", { 1: { /* as in the example of schemas/db/SPRING.json */ } });
 
-// Argument 규약 — POST /post/TABLE
+// Argument convention — POST /post/TABLE
 const table = await command("post", "TABLE", { TABLE_TYPE: "REACTIONG" });
 ```
 
-실패는 예외를 던지지 않고 `{ error, body? }` 로 돌아옵니다. **호출부에서 `result.error` 를 확인하세요.**
-`body` 에는 서버 응답 본문이 담기며, 어떤 필드가 왜 거부됐는지가 대개 여기 있습니다.
+Failures do not throw; they come back as `{ error, body? }`. **Check `result.error` at the call site.**
+`body` holds the server's response body, which usually says which field was rejected and why.
 
-자주 쓰는 작업의 완성된 예시는 [`cookbook.md`](./cookbook.md) 에 있습니다.
-
----
-
-## 함정
-
-이미 대가를 치르고 알아낸 것들입니다. 코드를 쓰기 전에 읽으세요.
-
-- [`reference.md` §10](./reference.md) — `db/IEHP` 의 비활성 성분 쓰레기값,
-  `db/SECT` `SECTTYPE:"VALUE"` 의 `BUILT_FLAG`/`STIFF` 누락 시 `断面寸法` 에러 등.
-- 요청 전제: **대상 NX 앱이 실행 중이고 모델 파일이 열려 있어야** 합니다. 아니면 전부 실패합니다.
-- `ᴴˢ` 표시는 Hyper-S 솔버 전용, `ᴶ` 는 CIVIL NX JP 버전 전용입니다.
-- `dbDelete` 와 `doc` 그룹(NEW/OPEN/SAVE/EXPORT)은 **사용자 데이터를 덮어씁니다.** 읽기와 달리 되돌릴 수 없습니다.
+Complete examples for common tasks are in [`cookbook.md`](./cookbook.md).
 
 ---
 
-## 이 폴더의 구성
+## Gotchas
 
-| 경로 | 내용 |
+Lessons already paid for. Read these before writing code.
+
+- [`reference.md` §10](./reference.md) — garbage values in inactive components of `db/IEHP`,
+  the `断面寸法` error when `BUILT_FLAG`/`STIFF` are missing from `db/SECT` with `SECTTYPE:"VALUE"`, and more.
+- Precondition for any request: **the target NX app must be running with a model file open.** Otherwise everything fails.
+- `ᴴˢ` marks Hyper-S solver only; `ᴶ` marks CIVIL NX JP edition only.
+- `dbDelete` and the `doc` group (NEW/OPEN/SAVE/EXPORT) **overwrite user data.** Unlike reads, they cannot be undone.
+
+---
+
+## What's in this folder
+
+| Path | Contents |
 | --- | --- |
-| `INDEX.md` · `INDEX-design.md` | 엔드포인트 목록 (Grep 대상) |
-| `schemas/<uri>.json` | 540개 · JSON Schema + 동작하는 example + 매뉴얼 링크 |
-| `features/<uri>.json` | 155개 · 기능 설명 + 제품 메뉴 경로 + 입력 항목 사용법 |
-| `reference.md` | 구조·인증·규약 개관과 그룹별 카탈로그, 그리고 §10 함정 |
+| `INDEX.md` · `INDEX-design.md` | Endpoint lists (Grep targets) |
+| `schemas/<uri>.json` | 551 · JSON Schema + working example + manual link |
+| `features/<uri>.json` | 150 · feature description + product menu path + per-input usage |
+| `reference.md` | Structure / auth / convention overview, per-group catalog, and §10 gotchas |
 
-`INDEX*.md`, `schemas/`, `features/`, `reference.md` 는 **생성물**입니다.
-직접 고치지 말고 [`scripts/sync-api-docs.js`](../../scripts/sync-api-docs.js) 로 다시 만드세요.
+`INDEX*.md`, `schemas/`, `features/` and `reference.md` are **generated**.
+Don't edit them by hand — regenerate with [`scripts/sync-api-docs.js`](../../scripts/sync-api-docs.js).
 
 ```bash
 node scripts/sync-api-docs.js

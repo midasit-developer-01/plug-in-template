@@ -10,7 +10,7 @@ rating/PSC 에 각각 존재). **반드시 전체 uri 로 지정하세요.**
 
 > 생성물입니다. 직접 고치지 말고 `node scripts/sync-api-docs.js` 로 다시 만드세요.
 
-## design (161)
+## design (177)
 
 | uri | methods | body | feature | desc |
 | --- | --- | --- | --- | --- |
@@ -32,7 +32,7 @@ rating/PSC 에 각각 존재). **반드시 전체 uri 로 지정하세요.**
 | `design/PSC/AASHTO-LRFD24/SLCT` | GET, PUT, DELETE | Assign |  | Serviceability Load Combination Type Selection (SLCT). Assigns the serviceability load type to an existing concrete service load… |
 | `design/PSC/AASHTO-LRFD24/STRPSSM` | POST, GET, PUT, DELETE | Assign |  | Section Manager - Additional Stress Points (STRPSSM). Fields define additional stress-check point coordinates at the i-end (POINT1) and… |
 | `design/PSC/AASHTO-LRFD24/TABLE` | POST | Argument |  | PSC Design Result Table (TABLE). Fields are driven by the TABLE_REQUEST DTO; TABLE_TYPE selects which PSC Design result table (PSC_*) is… |
-| `design/PSC/DSPSC` | POST, GET, PUT, DELETE | Assign |  | PSC Design Code (DSPSC). The only field is the design code name, which OnSet enforces to be exactly "AASHTO-LRFD24". |
+| `design/PSC/DSPSC` | POST, GET, PUT, DELETE | Assign |  | PSC Design Code (DSPSC). The only field is the design code name; writes accept the AASHTO LRFD family only (National Annex is forced to… |
 | `design/RC/DRC` | GET, PUT, DELETE | Assign |  | RC Design Code (DCON). The single field carries the RC concrete design code name that is validated against the supported design-code list… |
 | `design/RC/KDS-41-20-2022/BC-ANAL` | POST | Argument |  | RC Beam Design Analysis (BC-ANAL). Fields select which elements or sections the design analysis is performed on, driven by PERFORM_TYPE. |
 | `design/RC/KDS-41-20-2022/BC-REPORT` | POST | Argument |  |  |
@@ -110,7 +110,6 @@ rating/PSC 에 각각 존재). **반드시 전체 uri 로 지정하세요.**
 | `design/SRC/AIK-SRC2K/CC-REPORT` | POST | Argument |  | SRC Column Check Design Report (CC-REPORT). Generates a design report file for SRC column checking; fields are driven by the REPORT_REQUEST… |
 | `design/SRC/AIK-SRC2K/CC-TABLE` | POST | Argument |  | SRC Column Checking Result Table (CC-TABLE). Fields are driven by the DTO_D_TABLE_REQUEST design-table request, wrapped in Argument… |
 | `design/SRC/AIK-SRC2K/CMFT` | POST, GET, PUT, DELETE | Assign |  | Equivalent Moment Correction Factor Cm (CMFT). Fields hold the auto-calculate flag and the manual Cm factors about the member local y and z… |
-| `design/SRC/AIK-SRC2K/DCHECK` | POST | Argument |  | Steel/SRC Displacement-Based Design Check (DCHECK). Runs the displacement-control auto-section design; the request under Argument drives… |
 | `design/SRC/AIK-SRC2K/DCO` | GET, PUT, DELETE | Assign |  | SRC Design Code Options (SRCDCO). Fields set the SRC design code and whether special seismic provisions apply. |
 | `design/SRC/AIK-SRC2K/DCTL` | GET, PUT, DELETE | Assign |  | Design Control Data (DCTL). Fields set the frame sway classification per direction, effective length factor auto-calculation, and the… |
 | `design/SRC/AIK-SRC2K/DREULT` | POST | Argument |  | Design Result View Capture (DREULT). Captures a result-graphic view image; fields are driven by the CAPTURE business-logic DTO wrapped in… |
@@ -128,9 +127,28 @@ rating/PSC 에 각각 존재). **반드시 전체 uri 로 지정하세요.**
 | `design/SRC/AIK-SRC2K/MEMB` | POST, GET, PUT, DELETE | Assign |  | Member Assignment (MEMB). Groups a connected set of elements into a single design member; AELEM lists the element ids forming the member… |
 | `design/SRC/AIK-SRC2K/MLLR` | POST, GET, PUT, DELETE | Assign |  | Member Live Load Reduction (MLLR). Fields are driven by a reduction factor and the set of applied force components (axial, moment, shear). |
 | `design/SRC/AIK-SRC2K/MRBD` | POST, GET, PUT, DELETE | Assign |  | Modify SRC Beam Section Rebar Data (MRBD). Fields are driven by the SRC beam rebar arrangement per node sector (I/M/J), with top/bottom… |
-| `design/SRC/AIK-SRC2K/OCHECK` | POST | Argument |  | SRC Optimal Design Check (OCHECK). Runs SRC optimal section design for the listed sections; fields under Argument drive which sections are… |
 | `design/SRC/AIK-SRC2K/SUEQ` | POST, GET, PUT, DELETE | Assign |  | Seismic Load Scale Factors for Design (SUEQ). Scale factors applied to earthquake load-case and load-combination results (axial, moment… |
 | `design/SRC/AIK-SRC2K/TABLE` | POST | Argument |  | Result Output Table (TABLE). The request is wrapped in Argument; when TABLE_TYPE is assigned a new user table of that type is created… |
+| `design/STEEL/AIJ-ASD02/CBFT` | POST, GET, PUT, DELETE | Assign |  | Bending Coefficient Cb (CBFT). Keyed by element id; sets the lateral-torsional buckling bending coefficient Cb, either auto-calculated by… |
+| `design/STEEL/AIJ-ASD02/CODE-ANAL` | POST | Argument |  | Steel Code Check Analysis (CODE-ANAL) for AIJ-ASD02. Runs the steel design code check over a set of targets selected by PERFORM_TYPE; the… |
+| `design/STEEL/AIJ-ASD02/CODE-REPORT` | POST | Argument |  | Steel Code Check Report (CODE-REPORT) for AIJ-ASD02. The request (wrapped in Argument) selects report type, export destination, mode, and… |
+| `design/STEEL/AIJ-ASD02/CODE-TABLE` | POST | Argument |  | Steel Code Checking Result Table (CODE-TABLE) for AIJ-ASD02. The D_TABLE_REQUEST DTO (wrapped in Argument) selects the code-check result… |
+| `design/STEEL/AIJ-ASD02/DCTL` | GET, PUT, DELETE | Assign |  | Design Control Data (DCTL). Global steel design control settings driving frame sway classification, automatic effective length factor… |
+| `design/STEEL/AIJ-ASD02/DREULT` | POST | Argument |  | Design Result View Capture (CAPTURE) for AIJ-ASD02 DREULT. Captures the AIJ-ASD02 steel design-result graphic view to an image; the handler… |
+| `design/STEEL/AIJ-ASD02/HCBM` | POST, GET, PUT, DELETE | Assign |  | Haunched Beam (HCBM). Keyed by haunched-beam id; fields describe the three haunch parts (A, B, C), each specifying its member elements… |
+| `design/STEEL/AIJ-ASD02/KFAC` | POST, GET, PUT, DELETE | Assign |  | Effective Length Factor (KFAC). Keyed by element id (the element must already exist in the model); sets the effective length factors about… |
+| `design/STEEL/AIJ-ASD02/LCTB` | GET, DELETE | Assign |  | Load Contribution (LCTB). Read-only view of a named load contribution set whose members are load-case factor items (BASE_ITEM). |
+| `design/STEEL/AIJ-ASD02/LENG` | POST, GET, PUT, DELETE | Assign |  | Member Unbraced Length (LENG). Keyed by element id (the element must already exist in the model); sets the unbraced lengths used by the… |
+| `design/STEEL/AIJ-ASD02/LLRF` | GET, PUT, DELETE | Assign |  | Live Load Reduction Factor (LLRF). Single global record with key = 1, stored in the same underlying record as DCTL - set DCTL first (the… |
+| `design/STEEL/AIJ-ASD02/LTSR` | POST, GET, PUT, DELETE | Assign |  | Limiting Slenderness Ratio (LTSR). Keyed by element id (the element must already exist in the model); holds the per-element allowable… |
+| `design/STEEL/AIJ-ASD02/MBTP` | POST, GET, PUT, DELETE | Assign |  | Member Type (MBTP). The member's design classification, driven solely by the TYPE enum. Key = element number (the element must exist). |
+| `design/STEEL/AIJ-ASD02/MEMB` | POST, GET, PUT, DELETE | Assign |  | Design Member Assignment (MEMB). Groups connected elements into a single design member, driven by the AELEM element list. |
+| `design/STEEL/AIJ-ASD02/MLLR` | POST, GET, PUT, DELETE | Assign |  | Moving Load Reduction (MLLR). Defines a moving-load reduction factor and which internal force components it is applied to. |
+| `design/STEEL/AIJ-ASD02/OCHECK` | POST | Argument |  | Steel Optimal Design / Section Check (OCHECK) for AIJ-ASD02. The ODS_RUN_REQUEST DTO (wrapped in Argument) gives a required section list… |
+| `design/STEEL/AIJ-ASD02/SERV` | POST, GET, PUT, DELETE | Assign |  | Serviceability Parameters (SERV). Per-key deflection limit and amplification factor for the serviceability (deflection) check. |
+| `design/STEEL/AIJ-ASD02/SMODI` | GET, PUT, DELETE | Assign |  | Steel Design Material Modification (SMODI). Fields are driven by CODE: when CODE is 'None' the material is user-defined (NAME, FY, ES, PS… |
+| `design/STEEL/AIJ-ASD02/SUEQ` | POST, GET, PUT, DELETE | Assign |  | Scale-Up Factors of Earthquake Load (SUEQ). Per-key scale factors applied to earthquake load results, split by source (load case vs load… |
+| `design/STEEL/AIJ-ASD02/TABLE` | POST | Argument |  | Result Table (TABLE) for AIJ-ASD02. Registered under the AIJ-ASD02 design-code path but served by the SAME shared handler as post/TABLE and… |
 | `design/STEEL/DSTL` | GET, PUT, DELETE | Assign |  | Steel Design Code (DSTL). The single field selects the steel design code applied to the model; the input string is matched (case- and… |
 | `design/STEEL/JAPAN-ROAD-II-H14/KFAC` | POST, GET, PUT, DELETE | Assign |  | Effective Buckling Length Factor - Japan Road (Steel, Part II) (KFAC). Effective length factors about the major (Ky), minor (Kz), and… |
 | `design/STEEL/JAPAN-ROAD-II-H14/LENG` | POST, GET, PUT, DELETE | Assign |  | Unbraced Length - Japan Road (Steel, Part II) (LENG). Defines member unbraced lengths for buckling checks; each value is stored per… |
@@ -150,7 +168,6 @@ rating/PSC 에 각각 존재). **반드시 전체 uri 로 지정하세요.**
 | `design/STEEL/KDS-41-30-2022/CODE-REPORT` | POST | Argument |  | Steel Code Check Report (CODE-REPORT). Fields describe the report request wrapped in Argument; the report type, export destination, mode… |
 | `design/STEEL/KDS-41-30-2022/CODE-TABLE` | POST | Argument |  | Steel Code Checking Result Table (CODE-TABLE). Fields are driven by the D_TABLE_REQUEST DTO, which selects the steel beam/brace/column… |
 | `design/STEEL/KDS-41-30-2022/CRCM` | POST, GET, PUT, DELETE | Assign |  | Combined Strength Method (CRCM). The single field selects how directional strength components are combined for the seismic… |
-| `design/STEEL/KDS-41-30-2022/DCHECK` | POST | Argument |  | Steel Displacement-Based Design Check (DCHECK). Fields are driven by the STFDGN_RUN_REQUEST DTO: displacement/drift control cases… |
 | `design/STEEL/KDS-41-30-2022/DCO` | GET, PUT, DELETE | Assign |  | Steel Design Code Options (DCO). Fields describe global steel design settings; seismic-related fields (SEIS_SYS, COL_WEAK) are applied only… |
 | `design/STEEL/KDS-41-30-2022/DCTL` | GET, PUT, DELETE | Assign |  | Design Control Data (DCTL). Global steel/RC/SRC design control settings driving frame sway classification, automatic effective length… |
 | `design/STEEL/KDS-41-30-2022/DETAILREPORT` | POST | Argument |  | Steel Code Check Detail Report (DETAILREPORT). Generates a KDS 41 30 2022 steel design check report file; REPORT_TYPE selects whether the… |
@@ -166,7 +183,6 @@ rating/PSC 에 각각 존재). **반드시 전체 uri 로 지정하세요.**
 | `design/STEEL/KDS-41-30-2022/MBTP` | POST, GET, PUT, DELETE | Assign |  | Member Type (MBTP). The member's design classification, driven solely by the TYPE enum. |
 | `design/STEEL/KDS-41-30-2022/MEMB` | POST, GET, PUT, DELETE | Assign |  | Design Member Assignment (MEMB). Groups connected elements into a single design member; fields are driven by the element list and its… |
 | `design/STEEL/KDS-41-30-2022/MLLR` | POST, GET, PUT, DELETE | Assign |  | Moving Load Reduction (MLLR). Defines a moving-load reduction factor and which internal force components it is applied to. |
-| `design/STEEL/KDS-41-30-2022/OCHECK` | POST | Argument |  | Steel Optimal Design / Section Check (OCHECK). Fields are driven by the ODS_RUN_REQUEST DTO: a required section list plus optional… |
 | `design/STEEL/KDS-41-30-2022/REDU` | POST, GET, PUT, DELETE | Assign |  | Force Reduction Factor (REDU). Fields drive the reduction factor applied to member design forces and which force components it is applied… |
 | `design/STEEL/KDS-41-30-2022/SERV` | POST, GET, PUT, DELETE | Assign |  | Serviceability Parameters (SERV). Deflection serviceability check parameters for KDS-41-30-2022 steel design; both fields are optional… |
 | `design/STEEL/KDS-41-30-2022/SLRS` | POST, GET, PUT, DELETE | Assign |  | Seismic Load Resisting System (SLRS). The frame type selects the seismic system, and the check option toggles brace-slenderness / link… |
@@ -204,5 +220,5 @@ rating/PSC 에 각각 존재). **반드시 전체 uri 로 지정하세요.**
 | `rating/PSC/AASHTO-LRFR19/SPLT-VBEAM` | POST, GET, PUT, DELETE | Assign |  | Span Length for V-Beam (SPLT-VBEAM). Holds the span length used by the PSC rating span-length database. |
 | `rating/PSC/AASHTO-LRFR19/STRPSSM` | POST, GET, PUT, DELETE | Assign |  | Additional Stress Points Data (STRPSSM). Defines additional stress point coordinates at the i-end and j-end of a section, used by the… |
 | `rating/PSC/AASHTO-LRFR19/TABLE` | POST | Argument |  | PSC Rating Result Table (AASHTO-LRFR19) (TABLE). Fields are driven by the CIVIL DTO_TABLE_REQUEST; the handler validates TABLE_TYPE as a… |
-| `rating/PSC/DSRPSC` | GET, PUT, DELETE | Assign |  | PSC Rating Code (DSRPSC). A singleton database (key fixed to 1) that selects the PSC load-rating design code; the handler hard-restricts… |
+| `rating/PSC/DSRPSC` | GET, PUT, DELETE | Assign |  | PSC Rating Code (DSRPSC). A singleton database (key fixed to 1) that selects the PSC load-rating design code; the handler restricts DGNCODE… |
 

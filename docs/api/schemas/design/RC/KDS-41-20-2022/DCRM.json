@@ -1,6 +1,7 @@
 {
   "_group": "design",
   "_name": "DCRM",
+  "product": "gen",
   "uri": "design/RC/KDS-41-20-2022/DCRM",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {
@@ -59,11 +60,18 @@
             "SPLICED_BARS": {
               "type": "string",
               "description": "Spliced bars ratio (case-insensitive).",
-              "enum": ["None", "50%", "100%"],
+              "enum": [
+                "None",
+                "50%",
+                "100%"
+              ],
               "default": "50%"
             }
           },
-          "required": ["MAIN_REBAR", "STIRRUPS"]
+          "required": [
+            "MAIN_REBAR",
+            "STIRRUPS"
+          ]
         },
         "COLUMN": {
           "type": "object",
@@ -95,7 +103,11 @@
             "SPLICE": {
               "type": "string",
               "description": "Splice ratio (case-insensitive).",
-              "enum": ["None", "50%", "100%"],
+              "enum": [
+                "None",
+                "50%",
+                "100%"
+              ],
               "default": "50%"
             },
             "SPACING_LIMIT": {
@@ -104,7 +116,10 @@
               "default": true
             }
           },
-          "required": ["MAIN_REBAR", "TIES_SPIRALS"]
+          "required": [
+            "MAIN_REBAR",
+            "TIES_SPIRALS"
+          ]
         },
         "BRACE": {
           "type": "object",
@@ -136,7 +151,11 @@
             "SPLICE": {
               "type": "string",
               "description": "Splice ratio (case-insensitive).",
-              "enum": ["None", "50%", "100%"],
+              "enum": [
+                "None",
+                "50%",
+                "100%"
+              ],
               "default": "50%"
             },
             "SPACING_LIMIT": {
@@ -145,7 +164,10 @@
               "default": true
             }
           },
-          "required": ["MAIN_REBAR", "TIES_SPIRALS"]
+          "required": [
+            "MAIN_REBAR",
+            "TIES_SPIRALS"
+          ]
         },
         "WALL": {
           "type": "object",
@@ -190,7 +212,10 @@
               "default": 0.0
             }
           },
-          "required": ["VERTICAL_REBAR", "HORIZONTAL_REBAR"]
+          "required": [
+            "VERTICAL_REBAR",
+            "HORIZONTAL_REBAR"
+          ]
         }
       }
     }

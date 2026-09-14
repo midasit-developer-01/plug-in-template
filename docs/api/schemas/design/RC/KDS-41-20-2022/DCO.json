@@ -1,6 +1,7 @@
 {
   "_group": "design",
   "_name": "DCO",
+  "product": "gen",
   "uri": "design/RC/KDS-41-20-2022/DCO",
   "methods": "GET, PUT, DELETE",
   "schema": {
@@ -11,7 +12,9 @@
       "properties": {
         "DESIGN_CD": {
           "type": "string",
-          "enum": ["KDS 41 20 : 2022"],
+          "enum": [
+            "KDS 41 20 : 2022"
+          ],
           "description": "Concrete design code standard (case-insensitive). Only KDS 41 20 : 2022 is supported by this handler."
         },
         "SEISMIC_PROV": {
@@ -33,7 +36,10 @@
         },
         "MOM_CALC_MTHD": {
           "type": "string",
-          "enum": ["Equivalent", "Each"],
+          "enum": [
+            "Equivalent",
+            "Each"
+          ],
           "default": "Equivalent",
           "description": "Moment Calculation Method for Beam (case-insensitive)."
         },
@@ -44,13 +50,19 @@
         },
         "EXP_COND": {
           "type": "string",
-          "enum": ["Dry", "etc"],
+          "enum": [
+            "Dry",
+            "etc"
+          ],
           "default": "Dry",
           "description": "Exposure Condition (kcr) (case-insensitive)."
         },
         "PM_CRV_CALC": {
           "type": "string",
-          "enum": ["KeepPConstant", "KeepMPConstant"],
+          "enum": [
+            "KeepPConstant",
+            "KeepMPConstant"
+          ],
           "default": "KeepMPConstant",
           "description": "P-M Curve Calculation Method (case-insensitive)."
         },
@@ -61,13 +73,19 @@
         },
         "CONC_STRS_STRN": {
           "type": "string",
-          "enum": ["Equivalent", "Parabola"],
+          "enum": [
+            "Equivalent",
+            "Parabola"
+          ],
           "default": "Equivalent",
           "description": "Concrete Stress-Strain Type for Bending (case-insensitive)."
         },
         "FS_MAIN_BAR": {
           "type": "string",
-          "enum": ["2/3fy", "ByProgram"],
+          "enum": [
+            "2/3fy",
+            "ByProgram"
+          ],
           "default": "2/3fy",
           "description": "fs of Main bar in Beam Design (case-insensitive)."
         },
@@ -77,7 +95,11 @@
           "properties": {
             "FRAME_TYPE": {
               "type": "string",
-              "enum": ["Special", "Intermediate", "Ordinary"],
+              "enum": [
+                "Special",
+                "Intermediate",
+                "Ordinary"
+              ],
               "default": "Special",
               "description": "Select Frame Type (case-insensitive)."
             },
@@ -97,19 +119,39 @@
                 },
                 "BDRY_ELEM_MTHD": {
                   "type": "string",
-                  "enum": ["Displacement", "Stress"],
+                  "enum": [
+                    "Displacement",
+                    "Stress"
+                  ],
                   "default": "Displacement",
                   "description": "[SPEC_RC_WALL=true] Boundary Element Method (case-insensitive). Applied only when SPEC_RC_WALL is true."
                 },
                 "DEFL_AMP_FACT": {
                   "type": "number",
-                  "enum": [1.25, 1.5, 2.0, 2.5, 3.0, 3.25, 4.0, 4.5, 5.0, 5.5, 6.0, 6.5],
+                  "enum": [
+                    1.25,
+                    1.5,
+                    2.0,
+                    2.5,
+                    3.0,
+                    3.25,
+                    4.0,
+                    4.5,
+                    5.0,
+                    5.5,
+                    6.0,
+                    6.5
+                  ],
                   "default": 4.5,
                   "description": "[SPEC_RC_WALL=true AND BDRY_ELEM_MTHD=Displacement] Deflection Amplification Factor (Cd). Must be one of the allowed discrete values."
                 },
                 "IMP_FACT": {
                   "type": "number",
-                  "enum": [1.0, 1.2, 1.5],
+                  "enum": [
+                    1.0,
+                    1.2,
+                    1.5
+                  ],
                   "default": 1.2,
                   "description": "[SPEC_RC_WALL=true AND BDRY_ELEM_MTHD=Displacement] Important Factor (Ie). Must be one of the allowed discrete values."
                 }
@@ -122,7 +164,12 @@
               "properties": {
                 "MTHD": {
                   "type": "string",
-                  "enum": ["MAX", "MIN", "Ve1", "Ve2"],
+                  "enum": [
+                    "MAX",
+                    "MIN",
+                    "Ve1",
+                    "Ve2"
+                  ],
                   "default": "MIN",
                   "description": "Shear design method (case-insensitive)."
                 },
@@ -158,14 +205,25 @@
                   "type": "array",
                   "items": {
                     "type": "string",
-                    "enum": ["SUBBEAM", "CANTIL", "UGBEAMCOL"]
+                    "enum": [
+                      "SUBBEAM",
+                      "CANTIL",
+                      "UGBEAMCOL"
+                    ]
                   },
-                  "default": ["SUBBEAM", "CANTIL", "UGBEAMCOL"],
+                  "default": [
+                    "SUBBEAM",
+                    "CANTIL",
+                    "UGBEAMCOL"
+                  ],
                   "description": "Member Types to be excluded in Seismic Design (case-insensitive tokens). When omitted, all three are excluded."
                 },
                 "CHK_POS": {
                   "type": "string",
-                  "enum": ["Top", "Bottom"],
+                  "enum": [
+                    "Top",
+                    "Bottom"
+                  ],
                   "default": "Bottom",
                   "description": "[FRAME_TYPE=Special] Select Check Position (case-insensitive)."
                 }
@@ -182,7 +240,9 @@
           "description": "[TORS_DES=true] Torsion Reduction Factor for Beam. Must be >= 0."
         }
       },
-      "required": ["DESIGN_CD"]
+      "required": [
+        "DESIGN_CD"
+      ]
     }
   },
   "example": {
@@ -217,7 +277,11 @@
           },
           "BEAM_COL_JNT_DES": true,
           "JOINT": {
-            "EXCL_MEM_TYPES": ["SUBBEAM", "CANTIL", "UGBEAMCOL"],
+            "EXCL_MEM_TYPES": [
+              "SUBBEAM",
+              "CANTIL",
+              "UGBEAMCOL"
+            ],
             "CHK_POS": "Bottom"
           }
         }

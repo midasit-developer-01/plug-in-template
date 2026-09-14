@@ -1,6 +1,7 @@
 {
   "_group": "db",
   "_name": "STYP-M1",
+  "product": "civil",
   "uri": "db/STYP-M1",
   "methods": "GET, PUT",
   "schema": {
@@ -10,7 +11,13 @@
       "properties": {
         "STYPE": {
           "type": "string",
-          "enum": ["3D", "XZ", "YZ", "XY", "RZ"],
+          "enum": [
+            "3D",
+            "XZ",
+            "YZ",
+            "XY",
+            "RZ"
+          ],
           "description": "Structure type (case-insensitive). 3D = 3-D, XZ = X-Z plane, YZ = Y-Z plane, XY = X-Y plane, RZ = constrain RZ."
         },
         "GRAV": {
@@ -38,12 +45,18 @@
           "properties": {
             "MASS_TYPE": {
               "type": "string",
-              "enum": ["LUMPED", "CONSISTENT"],
+              "enum": [
+                "LUMPED",
+                "CONSISTENT"
+              ],
               "description": "Mass type (case-insensitive). LUMPED = lumped mass, CONSISTENT = consistent mass. Drives applicability of MASS_POS and the allowed MASS_AXIS values."
             },
             "MASS_POS": {
               "type": "string",
-              "enum": ["CENTROID", "OFFSET"],
+              "enum": [
+                "CENTROID",
+                "OFFSET"
+              ],
               "description": "[MASS_TYPE=LUMPED] Mass position; required by the handler when MASS_TYPE is LUMPED, unused (ignored) when MASS_TYPE is CONSISTENT. CENTROID = mass at section centroid, OFFSET = mass at offset position. Case-insensitive."
             },
             "SELFWEIGHT": {
@@ -52,11 +65,18 @@
             },
             "MASS_AXIS": {
               "type": "string",
-              "enum": ["XYZ", "XY", "Z"],
+              "enum": [
+                "XYZ",
+                "XY",
+                "Z"
+              ],
               "description": "[SELFWEIGHT=true] Axes to which self-weight mass is converted; required by the handler when SELFWEIGHT is true. XYZ = X, Y, Z; XY = X, Y; Z = Z. When MASS_TYPE is CONSISTENT the handler hard-enforces MASS_AXIS = XYZ. Case-insensitive."
             }
           },
-          "required": ["MASS_TYPE", "SELFWEIGHT"]
+          "required": [
+            "MASS_TYPE",
+            "SELFWEIGHT"
+          ]
         }
       },
       "required": []

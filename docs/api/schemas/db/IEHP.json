@@ -434,11 +434,15 @@
                   },
                   "INITSTIFFTYPE": {
                     "type": "integer",
-                    "description": "Initial stiffness type."
+                    "description": "Initial stiffness type: 0=6EI/L, 1=3EI/L, 2=2EI/L, 3=User (INITSTIFFNESS), 4=Elastic Stiffness, 5=Skeleton Curve."
                   },
                   "INITSTIFFNESS": {
                     "type": "number",
                     "description": "Initial stiffness."
+                  },
+                  "INITSTIFFNESSDIST": {
+                    "type": "number",
+                    "description": "Initial stiffness value for distributed hinges (Dist). DB default 1.0."
                   },
                   "PALPHADELTA": {
                     "type": "integer",
@@ -676,11 +680,15 @@
                   },
                   "INITSTIFFTYPE": {
                     "type": "integer",
-                    "description": "Initial stiffness type."
+                    "description": "Initial stiffness type: 0=6EI/L, 1=3EI/L, 2=2EI/L, 3=User (INITSTIFFNESS), 4=Elastic Stiffness, 5=Skeleton Curve."
                   },
                   "INITSTIFFNESS": {
                     "type": "number",
                     "description": "Initial stiffness."
+                  },
+                  "INITSTIFFNESSDIST": {
+                    "type": "number",
+                    "description": "Initial stiffness value for distributed hinges (Dist). DB default 1.0."
                   },
                   "PALPHADELTA": {
                     "type": "integer",
@@ -918,11 +926,15 @@
                   },
                   "INITSTIFFTYPE": {
                     "type": "integer",
-                    "description": "Initial stiffness type."
+                    "description": "Initial stiffness type: 0=6EI/L, 1=3EI/L, 2=2EI/L, 3=User (INITSTIFFNESS), 4=Elastic Stiffness, 5=Skeleton Curve."
                   },
                   "INITSTIFFNESS": {
                     "type": "number",
                     "description": "Initial stiffness."
+                  },
+                  "INITSTIFFNESSDIST": {
+                    "type": "number",
+                    "description": "Initial stiffness value for distributed hinges (Dist). DB default 1.0."
                   },
                   "PALPHADELTA": {
                     "type": "integer",
@@ -1160,11 +1172,15 @@
                   },
                   "INITSTIFFTYPE": {
                     "type": "integer",
-                    "description": "Initial stiffness type."
+                    "description": "Initial stiffness type: 0=6EI/L, 1=3EI/L, 2=2EI/L, 3=User (INITSTIFFNESS), 4=Elastic Stiffness, 5=Skeleton Curve."
                   },
                   "INITSTIFFNESS": {
                     "type": "number",
                     "description": "Initial stiffness."
+                  },
+                  "INITSTIFFNESSDIST": {
+                    "type": "number",
+                    "description": "Initial stiffness value for distributed hinges (Dist). DB default 1.0."
                   },
                   "PALPHADELTA": {
                     "type": "integer",
@@ -1406,11 +1422,15 @@
                   },
                   "INITSTIFFTYPE": {
                     "type": "integer",
-                    "description": "Initial stiffness type."
+                    "description": "Initial stiffness type: 0=6EI/L, 1=3EI/L, 2=2EI/L, 3=User (INITSTIFFNESS), 4=Elastic Stiffness, 5=Skeleton Curve."
                   },
                   "INITSTIFFNESS": {
                     "type": "number",
                     "description": "Initial stiffness."
+                  },
+                  "INITSTIFFNESSDIST": {
+                    "type": "number",
+                    "description": "Initial stiffness value for distributed hinges (Dist). DB default 1.0."
                   },
                   "PALPHADELTA": {
                     "type": "integer",
@@ -1648,11 +1668,15 @@
                   },
                   "INITSTIFFTYPE": {
                     "type": "integer",
-                    "description": "Initial stiffness type."
+                    "description": "Initial stiffness type: 0=6EI/L, 1=3EI/L, 2=2EI/L, 3=User (INITSTIFFNESS), 4=Elastic Stiffness, 5=Skeleton Curve."
                   },
                   "INITSTIFFNESS": {
                     "type": "number",
                     "description": "Initial stiffness."
+                  },
+                  "INITSTIFFNESSDIST": {
+                    "type": "number",
+                    "description": "Initial stiffness value for distributed hinges (Dist). DB default 1.0."
                   },
                   "PALPHADELTA": {
                     "type": "integer",
@@ -1902,11 +1926,15 @@
                   },
                   "INITSTIFFTYPE": {
                     "type": "integer",
-                    "description": "Initial stiffness type."
+                    "description": "Initial stiffness type: 0=6EI/L, 1=3EI/L, 2=2EI/L, 3=User (INITSTIFFNESS), 4=Elastic Stiffness, 5=Skeleton Curve."
                   },
                   "INITSTIFFNESS": {
                     "type": "number",
                     "description": "Initial stiffness."
+                  },
+                  "INITSTIFFNESSDIST": {
+                    "type": "number",
+                    "description": "Initial stiffness value for distributed hinges (Dist). DB default 1.0."
                   },
                   "PALPHADELTA": {
                     "type": "integer",
@@ -2152,11 +2180,15 @@
                   },
                   "INITSTIFFTYPE": {
                     "type": "integer",
-                    "description": "Initial stiffness type."
+                    "description": "Initial stiffness type: 0=6EI/L, 1=3EI/L, 2=2EI/L, 3=User (INITSTIFFNESS), 4=Elastic Stiffness, 5=Skeleton Curve."
                   },
                   "INITSTIFFNESS": {
                     "type": "number",
                     "description": "Initial stiffness."
+                  },
+                  "INITSTIFFNESSDIST": {
+                    "type": "number",
+                    "description": "Initial stiffness value for distributed hinges (Dist). DB default 1.0."
                   },
                   "PALPHADELTA": {
                     "type": "integer",
@@ -2394,11 +2426,15 @@
                   },
                   "INITSTIFFTYPE": {
                     "type": "integer",
-                    "description": "Initial stiffness type."
+                    "description": "Initial stiffness type: 0=6EI/L, 1=3EI/L, 2=2EI/L, 3=User (INITSTIFFNESS), 4=Elastic Stiffness, 5=Skeleton Curve."
                   },
                   "INITSTIFFNESS": {
                     "type": "number",
                     "description": "Initial stiffness."
+                  },
+                  "INITSTIFFNESSDIST": {
+                    "type": "number",
+                    "description": "Initial stiffness value for distributed hinges (Dist). DB default 1.0."
                   },
                   "PALPHADELTA": {
                     "type": "integer",
@@ -2636,11 +2672,15 @@
                   },
                   "INITSTIFFTYPE": {
                     "type": "integer",
-                    "description": "Initial stiffness type."
+                    "description": "Initial stiffness type: 0=6EI/L, 1=3EI/L, 2=2EI/L, 3=User (INITSTIFFNESS), 4=Elastic Stiffness, 5=Skeleton Curve."
                   },
                   "INITSTIFFNESS": {
                     "type": "number",
                     "description": "Initial stiffness."
+                  },
+                  "INITSTIFFNESSDIST": {
+                    "type": "number",
+                    "description": "Initial stiffness value for distributed hinges (Dist). DB default 1.0."
                   },
                   "PALPHADELTA": {
                     "type": "integer",
@@ -2878,11 +2918,15 @@
                   },
                   "INITSTIFFTYPE": {
                     "type": "integer",
-                    "description": "Initial stiffness type."
+                    "description": "Initial stiffness type: 0=6EI/L, 1=3EI/L, 2=2EI/L, 3=User (INITSTIFFNESS), 4=Elastic Stiffness, 5=Skeleton Curve."
                   },
                   "INITSTIFFNESS": {
                     "type": "number",
                     "description": "Initial stiffness."
+                  },
+                  "INITSTIFFNESSDIST": {
+                    "type": "number",
+                    "description": "Initial stiffness value for distributed hinges (Dist). DB default 1.0."
                   },
                   "PALPHADELTA": {
                     "type": "integer",
@@ -3198,11 +3242,15 @@
                   },
                   "INITSTIFFTYPE": {
                     "type": "integer",
-                    "description": "Initial stiffness type."
+                    "description": "Initial stiffness type: 0=6EI/L, 1=3EI/L, 2=2EI/L, 3=User (INITSTIFFNESS), 4=Elastic Stiffness, 5=Skeleton Curve."
                   },
                   "INITSTIFFNESS": {
                     "type": "number",
                     "description": "Initial stiffness."
+                  },
+                  "INITSTIFFNESSDIST": {
+                    "type": "number",
+                    "description": "Initial stiffness value for distributed hinges (Dist). DB default 1.0."
                   },
                   "PALPHADELTA": {
                     "type": "integer",
@@ -3575,11 +3623,15 @@
                   },
                   "INITSTIFFTYPE": {
                     "type": "integer",
-                    "description": "Initial stiffness type."
+                    "description": "Initial stiffness type: 0=6EI/L, 1=3EI/L, 2=2EI/L, 3=User (INITSTIFFNESS), 4=Elastic Stiffness, 5=Skeleton Curve."
                   },
                   "INITSTIFFNESS": {
                     "type": "number",
                     "description": "Initial stiffness."
+                  },
+                  "INITSTIFFNESSDIST": {
+                    "type": "number",
+                    "description": "Initial stiffness value for distributed hinges (Dist). DB default 1.0."
                   }
                 }
               },
@@ -3627,11 +3679,15 @@
                   },
                   "INITSTIFFTYPE": {
                     "type": "integer",
-                    "description": "Initial stiffness type."
+                    "description": "Initial stiffness type: 0=6EI/L, 1=3EI/L, 2=2EI/L, 3=User (INITSTIFFNESS), 4=Elastic Stiffness, 5=Skeleton Curve."
                   },
                   "INITSTIFFNESS": {
                     "type": "number",
                     "description": "Initial stiffness."
+                  },
+                  "INITSTIFFNESSDIST": {
+                    "type": "number",
+                    "description": "Initial stiffness value for distributed hinges (Dist). DB default 1.0."
                   }
                 }
               },
@@ -3948,11 +4004,15 @@
                   },
                   "INITSTIFFTYPE": {
                     "type": "integer",
-                    "description": "Initial stiffness type."
+                    "description": "Initial stiffness type: 0=6EI/L, 1=3EI/L, 2=2EI/L, 3=User (INITSTIFFNESS), 4=Elastic Stiffness, 5=Skeleton Curve."
                   },
                   "INITSTIFFNESS": {
                     "type": "number",
                     "description": "Initial stiffness."
+                  },
+                  "INITSTIFFNESSDIST": {
+                    "type": "number",
+                    "description": "Initial stiffness value for distributed hinges (Dist). DB default 1.0."
                   },
                   "PALPHADELTA": {
                     "type": "integer",
@@ -4395,11 +4455,15 @@
                   },
                   "INITSTIFFTYPE": {
                     "type": "integer",
-                    "description": "Initial stiffness type."
+                    "description": "Initial stiffness type: 0=6EI/L, 1=3EI/L, 2=2EI/L, 3=User (INITSTIFFNESS), 4=Elastic Stiffness, 5=Skeleton Curve."
                   },
                   "INITSTIFFNESS": {
                     "type": "number",
                     "description": "Initial stiffness."
+                  },
+                  "INITSTIFFNESSDIST": {
+                    "type": "number",
+                    "description": "Initial stiffness value for distributed hinges (Dist). DB default 1.0."
                   },
                   "PALPHADELTA": {
                     "type": "integer",
@@ -4637,11 +4701,15 @@
                   },
                   "INITSTIFFTYPE": {
                     "type": "integer",
-                    "description": "Initial stiffness type."
+                    "description": "Initial stiffness type: 0=6EI/L, 1=3EI/L, 2=2EI/L, 3=User (INITSTIFFNESS), 4=Elastic Stiffness, 5=Skeleton Curve."
                   },
                   "INITSTIFFNESS": {
                     "type": "number",
                     "description": "Initial stiffness."
+                  },
+                  "INITSTIFFNESSDIST": {
+                    "type": "number",
+                    "description": "Initial stiffness value for distributed hinges (Dist). DB default 1.0."
                   },
                   "PALPHADELTA": {
                     "type": "integer",
@@ -4879,11 +4947,15 @@
                   },
                   "INITSTIFFTYPE": {
                     "type": "integer",
-                    "description": "Initial stiffness type."
+                    "description": "Initial stiffness type: 0=6EI/L, 1=3EI/L, 2=2EI/L, 3=User (INITSTIFFNESS), 4=Elastic Stiffness, 5=Skeleton Curve."
                   },
                   "INITSTIFFNESS": {
                     "type": "number",
                     "description": "Initial stiffness."
+                  },
+                  "INITSTIFFNESSDIST": {
+                    "type": "number",
+                    "description": "Initial stiffness value for distributed hinges (Dist). DB default 1.0."
                   },
                   "PALPHADELTA": {
                     "type": "integer",
@@ -5121,11 +5193,15 @@
                   },
                   "INITSTIFFTYPE": {
                     "type": "integer",
-                    "description": "Initial stiffness type."
+                    "description": "Initial stiffness type: 0=6EI/L, 1=3EI/L, 2=2EI/L, 3=User (INITSTIFFNESS), 4=Elastic Stiffness, 5=Skeleton Curve."
                   },
                   "INITSTIFFNESS": {
                     "type": "number",
                     "description": "Initial stiffness."
+                  },
+                  "INITSTIFFNESSDIST": {
+                    "type": "number",
+                    "description": "Initial stiffness value for distributed hinges (Dist). DB default 1.0."
                   },
                   "PALPHADELTA": {
                     "type": "integer",
@@ -5367,11 +5443,15 @@
                   },
                   "INITSTIFFTYPE": {
                     "type": "integer",
-                    "description": "Initial stiffness type."
+                    "description": "Initial stiffness type: 0=6EI/L, 1=3EI/L, 2=2EI/L, 3=User (INITSTIFFNESS), 4=Elastic Stiffness, 5=Skeleton Curve."
                   },
                   "INITSTIFFNESS": {
                     "type": "number",
                     "description": "Initial stiffness."
+                  },
+                  "INITSTIFFNESSDIST": {
+                    "type": "number",
+                    "description": "Initial stiffness value for distributed hinges (Dist). DB default 1.0."
                   },
                   "PALPHADELTA": {
                     "type": "integer",
@@ -5609,11 +5689,15 @@
                   },
                   "INITSTIFFTYPE": {
                     "type": "integer",
-                    "description": "Initial stiffness type."
+                    "description": "Initial stiffness type: 0=6EI/L, 1=3EI/L, 2=2EI/L, 3=User (INITSTIFFNESS), 4=Elastic Stiffness, 5=Skeleton Curve."
                   },
                   "INITSTIFFNESS": {
                     "type": "number",
                     "description": "Initial stiffness."
+                  },
+                  "INITSTIFFNESSDIST": {
+                    "type": "number",
+                    "description": "Initial stiffness value for distributed hinges (Dist). DB default 1.0."
                   },
                   "PALPHADELTA": {
                     "type": "integer",
@@ -5863,11 +5947,15 @@
                   },
                   "INITSTIFFTYPE": {
                     "type": "integer",
-                    "description": "Initial stiffness type."
+                    "description": "Initial stiffness type: 0=6EI/L, 1=3EI/L, 2=2EI/L, 3=User (INITSTIFFNESS), 4=Elastic Stiffness, 5=Skeleton Curve."
                   },
                   "INITSTIFFNESS": {
                     "type": "number",
                     "description": "Initial stiffness."
+                  },
+                  "INITSTIFFNESSDIST": {
+                    "type": "number",
+                    "description": "Initial stiffness value for distributed hinges (Dist). DB default 1.0."
                   },
                   "PALPHADELTA": {
                     "type": "integer",
@@ -6113,11 +6201,15 @@
                   },
                   "INITSTIFFTYPE": {
                     "type": "integer",
-                    "description": "Initial stiffness type."
+                    "description": "Initial stiffness type: 0=6EI/L, 1=3EI/L, 2=2EI/L, 3=User (INITSTIFFNESS), 4=Elastic Stiffness, 5=Skeleton Curve."
                   },
                   "INITSTIFFNESS": {
                     "type": "number",
                     "description": "Initial stiffness."
+                  },
+                  "INITSTIFFNESSDIST": {
+                    "type": "number",
+                    "description": "Initial stiffness value for distributed hinges (Dist). DB default 1.0."
                   },
                   "PALPHADELTA": {
                     "type": "integer",
@@ -6355,11 +6447,15 @@
                   },
                   "INITSTIFFTYPE": {
                     "type": "integer",
-                    "description": "Initial stiffness type."
+                    "description": "Initial stiffness type: 0=6EI/L, 1=3EI/L, 2=2EI/L, 3=User (INITSTIFFNESS), 4=Elastic Stiffness, 5=Skeleton Curve."
                   },
                   "INITSTIFFNESS": {
                     "type": "number",
                     "description": "Initial stiffness."
+                  },
+                  "INITSTIFFNESSDIST": {
+                    "type": "number",
+                    "description": "Initial stiffness value for distributed hinges (Dist). DB default 1.0."
                   },
                   "PALPHADELTA": {
                     "type": "integer",
@@ -6597,11 +6693,15 @@
                   },
                   "INITSTIFFTYPE": {
                     "type": "integer",
-                    "description": "Initial stiffness type."
+                    "description": "Initial stiffness type: 0=6EI/L, 1=3EI/L, 2=2EI/L, 3=User (INITSTIFFNESS), 4=Elastic Stiffness, 5=Skeleton Curve."
                   },
                   "INITSTIFFNESS": {
                     "type": "number",
                     "description": "Initial stiffness."
+                  },
+                  "INITSTIFFNESSDIST": {
+                    "type": "number",
+                    "description": "Initial stiffness value for distributed hinges (Dist). DB default 1.0."
                   },
                   "PALPHADELTA": {
                     "type": "integer",
@@ -6839,11 +6939,15 @@
                   },
                   "INITSTIFFTYPE": {
                     "type": "integer",
-                    "description": "Initial stiffness type."
+                    "description": "Initial stiffness type: 0=6EI/L, 1=3EI/L, 2=2EI/L, 3=User (INITSTIFFNESS), 4=Elastic Stiffness, 5=Skeleton Curve."
                   },
                   "INITSTIFFNESS": {
                     "type": "number",
                     "description": "Initial stiffness."
+                  },
+                  "INITSTIFFNESSDIST": {
+                    "type": "number",
+                    "description": "Initial stiffness value for distributed hinges (Dist). DB default 1.0."
                   },
                   "PALPHADELTA": {
                     "type": "integer",
@@ -7159,11 +7263,15 @@
                   },
                   "INITSTIFFTYPE": {
                     "type": "integer",
-                    "description": "Initial stiffness type."
+                    "description": "Initial stiffness type: 0=6EI/L, 1=3EI/L, 2=2EI/L, 3=User (INITSTIFFNESS), 4=Elastic Stiffness, 5=Skeleton Curve."
                   },
                   "INITSTIFFNESS": {
                     "type": "number",
                     "description": "Initial stiffness."
+                  },
+                  "INITSTIFFNESSDIST": {
+                    "type": "number",
+                    "description": "Initial stiffness value for distributed hinges (Dist). DB default 1.0."
                   },
                   "PALPHADELTA": {
                     "type": "integer",
@@ -7536,11 +7644,15 @@
                   },
                   "INITSTIFFTYPE": {
                     "type": "integer",
-                    "description": "Initial stiffness type."
+                    "description": "Initial stiffness type: 0=6EI/L, 1=3EI/L, 2=2EI/L, 3=User (INITSTIFFNESS), 4=Elastic Stiffness, 5=Skeleton Curve."
                   },
                   "INITSTIFFNESS": {
                     "type": "number",
                     "description": "Initial stiffness."
+                  },
+                  "INITSTIFFNESSDIST": {
+                    "type": "number",
+                    "description": "Initial stiffness value for distributed hinges (Dist). DB default 1.0."
                   }
                 }
               },
@@ -7588,11 +7700,15 @@
                   },
                   "INITSTIFFTYPE": {
                     "type": "integer",
-                    "description": "Initial stiffness type."
+                    "description": "Initial stiffness type: 0=6EI/L, 1=3EI/L, 2=2EI/L, 3=User (INITSTIFFNESS), 4=Elastic Stiffness, 5=Skeleton Curve."
                   },
                   "INITSTIFFNESS": {
                     "type": "number",
                     "description": "Initial stiffness."
+                  },
+                  "INITSTIFFNESSDIST": {
+                    "type": "number",
+                    "description": "Initial stiffness value for distributed hinges (Dist). DB default 1.0."
                   }
                 }
               },
@@ -7909,11 +8025,15 @@
                   },
                   "INITSTIFFTYPE": {
                     "type": "integer",
-                    "description": "Initial stiffness type."
+                    "description": "Initial stiffness type: 0=6EI/L, 1=3EI/L, 2=2EI/L, 3=User (INITSTIFFNESS), 4=Elastic Stiffness, 5=Skeleton Curve."
                   },
                   "INITSTIFFNESS": {
                     "type": "number",
                     "description": "Initial stiffness."
+                  },
+                  "INITSTIFFNESSDIST": {
+                    "type": "number",
+                    "description": "Initial stiffness value for distributed hinges (Dist). DB default 1.0."
                   },
                   "PALPHADELTA": {
                     "type": "integer",
@@ -8195,9 +8315,9 @@
           "KIN",
           "ETR",
           "ETR",
-          "",
-          "",
-          ""
+          "KIN",
+          "KIN",
+          "KIN"
         ],
         "SECTION_NUM": [
           3,
@@ -8208,16 +8328,26 @@
           1
         ],
         "ALL_PROP": [
-          {},
-          {},
-          {},
-          {},
+          {
+            "KINEMA": {}
+          },
+          {
+            "KINEMA": {}
+          },
+          {
+            "KINEMA": {}
+          },
+          {
+            "KINEMA": {}
+          },
           {
             "ELATRI": {
               "SYMMETRIC": 1,
               "YIELDSTRENGTHOPT": 0,
               "DEFORMDEFINETYPE": 1,
+              "INITSTIFFTYPE": 3,
               "INITSTIFFNESS": 1e-06,
+              "INITSTIFFNESSDIST": 1.0,
               "PALPHADELTA": 1,
               "COMPONENTPROPS": {
                 "YIELDFORCE": [
@@ -8292,7 +8422,9 @@
               "SYMMETRIC": 1,
               "YIELDSTRENGTHOPT": 0,
               "DEFORMDEFINETYPE": 1,
+              "INITSTIFFTYPE": 3,
               "INITSTIFFNESS": 1e-06,
+              "INITSTIFFNESSDIST": 1.0,
               "PALPHADELTA": 1,
               "COMPONENTPROPS": {
                 "YIELDFORCE": [

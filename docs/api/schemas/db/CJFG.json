@@ -1,6 +1,7 @@
 {
   "_group": "db",
   "_name": "CJFG",
+  "product": "civil",
   "uri": "db/CJFG",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {

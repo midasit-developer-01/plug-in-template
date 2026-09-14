@@ -1,6 +1,7 @@
 {
   "_group": "db",
   "_name": "IMFM-M1",
+  "product": "civil",
   "uri": "db/IMFM-M1",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {

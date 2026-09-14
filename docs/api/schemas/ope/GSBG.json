@@ -1,6 +1,7 @@
 {
   "_group": "ope",
   "_name": "GSBG",
+  "product": "civil",
   "uri": "ope/GSBG",
   "methods": "POST",
   "schema": {
@@ -35,7 +36,11 @@
             "EXTENSION": {
               "type": "string",
               "description": "Graph image extension (bmp/jpg/emf). Case-insensitive.",
-              "enum": ["bmp", "jpg", "emf"]
+              "enum": [
+                "bmp",
+                "jpg",
+                "emf"
+              ]
             },
             "BATCH": {
               "type": "boolean",
@@ -90,17 +95,28 @@
               }
             }
           },
-          "required": ["LC_NAME", "DGRM_TYPE", "STAGE_LIST", "EXPORT_PATH", "EXTENSION"]
+          "required": [
+            "LC_NAME",
+            "DGRM_TYPE",
+            "STAGE_LIST",
+            "EXPORT_PATH",
+            "EXTENSION"
+          ]
         }
       },
-      "required": ["Argument"]
+      "required": [
+        "Argument"
+      ]
     }
   },
   "example": {
     "Argument": {
       "LC_NAME": "Summation",
       "DGRM_TYPE": 0,
-      "STAGE_LIST": ["CS1", "CS2"],
+      "STAGE_LIST": [
+        "CS1",
+        "CS2"
+      ],
       "EXPORT_PATH": "C:/Temp/GSBG",
       "EXTENSION": "jpg",
       "BATCH": true,
@@ -112,7 +128,10 @@
         "COMP": -20.0,
         "TENS": 3.5
       },
-      "BATCH_LIST": ["Batch1", "Batch2"]
+      "BATCH_LIST": [
+        "Batch1",
+        "Batch2"
+      ]
     }
   }
 }

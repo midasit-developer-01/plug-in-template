@@ -1,6 +1,7 @@
 {
   "_group": "design",
   "_name": "BRC-TABLE",
+  "product": "gen",
   "uri": "design/RC/KDS-41-20-2022/BRC-TABLE",
   "methods": "POST",
   "schema": {
@@ -152,7 +153,8 @@
             "TABLE_TYPE"
           ]
         }
-      }
+      },
+      "description": ""
     }
   },
   "example": {

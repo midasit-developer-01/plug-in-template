@@ -1,6 +1,7 @@
 {
   "_group": "design",
   "_name": "FMAG",
+  "product": "gen",
   "uri": "design/RC/KDS-41-20-2022/FMAG",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {

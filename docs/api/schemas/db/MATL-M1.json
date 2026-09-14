@@ -1,6 +1,7 @@
 {
   "_group": "db",
   "_name": "MATL-M1",
+  "product": "civil",
   "uri": "db/MATL-M1",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {
@@ -14,7 +15,12 @@
         },
         "MATL_TYPE": {
           "type": "string",
-          "enum": ["CONC", "STEEL", "SRC", "USER"],
+          "enum": [
+            "CONC",
+            "STEEL",
+            "SRC",
+            "USER"
+          ],
           "description": "Material type (case-insensitive). CONC=concrete, STEEL=steel, SRC=steel reinforced concrete, USER=user-defined. Hard-validated at runtime."
         },
         "DAMP_RAT": {
@@ -30,7 +36,11 @@
             "properties": {
               "P_TYPE": {
                 "type": "integer",
-                "enum": [0, 1, 2],
+                "enum": [
+                  0,
+                  1,
+                  2
+                ],
                 "description": "Definition type: 0=Standard (properties pulled from code DB; requires STANDARD and DB), 1=Isotropic user-defined (uses USER_DEFINED bELAST/POISN/THERMAL/DEN), 2=Orthotropic user-defined (uses USER_DEFINED ELAST_M/THERMAL_M/SHEAR_M/POISN_M). For MATL_TYPE=SRC only P_TYPE 0 and 1 are meaningful."
               },
               "STANDARD": {
@@ -68,28 +78,36 @@
                   },
                   "ELAST_M": {
                     "type": "array",
-                    "items": {"type": "number"},
+                    "items": {
+                      "type": "number"
+                    },
                     "minItems": 3,
                     "maxItems": 3,
                     "description": "[P_TYPE=2] Moduli of elasticity [X, Y, Z]."
                   },
                   "THERMAL_M": {
                     "type": "array",
-                    "items": {"type": "number"},
+                    "items": {
+                      "type": "number"
+                    },
                     "minItems": 3,
                     "maxItems": 3,
                     "description": "[P_TYPE=2] Coefficients of linear thermal expansion [X, Y, Z]."
                   },
                   "SHEAR_M": {
                     "type": "array",
-                    "items": {"type": "number"},
+                    "items": {
+                      "type": "number"
+                    },
                     "minItems": 3,
                     "maxItems": 3,
                     "description": "[P_TYPE=2] Shear moduli [xy, xz, yz]."
                   },
                   "POISN_M": {
                     "type": "array",
-                    "items": {"type": "number"},
+                    "items": {
+                      "type": "number"
+                    },
                     "minItems": 3,
                     "maxItems": 3,
                     "description": "[P_TYPE=2] Poisson's ratios [xy, xz, yz]."
@@ -128,12 +146,18 @@
                 "additionalProperties": false
               }
             },
-            "required": ["P_TYPE"],
+            "required": [
+              "P_TYPE"
+            ],
             "additionalProperties": false
           }
         }
       },
-      "required": ["MATL_NAME", "MATL_TYPE", "PARAM"],
+      "required": [
+        "MATL_NAME",
+        "MATL_TYPE",
+        "PARAM"
+      ],
       "additionalProperties": false
     }
   },
@@ -164,7 +188,7 @@
             "USER_DEFINED": {
               "bELAST": 25000000,
               "POISN": 0.18,
-              "THERMAL": 0.00001,
+              "THERMAL": 1e-05,
               "DEN": 24.5,
               "bMASS_DENS": true,
               "MASS": 2.5
@@ -183,10 +207,26 @@
           {
             "P_TYPE": 2,
             "USER_DEFINED": {
-              "ELAST_M": [21000000, 21000000, 10000000],
-              "THERMAL_M": [0.000012, 0.000012, 0.000012],
-              "SHEAR_M": [8000000, 8000000, 4000000],
-              "POISN_M": [0.3, 0.3, 0.2],
+              "ELAST_M": [
+                21000000,
+                21000000,
+                10000000
+              ],
+              "THERMAL_M": [
+                1.2e-05,
+                1.2e-05,
+                1.2e-05
+              ],
+              "SHEAR_M": [
+                8000000,
+                8000000,
+                4000000
+              ],
+              "POISN_M": [
+                0.3,
+                0.3,
+                0.2
+              ],
               "bMASS_DENS": false
             }
           }

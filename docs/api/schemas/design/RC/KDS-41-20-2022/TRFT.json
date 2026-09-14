@@ -1,6 +1,7 @@
 {
   "_group": "design",
   "_name": "TRFT",
+  "product": "gen",
   "uri": "design/RC/KDS-41-20-2022/TRFT",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {

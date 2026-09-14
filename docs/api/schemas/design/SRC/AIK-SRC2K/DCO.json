@@ -1,6 +1,7 @@
 {
   "_group": "design",
   "_name": "DCO",
+  "product": "gen",
   "uri": "design/SRC/AIK-SRC2K/DCO",
   "methods": "GET, PUT, DELETE",
   "schema": {

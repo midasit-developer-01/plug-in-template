@@ -19,7 +19,7 @@
 | `config/PROJECT` | GET | Argument |  | Project Information (PROJECT). Retrieves the opened project's file dates and design code preferences; the request carries no meaningful… |
 | `config/VER` | GET | Argument |  | Program Version Information (VER). Retrieves product/version metadata; the request takes no body (DTO_EMPTY), so Argument is an empty… |
 
-## db (270)
+## db (259)
 
 | uri | methods | body | feature | desc |
 | --- | --- | --- | --- | --- |
@@ -54,12 +54,9 @@
 | `db/CRPC` | POST, GET, PUT, DELETE | Assign |  | Creep Coefficient for Construction Stage (CRPC). Keyed by element (entity) id; ITEMS holds one entry per load group, each carrying a creep… |
 | `db/CSCS` | POST, GET, PUT, DELETE | Assign |  | Composite Section for Construction Stage (CSCS). The TYPE (composite type) and each vPARTINFO entry's MTYPE drive which fields apply; the… |
 | `db/CUTL` | POST, GET, PUT, DELETE | Assign | Plate Cutting Line Diagram | Cutting Line (CUTL). Defines a cutting line for extracting analysis results along a plane; the two endpoints (PT1*, PT2*) and DIR set the… |
-| `db/DCON` | POST, GET, PUT, DELETE | Assign | Design Code Option | RC Design Code (DCON). A single global record (key must be 1) that sets the reinforced-concrete design code; DGNCODE names the code and… |
-| `db/DCTL` | POST, GET, PUT, DELETE | Assign | Definition of Frame | Design Control Data (DCTL). A single record (key 1) holding global steel/concrete design control settings; FRAMEX/FRAMEY set the… |
 | `db/DMAS` | POST, GET, PUT, DELETE | Assign |  | Floor Diaphragm Masses (DMAS). Each item's MASS_TYPE selects which mass geometry block… |
 | `db/DOEL` | POST, GET, PUT, DELETE | Assign | Define Domain | Domain Element (DOEL). Assigns each node/element key to a domain; TYPE selects whether the key belongs to a main domain or a sub domain… |
 | `db/DRLS` | POST, GET, PUT, DELETE | Assign | Diaphragm Disconnect | Diaphragm Disconnect (DRLS). Assigns a rigid-diaphragm disconnect to a node; the assignment is keyed by node number and carries no… |
-| `db/DSTL` | POST, GET, PUT, DELETE | Assign | Design Code Option | Design Steel Data (DSTL). A single-instance record (key is always 1) holding the steel design code; the DGNCODE string is matched (case-… |
 | `db/DYFG` | POST, GET, PUT, DELETE | Assign |  | Railway Dynamic Factor (DYFG). A single global setting (key is always 1) whose fields configure how the dynamic amplification factor for… |
 | `db/DYLA` | POST, GET, PUT, DELETE | Assign |  | Dynamic Load Allowance (DYLA). Each key is a dynamic-load-allowance entry id; FACTOR sets the impact/dynamic amplification factor applied… |
 | `db/DYNF` | POST, GET, PUT, DELETE | Assign |  | Railway Dynamic Factor by Element (DYNF). INPUT_TYPE selects which fields apply: 0 uses LENGTH/MAINTAIN_TYPE/OPT_REDUCE_EFF (and… |
@@ -136,7 +133,6 @@
 | `db/LCOM-STLCOMP` | POST, GET, PUT, DELETE | Assign |  | Steel Composite Load Combination (LCOM-STLCOMP). One entry per combination id; each combination carries a list of (load case, factor) terms… |
 | `db/LDGR` | POST, GET, PUT, DELETE | Assign | Define Load Group | Load Group (LDGR). Each entry is keyed by a load group id and carries only the group name; the name is the sole field written on set. |
 | `db/LDSQ` | POST, GET, PUT, DELETE | Assign |  | Loading Sequence (LDSQ). A single record (key 1) whose LCNAME_ITEM lists static load case names in the order they are applied; the handler… |
-| `db/LENG` | POST, GET, PUT, DELETE | Assign | Unbraced Length (L,Lb) | Unbraced Length (LENG). Per-element design unbraced-length data keyed by element number; all fields are optional length/flag values applied… |
 | `db/LLAN` | POST, GET, PUT, DELETE | Assign | Traffic Line Lanes | Traffic Line Lane (LLAN). COMMON holds the lane definition; provide EITHER LANE_ITEMS (per-element rows) OR SPECIAL_LANE_ITEMS (bulk import… |
 | `db/LLANCH` | POST, GET, PUT, DELETE | Assign | Traffic Line Lanes | Traffic Line Lane - China (LLANCH). Defines a moving-load traffic line lane; COMMON holds the lane header and either LANE_ITEMS… |
 | `db/LLANID` | POST, GET, PUT, DELETE | Assign | Traffic Line Lanes | Traffic Line Lane - India (LLANID). Defines an India-code moving-load traffic line lane; COMMON holds lane-wide settings while lane element… |
@@ -144,7 +140,6 @@
 | `db/LLANOP` | POST, GET, PUT, DELETE | Assign | Traffic Line Lanes | Traffic Line Lane - Moving Load Optimization (LLANOP). Defines a moving-load optimization line lane; lane data can be supplied per-lane via… |
 | `db/LLANTR` | POST, GET, PUT, DELETE | Assign | Traffic Line Lanes | Traffic Line Lane - Transverse (LLANTR). Defines a transverse moving-load traffic lane by name and its lane data; lane elements/factors are… |
 | `db/LTOM` | POST, GET, PUT, DELETE | Assign | Loads to Masses | Loads to Masses (LTOM). Singleton settings that convert selected static load types into masses along the chosen direction, scaled per load… |
-| `db/LTSR` | POST, GET, PUT, DELETE | Assign | Limiting Slenderness Ratio | Limiting Slenderness Ratio (LTSR). Per-element steel/SRC design limiting slenderness ratio; the id key is the element number and all fields… |
 | `db/MADO` | POST, GET, PUT, DELETE | Assign | Define Domain | Mesh Analysis Domain (MADO). Defines a named analysis domain characterized by its element type, material, property, and sub type; all keys… |
 | `db/MATD` | GET, PUT | Assign | Modify Concrete Material | Material Design Data (MATD). The TYPE field (STEEL/CONC/SRC) selects which sub-blocks of DATA1/DATA2 and which rebar/serviceability fields… |
 | `db/MATL` | POST, GET, PUT, DELETE | Assign | Material Properties | Material (MATL). TYPE selects the material category and each PARAM entry's P_TYPE (1=Standard, 2=User-defined isotropic, 3=User-defined… |
@@ -208,11 +203,6 @@
 | `db/PSSF` | POST, GET, PUT, DELETE | Assign | Plate Stiffness Scale Factor | Plate Stiffness Scale Factor (PSSF). Keyed by element number; the ITEMS array holds one scale-factor set per boundary group, each entry… |
 | `db/PTNS` | POST, GET, PUT, DELETE | Assign | Pretension Loads | Prestress Loads (PTNS). Each element key maps to an ITEMS array of pretension load entries; each item ties a static load case (and optional… |
 | `db/PZEF` | POST, GET, PUT | Assign | Panel Zone Effects | Panel Zone Effect (PZEF). A single-key (id "1") global setting controlling panel zone offset calculation; all three fields are applied… |
-| `db/RCHK` | POST, GET, PUT, DELETE | Assign |  | Rebar for Checking (RCHK). MEMBTYPE selects the member kind and drives which sub-object is used: BEAM populates the BEAM object, COLUMN… |
-| `db/REBB` | POST, GET, PUT, DELETE | Assign |  | Rebar Input for Beam Section (REBB). Keyed by section id (sectK); ITEMS is a list of rebar definitions, one per (sub-)section, each… |
-| `db/REBC` | POST, GET, PUT, DELETE | Assign |  | Rebar Input for Column Section (REBC). The endpoint key is the section id (sectK); each request carries an ITEMS array where each item is… |
-| `db/REBR` | POST, GET, PUT, DELETE | Assign |  | Concrete Brace Rebar (REBR). Keyed by section id (sectK); each ITEMS entry defines the rebar arrangement for one brace section or, when… |
-| `db/REBW` | POST, GET, PUT, DELETE | Assign |  | Rebar Input for Wall Section (REBW). The key is the Wall element ID (1..9999); ITEMS holds one or more rebar entries whose applicable… |
 | `db/RIGD` | POST, GET, PUT, DELETE | Assign | Rigid Link | Rigid Link (RIGD). The key is the master node number (entity key); ITEMS holds one or more rigid-link definitions, each pairing a… |
 | `db/RISS` | POST, GET, PUT, DELETE | Assign |  | Reduce Infill Strut Stiffness (RISS). Boundary attribute keyed by element key that flags whether the infill strut stiffness is reduced for… |
 | `db/RPSC` | POST, GET, PUT, DELETE | Assign |  | Reinforcement of Section (RPSC). Keyed by section id; SBAR_ITEMS carries shear/web/torsion/stirrup reinforcement (index 0 = i-section… |
@@ -283,7 +273,6 @@
 | `db/TRFT` | POST, GET, PUT, DELETE | Assign |  | Torsional Reduction Factor (TRFT). Keyed by element id; the factor is applied per element and can only be assigned to BEAM-type elements. |
 | `db/TSGR` | POST, GET, PUT, DELETE | Assign | Tapered Section Group | Tapered Section Group (TSGR). ZVAR and YVAR select the section-shape variation law along the z- and y-axes; when a variation is POLY the… |
 | `db/UFIG` | GET | Assign |  | User Figure (UFIG). A DYNAGEN figure entry used for M-Connector; read-only, the single NAME field holds the figure's name as stored in the… |
-| `db/ULCT` | POST, GET, PUT, DELETE | Assign |  | Underground Load Combination Type (ULCT). Assigned per element (key = element number); the single flag bUNDERLOADTYPE marks whether the… |
 | `db/ULFC` | POST, GET, PUT, DELETE | Assign | Unknown Load Factor | Unknown Load Factor Constraint (ULFC). TYPE selects the response quantity (reaction/displacement/truss/beam) constrained on object OBJ_ID… |
 | `db/UNIT` | GET, PUT | Assign | Unit System | Unit System (UNIT). The single model-wide unit system; each optional field independently overrides the current force, length, heat, or… |
 | `db/VBEM` | POST, GET, PUT, DELETE | Assign |  | Virtual Beam (VBEM). Each key is a virtual beam id whose two virtual section ids (VSEC1 at end i, VSEC2 at end j) define the beam's… |
@@ -311,7 +300,7 @@
 | `doc/SAVEAS` | POST | Argument | Save As | Save Document As (SAVEAS). Saves the currently open project to the file path supplied in Argument; the string value is passed directly as… |
 | `doc/STAGAS` | POST | Argument | Save Current Stage As | Save Stage As (STAGAS). Exports the model at a specified construction stage to a new file; the fields specify the export file path and the… |
 
-## ope (52)
+## ope (58)
 
 | uri | methods | body | feature | desc |
 | --- | --- | --- | --- | --- |
@@ -324,6 +313,7 @@
 | `ope/APIEND` | GET | Argument |  | API End (APIEND). Terminates the running API session; the request takes no meaningful body (empty request DTO), so the Argument object… |
 | `ope/APISTART` | GET | Argument |  | API Start (APISTART). Starts an API working session for the current product; the request carries no fields (DTO_EMPTY). |
 | `ope/AUTOMESH` | POST | Argument | Auto-mesh Planar Area | Auto Mesh Generation (AUTOMESH). Generates a planar auto mesh from target nodes/line/planar elements; the request drives the mesher method… |
+| `ope/BMLD` | POST | Argument |  | Beam Detail Analysis (BMLD). Runs the Beam Detail Analysis of one beam element for one load case/combination and returns displacement… |
 | `ope/BOM` | POST | Argument |  | Bill of Material (BOM). Computes bill-of-material tables from the selected BOM item titles; the SELECTS list drives which structural… |
 | `ope/CPCREATE` | POST | Argument |  | Construction Stage Create (CPCREATE). The request takes no meaningful body; posting triggers the construction-stage create command on the… |
 | `ope/CPEXPORT` | POST | Argument |  | Construction Stage / CP Export (CPEXPORT). The request body is a single string giving the full destination file path; the handler opens… |
@@ -335,10 +325,15 @@
 | `ope/ELEMTDNT` | POST | Argument |  | Element Tendon Coordinates (ELEMTDNT). Returns the section tendon (strand) coordinates for an element at a given position along its length… |
 | `ope/GSBG` | POST | Argument |  | Bridge Girder Diagram Auto-Save (GSBG). Auto-saves bridge girder diagram graph images; the request fields under Argument drive which load… |
 | `ope/GUSTFACTOR` | POST | Argument |  | Gust Effect Factor Calculation (GUSTFACTOR). Computes the along-wind gust effect factors in the X and Y directions per the KDS wind code… |
-| `ope/LCOM-CONC` | POST | Argument |  | Load Combination Auto Generation - Concrete (LCOM-CONC). Auto-generates concrete design load combinations for design code KDS 41 20 : 2022… |
-| `ope/LCOM-GEN` | POST | Argument |  | Load Combination Auto Generation, General table (LCOM-GEN). Auto-generates load combinations into the General table (name prefix gLCB) for… |
-| `ope/LCOM-SRC` | POST | Argument |  | Load Combination Auto Generation - SRC (LCOM-SRC). DGNCODE selects the active generation payload: 'KDS 41 SRC : 2022' consumes all… |
-| `ope/LCOM-STEEL` | POST | Argument |  | Load Combination Auto Generation - Steel (LCOM-STEEL). Runs the KDS 41 30 : 2022 steel auto load-combination generator; OPTION and DGNCODE… |
+| `ope/IBFD` | POST | Argument |  | Influence Line Beam Force/Moment Data (IBFD). Returns the BEAM FORCE/MOMENT influence line: one force/moment component at a chosen position… |
+| `ope/IBSD` | POST | Argument |  | Influence Line Beam Stress Data (IBSD). Returns the BEAM STRESS influence line: the combined section stress at a chosen stress point and… |
+| `ope/IDSD` | POST | Argument |  | Influence Line Displacement Data (IDSD). Returns the DISPLACEMENT influence line: the displacement/rotation component at one node as a unit… |
+| `ope/IELD` | POST | Argument |  | Influence Line Elastic Link Force/Moment Data (IELD). Returns the ELASTIC LINK FORCE/MOMENT influence line: one force/moment component of… |
+| `ope/IGLD` | POST | Argument |  | Influence Line General Link Force/Moment Data (IGLD). Returns the GENERAL LINK FORCE/MOMENT influence line: one force/moment component of… |
+| `ope/IPLD` | POST | Argument |  | Influence Line Plate Force/Moment Data (IPLD). Returns the PLATE FORCE/MOMENT influence line: one plate force/moment component at a chosen… |
+| `ope/IRED` | POST | Argument |  | Influence Line Reaction Data (IRED). Returns the support REACTION influence line: the reaction component at one support node as a unit load… |
+| `ope/ISSD` | POST | Argument |  | Influence Line Solid Stress Data (ISSD). Returns the SOLID STRESS influence line: one stress component at a chosen position of one solid… |
+| `ope/ITRD` | POST | Argument |  | Influence Line Truss Force Data (ITRD). Returns the TRUSS AXIAL FORCE influence line of one truss element as a unit load moves along a… |
 | `ope/LINEBMLD` | POST | Argument | Line Beam Loads | Line Beam Load (LINEBMLD). Adds a line/beam load to elements or along a loading line; the load geometry, direction, eccentricity… |
 | `ope/MATL_DB` | GET | Argument |  | Material DB Lookup (MATL_DB). Retrieves the built-in material database name list for a given material type or design standard; the… |
 | `ope/MATL_STANDARD` | GET | Argument |  | Material Standard List (MATL_STANDARD). Returns the list of available material design-standard names for a given material type; the request… |

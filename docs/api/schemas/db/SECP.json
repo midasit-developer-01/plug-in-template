@@ -1,6 +1,7 @@
 {
   "_group": "db",
   "_name": "SECP",
+  "product": "civil",
   "uri": "db/SECP",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {

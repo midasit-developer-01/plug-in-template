@@ -1,0 +1,58 @@
+{
+  "_group": "design",
+  "_name": "SUEQ",
+  "product": "gen",
+  "uri": "design/STEEL/AIJ-ASD02/SUEQ",
+  "methods": "POST, GET, PUT, DELETE",
+  "schema": {
+    "SUEQ": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "description": "Scale-Up Factors of Earthquake Load (SUEQ). Per-key scale factors applied to earthquake load results, split by source (load case vs load combination) and force component. To use any /DESIGN/STEEL/AIJ-ASD02/* endpoint, first activate the AIJ-ASD02 design code with PUT /TEMP/DESIGN/STEEL/AIJ-ASD02/DCO. Note: PUT fully replaces the record; every omitted field is written with its default 1.0, not preserved. DELETE removes the entry.",
+      "properties": {
+        "LC_AXIAL": {
+          "type": "number",
+          "default": 1.0,
+          "description": "Load Case - Axial force scale factor."
+        },
+        "LC_MOMENT": {
+          "type": "number",
+          "default": 1.0,
+          "description": "Load Case - Moment scale factor."
+        },
+        "LC_SHEAR": {
+          "type": "number",
+          "default": 1.0,
+          "description": "Load Case - Shear scale factor."
+        },
+        "LCOM_AXIAL": {
+          "type": "number",
+          "default": 1.0,
+          "description": "Load Combination - Axial force scale factor."
+        },
+        "LCOM_MOMENT": {
+          "type": "number",
+          "default": 1.0,
+          "description": "Load Combination - Moment scale factor."
+        },
+        "LCOM_SHEAR": {
+          "type": "number",
+          "default": 1.0,
+          "description": "Load Combination - Shear scale factor."
+        }
+      }
+    }
+  },
+  "example": {
+    "Assign": {
+      "1": {
+        "LC_AXIAL": 1.0,
+        "LC_MOMENT": 1.2,
+        "LC_SHEAR": 1.2,
+        "LCOM_AXIAL": 1.0,
+        "LCOM_MOMENT": 1.2,
+        "LCOM_SHEAR": 1.2
+      }
+    }
+  }
+}

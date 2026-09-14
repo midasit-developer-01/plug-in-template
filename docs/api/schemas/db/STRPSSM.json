@@ -1,6 +1,7 @@
 {
   "_group": "db",
   "_name": "STRPSSM",
+  "product": "civil",
   "uri": "db/STRPSSM",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {

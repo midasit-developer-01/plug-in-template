@@ -1,6 +1,7 @@
 {
   "_group": "design",
   "_name": "BC-TABLE",
+  "product": "gen",
   "uri": "design/SRC/AIK-SRC2K/BC-TABLE",
   "methods": "POST",
   "schema": {

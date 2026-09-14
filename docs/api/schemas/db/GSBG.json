@@ -1,6 +1,7 @@
 {
   "_group": "db",
   "_name": "GSBG",
+  "product": "civil",
   "uri": "db/GSBG",
   "methods": "POST, GET, PUT, DELETE",
   "schema": {

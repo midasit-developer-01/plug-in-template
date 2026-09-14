@@ -1,6 +1,7 @@
 {
   "_group": "design",
   "_name": "MATD",
+  "product": "civil",
   "uri": "design/PSC/AASHTO-LRFD24/MATD",
   "methods": "GET, PUT, DELETE",
   "schema": {

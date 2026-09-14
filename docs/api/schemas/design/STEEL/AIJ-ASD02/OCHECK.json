@@ -1,12 +1,13 @@
 {
   "_group": "design",
   "_name": "OCHECK",
-  "uri": "design/STEEL/KDS-41-30-2022/OCHECK",
+  "product": "gen",
+  "uri": "design/STEEL/AIJ-ASD02/OCHECK",
   "methods": "POST",
   "schema": {
     "OCHECK": {
       "type": "object",
-      "description": "Steel Optimal Design / Section Check (OCHECK). Fields are driven by the ODS_RUN_REQUEST DTO: a required section list plus optional analysis, column-design, output, plate-thickness and user-defined-section blocks.",
+      "description": "Steel Optimal Design / Section Check (OCHECK) for AIJ-ASD02. The ODS_RUN_REQUEST DTO (wrapped in Argument) gives a required section list plus optional analysis, column-design, output, plate-thickness and user-defined-section blocks. Same handler as the KDS OCHECK; the active design code (set via PUT /TEMP/DESIGN/STEEL/AIJ-ASD02/DCO) determines the code rules used. Runs SYNCHRONOUSLY and can re-run the structural analysis up to ANAL_TIME times, so a large model easily exceeds the ~60s client read timeout. SIDE EFFECTS: OUTPUT.MODEL_UPDATE=true MODIFIES the model (replaces member sections with the optimal ones), and OUTPUT with a non-empty EXPORT_PATH writes graph/report files on the HOST machine; omit OUTPUT (or leave EXPORT_PATH empty) for a pure query. Every SECT_LIST[].SECT_NO must reference an existing model section or the request fails in-band ('Section N does not exist.'). Response: {FORCE, DIST, HEAD, DATA} table with columns No, Name, Size, Area, COM, Axial, Ben-y, Ben-z, Shear; a '*' prefix on Size marks a section that was NOT selected, and a '*' prefix on COM marks a slender section.",
       "properties": {
         "Argument": {
           "type": "object",
@@ -14,13 +15,13 @@
           "properties": {
             "SECT_LIST": {
               "type": "array",
-              "description": "Section List & Design Criteria. Each entry references an existing section and its optimal-design criteria.",
+              "description": "Section List & Design Criteria. Each entry references an existing section and its optimal-design criteria. Omitted SHAPE/D1..D6 fall back to the model section's shape/dimensions.",
               "items": {
                 "type": "object",
                 "properties": {
                   "SECT_NO": {
                     "type": "integer",
-                    "description": "Section No. Must reference an existing section in the model."
+                    "description": "Section No. Must reference an existing section in the model (otherwise the request fails)."
                   },
                   "ALLOW": {
                     "type": "number",
@@ -29,13 +30,28 @@
                   },
                   "SECT_DB": {
                     "type": "string",
-                    "description": "Section DB. Case-insensitive. BUILT requires PLATE_THICKNESS; USER requires the section to be defined in USER_DEFINED_SECT.",
-                    "enum": ["BUILT", "KS21", "USER"]
+                    "description": "Section DB. Case-insensitive. BUILT requires PLATE_THICKNESS; USER requires the section number to be defined in USER_DEFINED_SECT.",
+                    "enum": [
+                      "BUILT",
+                      "KS21",
+                      "USER"
+                    ]
                   },
                   "SHAPE": {
                     "type": "string",
-                    "description": "Shape. Case-insensitive. If omitted, the model section's shape is used.",
-                    "enum": ["L", "C", "H", "T", "B", "P", "SR", "SB", "2L", "2C"]
+                    "description": "Shape (L=angle, C=channel, H, T, B=box, P=pipe, SR=round bar, SB=square bar, 2L, 2C). Case-insensitive. If omitted, the model section's shape is used.",
+                    "enum": [
+                      "L",
+                      "C",
+                      "H",
+                      "T",
+                      "B",
+                      "P",
+                      "SR",
+                      "SB",
+                      "2L",
+                      "2C"
+                    ]
                   },
                   "D1": {
                     "type": "number",
@@ -62,7 +78,10 @@
                     "description": "Section dimension D6. If omitted, the model section's dimension is used."
                   }
                 },
-                "required": ["SECT_NO", "SECT_DB"]
+                "required": [
+                  "SECT_NO",
+                  "SECT_DB"
+                ]
               }
             },
             "ANALYSIS_OPT": {
@@ -71,7 +90,7 @@
               "properties": {
                 "ANAL_TIME": {
                   "type": "integer",
-                  "description": "Analysis Time. 0 = selection only, max 10.",
+                  "description": "Analysis Time (number of re-analysis iterations). 0 = section selection only (no re-analysis), max 10. Higher values multiply run time - mind the ~60s client timeout.",
                   "default": 1
                 }
               }
@@ -82,60 +101,66 @@
               "properties": {
                 "APPLIED_FORCES": {
                   "type": "integer",
-                  "description": "Applied Forces and Moments (0=Axial+Moments, 1=Axial Only). Must be 0 or 1.",
-                  "enum": [0, 1],
+                  "description": "Applied Forces and Moments (0=Axial+Moments, 1=Axial Only). Any other value fails in-band with 'APPLIED_FORCES must be 0 or 1'.",
+                  "enum": [
+                    0,
+                    1
+                  ],
                   "default": 0
                 },
                 "JOINT_METHOD": {
                   "type": "integer",
-                  "description": "Joint Method of Built-Up Column Splices (0=Internal, 1=External). Must be 0 or 1.",
-                  "enum": [0, 1],
+                  "description": "Joint Method of Built-Up Column Splices (0=Internal, 1=External). Any other value fails in-band with 'JOINT_METHOD must be 0 or 1'.",
+                  "enum": [
+                    0,
+                    1
+                  ],
                   "default": 1
                 }
               }
             },
             "OUTPUT": {
               "type": "object",
-              "description": "Output Options. Output is produced only when this block is present (and EXPORT_PATH is set for file output).",
+              "description": "Output Options. File output is produced only when this block is present AND EXPORT_PATH is non-empty; files are written on the HOST machine. WARNING: MODEL_UPDATE=true is side-effectful - it updates the model's sections to the optimal result.",
               "properties": {
                 "GRAPH_MAX_RATIO": {
                   "type": "boolean",
-                  "description": "Optimal Design (Max. Ratio).",
+                  "description": "Optimal Design (Max. Ratio) graph.",
                   "default": false
                 },
                 "GRAPH_AVG_RATIO": {
                   "type": "boolean",
-                  "description": "Optimal Design (Average Ratio).",
+                  "description": "Optimal Design (Average Ratio) graph.",
                   "default": false
                 },
                 "GRAPH_WEIGHT": {
                   "type": "boolean",
-                  "description": "Optimal Design (Weight).",
+                  "description": "Optimal Design (Weight) graph.",
                   "default": false
                 },
                 "GRAPH_WEIGHT_SUM": {
                   "type": "boolean",
-                  "description": "Optimal Design (Weight Sum).",
+                  "description": "Optimal Design (Weight Sum) graph.",
                   "default": false
                 },
                 "GRAPH_WEIGHT_RATIO": {
                   "type": "boolean",
-                  "description": "Optimal Design (Weight Ratio).",
+                  "description": "Optimal Design (Weight Ratio) graph.",
                   "default": false
                 },
                 "TEXT_REPORT": {
                   "type": "boolean",
-                  "description": "Text Report.",
+                  "description": "Text Report file.",
                   "default": false
                 },
                 "MODEL_UPDATE": {
                   "type": "boolean",
-                  "description": "Model Update.",
+                  "description": "Model Update. SIDE EFFECT: true replaces the model's member sections with the optimal-design result. Keep false for a read-only check.",
                   "default": false
                 },
                 "EXPORT_PATH": {
                   "type": "string",
-                  "description": "Export Path (folder or prefix). If empty, no file output is produced."
+                  "description": "Export Path on the HOST machine (folder or prefix). If empty, no file output is produced."
                 }
               }
             },
@@ -148,18 +173,29 @@
             },
             "USER_DEFINED_SECT": {
               "type": "array",
-              "description": "User-Defined Section DB. Required when any SECT_LIST entry uses SECT_DB = USER.",
+              "description": "User-Defined Section DB. Required when any SECT_LIST entry uses SECT_DB = USER (entries are matched by NO).",
               "items": {
                 "type": "object",
                 "properties": {
                   "NO": {
                     "type": "integer",
-                    "description": "No (user section number)."
+                    "description": "No (user section number, matched against SECT_LIST[].SECT_NO)."
                   },
                   "SHAPE": {
                     "type": "string",
                     "description": "Shape. Case-insensitive.",
-                    "enum": ["L", "C", "H", "T", "B", "P", "SR", "SB", "2L", "2C"]
+                    "enum": [
+                      "L",
+                      "C",
+                      "H",
+                      "T",
+                      "B",
+                      "P",
+                      "SR",
+                      "SB",
+                      "2L",
+                      "2C"
+                    ]
                   },
                   "D1": {
                     "type": "number",
@@ -192,11 +228,16 @@
                     "default": 0.0
                   }
                 },
-                "required": ["NO", "SHAPE"]
+                "required": [
+                  "NO",
+                  "SHAPE"
+                ]
               }
             }
           },
-          "required": ["SECT_LIST"]
+          "required": [
+            "SECT_LIST"
+          ]
         }
       }
     }
