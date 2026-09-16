@@ -779,32 +779,32 @@
               "items": {
                 "type": "number"
               },
-              "description": "PSC section I size group A (PSC sections only)."
+              "description": "[SECTTYPE=PSC] PSC dimension group A. All four groups A, B, C and D must be present with exactly the length listed for the SHAPE, or no dimension at all is stored and the request fails with a generic section-size error. Lengths A/B/C/D per SHAPE: 1CEL 6/6/10/8, 2CEL 6/6/10/8, 3CEL 10/12/13/13, PSCM 10/6/9/6, PSCH 6/6/10/7, PSCT 8/8/7/8, PSCB 10/6/8/5, PSCI 10/7/9/7, NCEL 5/8/0/0, NCE2 11/18/11/18, CMPW 7/11/8/9 (VALU uses a separate path). Field order for 1CEL/2CEL: HO1, HO2, HO2-1, HO2-2, HO3, HO3-1. For NCE2 (left half): HO1, HO2, HO2-1, HO3, HO4, BO1, BO1-1, BO2, BO3, BO4, BO5."
             },
             "vSIZE_PSC_B": {
               "type": "array",
               "items": {
                 "type": "number"
               },
-              "description": "PSC section I size group B (PSC sections only)."
+              "description": "[SECTTYPE=PSC] PSC dimension group B. All four groups A, B, C and D must be present with exactly the length listed for the SHAPE, or no dimension at all is stored and the request fails with a generic section-size error. Lengths A/B/C/D per SHAPE: 1CEL 6/6/10/8, 2CEL 6/6/10/8, 3CEL 10/12/13/13, PSCM 10/6/9/6, PSCH 6/6/10/7, PSCT 8/8/7/8, PSCB 10/6/8/5, PSCI 10/7/9/7, NCEL 5/8/0/0, NCE2 11/18/11/18, CMPW 7/11/8/9 (VALU uses a separate path). Field order for 1CEL/2CEL: BO1, BO1-1, BO1-2, BO2, BO2-1, BO3. For NCE2 (left half, 18 values): HI1, HI2, HI2-1, HI3, HI4, HI5, HI6, BI1, BI2, BI2-1, BI3, BI4, BI5, BI6, then the two centre values BI7, BI8, then the two haunch radii R1, R2 - send 0, 0 when there are no radii."
             },
             "vSIZE_PSC_C": {
               "type": "array",
               "items": {
                 "type": "number"
               },
-              "description": "PSC section I size group C (PSC sections only)."
+              "description": "[SECTTYPE=PSC] PSC dimension group C. All four groups A, B, C and D must be present with exactly the length listed for the SHAPE, or no dimension at all is stored and the request fails with a generic section-size error. Lengths A/B/C/D per SHAPE: 1CEL 6/6/10/8, 2CEL 6/6/10/8, 3CEL 10/12/13/13, PSCM 10/6/9/6, PSCH 6/6/10/7, PSCT 8/8/7/8, PSCB 10/6/8/5, PSCI 10/7/9/7, NCEL 5/8/0/0, NCE2 11/18/11/18, CMPW 7/11/8/9 (VALU uses a separate path). Field order for 1CEL/2CEL: HI1, HI2, HI2-1, HI2-2, HI3, HI3-1, HI4, HI4-1, HI4-2, HI5. For NCE2 this is the right half in the same order as group A, required at full length even when USE_SYMMETRIC is true."
             },
             "vSIZE_PSC_D": {
               "type": "array",
               "items": {
                 "type": "number"
               },
-              "description": "PSC section I size group D (PSC sections only)."
+              "description": "[SECTTYPE=PSC] PSC dimension group D. All four groups A, B, C and D must be present with exactly the length listed for the SHAPE, or no dimension at all is stored and the request fails with a generic section-size error. Lengths A/B/C/D per SHAPE: 1CEL 6/6/10/8, 2CEL 6/6/10/8, 3CEL 10/12/13/13, PSCM 10/6/9/6, PSCH 6/6/10/7, PSCT 8/8/7/8, PSCB 10/6/8/5, PSCI 10/7/9/7, NCEL 5/8/0/0, NCE2 11/18/11/18, CMPW 7/11/8/9 (VALU uses a separate path). Field order for 1CEL/2CEL: BI1, BI1-1, BI1-2, BI2-1, BI3, BI3-1, BI3-2, BI4. For NCE2 this is the right half in the same order as group B, required at full length even when USE_SYMMETRIC is true."
             },
             "SWIDTH": {
               "type": "number",
-              "description": "S-Width for PSC section I or J."
+              "description": "S-Width for PSC section I or J, stored as Size[0]. NCE2 uses it as the slab width: it is recomputed from the BO values when the cell count is 1 or 2, and must be at least the sum of the BO values when the cell count is 3 or more."
             }
           }
         },
@@ -863,7 +863,7 @@
             },
             "SHAPE": {
               "type": "string",
-              "description": "Section shape code string (e.g. 'SB','H','B','I','P')."
+              "description": "Section shape code string (e.g. 'SB','H','B','I','P'). For SECTTYPE=PSC it must be one of the exact PSC codes: '1CEL' 1-cell box, '2CEL' 2-cell box, '3CEL' 3-cell box, 'NCEL' n-cell, 'NCE2' n-cell type 2, 'PSCM' mid, 'PSCH' half, 'PSCT' tee, 'PSCB' box, 'PSCI' I-girder, 'VALU' PSC value, 'CMPW' corrugated steel web. Any other spelling ('PSC', '2CELL', 'BOX', ...) is not recognised by the shape lookup and the section is built from uninitialised data."
             },
             "DATATYPE": {
               "type": "integer",
@@ -931,7 +931,7 @@
             },
             "SHEAR_CHK": {
               "type": "boolean",
-              "description": "Perform shear check.",
+              "description": "Perform shear check. Ignored on write for SECTTYPE=PSC - the handler overwrites the incoming value from the stored one, and PSC sections always run the shear check.",
               "default": false
             },
             "WARPING_CHK_POS_I": {
@@ -1087,7 +1087,7 @@
               "items": {
                 "type": "boolean"
               },
-              "description": "Use web-thickness override (fixed 2 flags).",
+              "description": "AUTO web-thickness flags for torsion, [I, J]. Maps to bAutoWebThk: true means auto-calculate, so the name reads the opposite way round from what it does. For SECTTYPE=PSC with SHAPE 1CEL/2CEL/3CEL/NCEL/PSCB/NCE2 this must be sent as [true,true] (or WEB_THICK must be positive) - the underlying default is false with WEB_THICK 0, which the section-size check rejects no matter how correct the dimensions are. Only index [0] is read for a non-tapered PSC section; index [1] is copied from it.",
               "default": [
                 false,
                 false
@@ -1100,7 +1100,7 @@
               "items": {
                 "type": "number"
               },
-              "description": "Web-thickness values (fixed 2 values).",
+              "description": "Web-thickness values for torsion, [I, J]. Read only where the matching USE_WEB_THICK flag is false, and must then be greater than 0.",
               "default": [
                 0.0,
                 0.0
@@ -1118,7 +1118,7 @@
                   "type": "boolean"
                 }
               },
-              "description": "Use auto web-thickness for shear (2 x 3 flags).",
+              "description": "AUTO web-thickness flags for shear, 2 x 3 ([I,J] x [top, centroid, bottom]). true means auto-calculate. Carries the same requirement as USE_WEB_THICK for the PSC box shapes: send all six as true, or supply positive WEB_THICK_SHEAR values.",
               "default": [
                 [
                   false,
@@ -1144,7 +1144,7 @@
                   "type": "number"
                 }
               },
-              "description": "Web-thickness-for-shear values (2 x 3 values).",
+              "description": "Web-thickness values for shear, 2 x 3. Read only where the matching USE_WEB_THICK_SHEAR flag is false, and must then be greater than 0.",
               "default": [
                 [
                   0.0,
@@ -1160,7 +1160,7 @@
             },
             "USE_SYMMETRIC": {
               "type": "boolean",
-              "description": "Symmetric section.",
+              "description": "Symmetric section. Applied without an is-assigned guard, so omitting it stores false and overrides the underlying default of true. Send it explicitly for a symmetric PSC section; the right-hand groups vSIZE_PSC_C/D are still required at full length even when true.",
               "default": false
             },
             "USE_SMALL_HOLE": {
@@ -1181,15 +1181,15 @@
             },
             "CELL_SHAPE": {
               "type": "integer",
-              "description": "Cell shape code."
+              "description": "Cell shape code. Ignored for SECTTYPE=PSC - PSC sections take the cell type and cell count from PSC_OPT1 and PSC_OPT2 instead."
             },
             "CELL_TYPE": {
               "type": "integer",
-              "description": "Cell type code."
+              "description": "Cell type code. Ignored for SECTTYPE=PSC - PSC sections take the cell type and cell count from PSC_OPT1 and PSC_OPT2 instead."
             },
             "CELL_NUM": {
               "type": "integer",
-              "description": "Cell count."
+              "description": "Cell count. Ignored for SECTTYPE=PSC - PSC sections take the cell type and cell count from PSC_OPT1 and PSC_OPT2 instead."
             },
             "FLANGE_SHAPE": {
               "type": "integer",
@@ -1209,18 +1209,18 @@
             },
             "PSC_OPT1": {
               "type": "string",
-              "description": "PSC option 1."
+              "description": "[SECTTYPE=PSC] Cell-type selector; the accepted strings depend on SHAPE. 1CEL/2CEL/3CEL/PSCT/PSCI: unused, send ''. PSCM: 'NONE'|'CIRCLE'|'POLYGON'. PSCH: 'LEFT'|'RIGHT'. PSCB: 'HALF'|'1CELL'|'2CELL'. NCEL: 'VERTICAL'|'SLOPE'|'CHAMFER'. NCE2: 'POLYGON'|'CIRCLE'. For PSC sections CELL_TYPE and CELL_SHAPE are ignored - this field is the real control."
             },
             "PSC_OPT2": {
               "type": "string",
-              "description": "PSC option 2."
+              "description": "[SECTTYPE=PSC] Cell-shape or cell-count selector; the accepted strings depend on SHAPE. 1CEL/2CEL/3CEL/PSCT/PSCI: unused, send ''. PSCM and PSCH: 'NONE'|'CIRCLE'|'POLYGON'. PSCB: with PSC_OPT1='HALF' -> 'LEFT'|'RIGHT'; with '1CELL' -> 'NONE'|'CIRCLE'|'POLYGON'; with '2CELL' unused. NCEL: the number of cells as a decimal string, stored as value-1. NCE2: the number of cells as a decimal string, stored as-is - required, because the stored count must be 1..20 and defaults to 0 when this field is omitted, which the section-size check rejects."
             },
             "JOINT": {
               "type": "array",
               "items": {
                 "type": "boolean"
               },
-              "description": "Joint flags."
+              "description": "[SECTTYPE=PSC] Haunch/joint on-off flags, packed in order into a bitfield. Required length per SHAPE: 1CEL 8, 2CEL 8, 3CEL 13, PSCM 9, PSCH 8, PSCT 9, PSCB 2, PSCI 9, NCEL 0 (unused), NCE2 2. For 1CEL/2CEL the eight flags are [JO1,JO2,JO3,JI1,JI2,JI3,JI4,JI5] and are mirrored into SECT_I.BUILT_FLAG; for NCE2 they are [JO,JI]. A flag left false forces its paired haunch dimensions to 0. On PUT the flags are OR-ed into the stored value, so a joint that is already on cannot be switched off through the API."
             },
             "SLAB": {
               "type": "array",
@@ -1229,7 +1229,625 @@
               },
               "description": "Slab dimensions (composite sections only)."
             }
-          }
+          },
+          "allOf": [
+            {
+              "if": {
+                "required": [
+                  "SHAPE"
+                ],
+                "properties": {
+                  "SHAPE": {
+                    "const": "1CEL"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "SECT_I": {
+                    "properties": {
+                      "vSIZE_PSC_A": {
+                        "minItems": 6,
+                        "maxItems": 6
+                      },
+                      "vSIZE_PSC_B": {
+                        "minItems": 6,
+                        "maxItems": 6
+                      },
+                      "vSIZE_PSC_C": {
+                        "minItems": 10,
+                        "maxItems": 10
+                      },
+                      "vSIZE_PSC_D": {
+                        "minItems": 8,
+                        "maxItems": 8
+                      }
+                    }
+                  },
+                  "SECT_J": {
+                    "properties": {
+                      "vSIZE_PSC_A": {
+                        "minItems": 6,
+                        "maxItems": 6
+                      },
+                      "vSIZE_PSC_B": {
+                        "minItems": 6,
+                        "maxItems": 6
+                      },
+                      "vSIZE_PSC_C": {
+                        "minItems": 10,
+                        "maxItems": 10
+                      },
+                      "vSIZE_PSC_D": {
+                        "minItems": 8,
+                        "maxItems": 8
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "required": [
+                  "SHAPE"
+                ],
+                "properties": {
+                  "SHAPE": {
+                    "const": "2CEL"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "SECT_I": {
+                    "properties": {
+                      "vSIZE_PSC_A": {
+                        "minItems": 6,
+                        "maxItems": 6
+                      },
+                      "vSIZE_PSC_B": {
+                        "minItems": 6,
+                        "maxItems": 6
+                      },
+                      "vSIZE_PSC_C": {
+                        "minItems": 10,
+                        "maxItems": 10
+                      },
+                      "vSIZE_PSC_D": {
+                        "minItems": 8,
+                        "maxItems": 8
+                      }
+                    }
+                  },
+                  "SECT_J": {
+                    "properties": {
+                      "vSIZE_PSC_A": {
+                        "minItems": 6,
+                        "maxItems": 6
+                      },
+                      "vSIZE_PSC_B": {
+                        "minItems": 6,
+                        "maxItems": 6
+                      },
+                      "vSIZE_PSC_C": {
+                        "minItems": 10,
+                        "maxItems": 10
+                      },
+                      "vSIZE_PSC_D": {
+                        "minItems": 8,
+                        "maxItems": 8
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "required": [
+                  "SHAPE"
+                ],
+                "properties": {
+                  "SHAPE": {
+                    "const": "3CEL"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "SECT_I": {
+                    "properties": {
+                      "vSIZE_PSC_A": {
+                        "minItems": 10,
+                        "maxItems": 10
+                      },
+                      "vSIZE_PSC_B": {
+                        "minItems": 12,
+                        "maxItems": 12
+                      },
+                      "vSIZE_PSC_C": {
+                        "minItems": 13,
+                        "maxItems": 13
+                      },
+                      "vSIZE_PSC_D": {
+                        "minItems": 13,
+                        "maxItems": 13
+                      }
+                    }
+                  },
+                  "SECT_J": {
+                    "properties": {
+                      "vSIZE_PSC_A": {
+                        "minItems": 10,
+                        "maxItems": 10
+                      },
+                      "vSIZE_PSC_B": {
+                        "minItems": 12,
+                        "maxItems": 12
+                      },
+                      "vSIZE_PSC_C": {
+                        "minItems": 13,
+                        "maxItems": 13
+                      },
+                      "vSIZE_PSC_D": {
+                        "minItems": 13,
+                        "maxItems": 13
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "required": [
+                  "SHAPE"
+                ],
+                "properties": {
+                  "SHAPE": {
+                    "const": "PSCM"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "SECT_I": {
+                    "properties": {
+                      "vSIZE_PSC_A": {
+                        "minItems": 10,
+                        "maxItems": 10
+                      },
+                      "vSIZE_PSC_B": {
+                        "minItems": 6,
+                        "maxItems": 6
+                      },
+                      "vSIZE_PSC_C": {
+                        "minItems": 9,
+                        "maxItems": 9
+                      },
+                      "vSIZE_PSC_D": {
+                        "minItems": 6,
+                        "maxItems": 6
+                      }
+                    }
+                  },
+                  "SECT_J": {
+                    "properties": {
+                      "vSIZE_PSC_A": {
+                        "minItems": 10,
+                        "maxItems": 10
+                      },
+                      "vSIZE_PSC_B": {
+                        "minItems": 6,
+                        "maxItems": 6
+                      },
+                      "vSIZE_PSC_C": {
+                        "minItems": 9,
+                        "maxItems": 9
+                      },
+                      "vSIZE_PSC_D": {
+                        "minItems": 6,
+                        "maxItems": 6
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "required": [
+                  "SHAPE"
+                ],
+                "properties": {
+                  "SHAPE": {
+                    "const": "PSCH"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "SECT_I": {
+                    "properties": {
+                      "vSIZE_PSC_A": {
+                        "minItems": 6,
+                        "maxItems": 6
+                      },
+                      "vSIZE_PSC_B": {
+                        "minItems": 6,
+                        "maxItems": 6
+                      },
+                      "vSIZE_PSC_C": {
+                        "minItems": 10,
+                        "maxItems": 10
+                      },
+                      "vSIZE_PSC_D": {
+                        "minItems": 7,
+                        "maxItems": 7
+                      }
+                    }
+                  },
+                  "SECT_J": {
+                    "properties": {
+                      "vSIZE_PSC_A": {
+                        "minItems": 6,
+                        "maxItems": 6
+                      },
+                      "vSIZE_PSC_B": {
+                        "minItems": 6,
+                        "maxItems": 6
+                      },
+                      "vSIZE_PSC_C": {
+                        "minItems": 10,
+                        "maxItems": 10
+                      },
+                      "vSIZE_PSC_D": {
+                        "minItems": 7,
+                        "maxItems": 7
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "required": [
+                  "SHAPE"
+                ],
+                "properties": {
+                  "SHAPE": {
+                    "const": "PSCT"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "SECT_I": {
+                    "properties": {
+                      "vSIZE_PSC_A": {
+                        "minItems": 8,
+                        "maxItems": 8
+                      },
+                      "vSIZE_PSC_B": {
+                        "minItems": 8,
+                        "maxItems": 8
+                      },
+                      "vSIZE_PSC_C": {
+                        "minItems": 7,
+                        "maxItems": 7
+                      },
+                      "vSIZE_PSC_D": {
+                        "minItems": 8,
+                        "maxItems": 8
+                      }
+                    }
+                  },
+                  "SECT_J": {
+                    "properties": {
+                      "vSIZE_PSC_A": {
+                        "minItems": 8,
+                        "maxItems": 8
+                      },
+                      "vSIZE_PSC_B": {
+                        "minItems": 8,
+                        "maxItems": 8
+                      },
+                      "vSIZE_PSC_C": {
+                        "minItems": 7,
+                        "maxItems": 7
+                      },
+                      "vSIZE_PSC_D": {
+                        "minItems": 8,
+                        "maxItems": 8
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "required": [
+                  "SHAPE"
+                ],
+                "properties": {
+                  "SHAPE": {
+                    "const": "PSCB"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "SECT_I": {
+                    "properties": {
+                      "vSIZE_PSC_A": {
+                        "minItems": 10,
+                        "maxItems": 10
+                      },
+                      "vSIZE_PSC_B": {
+                        "minItems": 6,
+                        "maxItems": 6
+                      },
+                      "vSIZE_PSC_C": {
+                        "minItems": 8,
+                        "maxItems": 8
+                      },
+                      "vSIZE_PSC_D": {
+                        "minItems": 5,
+                        "maxItems": 5
+                      }
+                    }
+                  },
+                  "SECT_J": {
+                    "properties": {
+                      "vSIZE_PSC_A": {
+                        "minItems": 10,
+                        "maxItems": 10
+                      },
+                      "vSIZE_PSC_B": {
+                        "minItems": 6,
+                        "maxItems": 6
+                      },
+                      "vSIZE_PSC_C": {
+                        "minItems": 8,
+                        "maxItems": 8
+                      },
+                      "vSIZE_PSC_D": {
+                        "minItems": 5,
+                        "maxItems": 5
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "required": [
+                  "SHAPE"
+                ],
+                "properties": {
+                  "SHAPE": {
+                    "const": "PSCI"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "SECT_I": {
+                    "properties": {
+                      "vSIZE_PSC_A": {
+                        "minItems": 10,
+                        "maxItems": 10
+                      },
+                      "vSIZE_PSC_B": {
+                        "minItems": 7,
+                        "maxItems": 7
+                      },
+                      "vSIZE_PSC_C": {
+                        "minItems": 9,
+                        "maxItems": 9
+                      },
+                      "vSIZE_PSC_D": {
+                        "minItems": 7,
+                        "maxItems": 7
+                      }
+                    }
+                  },
+                  "SECT_J": {
+                    "properties": {
+                      "vSIZE_PSC_A": {
+                        "minItems": 10,
+                        "maxItems": 10
+                      },
+                      "vSIZE_PSC_B": {
+                        "minItems": 7,
+                        "maxItems": 7
+                      },
+                      "vSIZE_PSC_C": {
+                        "minItems": 9,
+                        "maxItems": 9
+                      },
+                      "vSIZE_PSC_D": {
+                        "minItems": 7,
+                        "maxItems": 7
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "required": [
+                  "SHAPE"
+                ],
+                "properties": {
+                  "SHAPE": {
+                    "const": "NCEL"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "SECT_I": {
+                    "properties": {
+                      "vSIZE_PSC_A": {
+                        "minItems": 5,
+                        "maxItems": 5
+                      },
+                      "vSIZE_PSC_B": {
+                        "minItems": 8,
+                        "maxItems": 8
+                      },
+                      "vSIZE_PSC_C": {
+                        "minItems": 0,
+                        "maxItems": 0
+                      },
+                      "vSIZE_PSC_D": {
+                        "minItems": 0,
+                        "maxItems": 0
+                      }
+                    }
+                  },
+                  "SECT_J": {
+                    "properties": {
+                      "vSIZE_PSC_A": {
+                        "minItems": 5,
+                        "maxItems": 5
+                      },
+                      "vSIZE_PSC_B": {
+                        "minItems": 8,
+                        "maxItems": 8
+                      },
+                      "vSIZE_PSC_C": {
+                        "minItems": 0,
+                        "maxItems": 0
+                      },
+                      "vSIZE_PSC_D": {
+                        "minItems": 0,
+                        "maxItems": 0
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "required": [
+                  "SHAPE"
+                ],
+                "properties": {
+                  "SHAPE": {
+                    "const": "NCE2"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "SECT_I": {
+                    "properties": {
+                      "vSIZE_PSC_A": {
+                        "minItems": 11,
+                        "maxItems": 11
+                      },
+                      "vSIZE_PSC_B": {
+                        "minItems": 18,
+                        "maxItems": 18
+                      },
+                      "vSIZE_PSC_C": {
+                        "minItems": 11,
+                        "maxItems": 11
+                      },
+                      "vSIZE_PSC_D": {
+                        "minItems": 18,
+                        "maxItems": 18
+                      }
+                    }
+                  },
+                  "SECT_J": {
+                    "properties": {
+                      "vSIZE_PSC_A": {
+                        "minItems": 11,
+                        "maxItems": 11
+                      },
+                      "vSIZE_PSC_B": {
+                        "minItems": 18,
+                        "maxItems": 18
+                      },
+                      "vSIZE_PSC_C": {
+                        "minItems": 11,
+                        "maxItems": 11
+                      },
+                      "vSIZE_PSC_D": {
+                        "minItems": 18,
+                        "maxItems": 18
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "required": [
+                  "SHAPE"
+                ],
+                "properties": {
+                  "SHAPE": {
+                    "const": "CMPW"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "SECT_I": {
+                    "properties": {
+                      "vSIZE_PSC_A": {
+                        "minItems": 7,
+                        "maxItems": 7
+                      },
+                      "vSIZE_PSC_B": {
+                        "minItems": 11,
+                        "maxItems": 11
+                      },
+                      "vSIZE_PSC_C": {
+                        "minItems": 8,
+                        "maxItems": 8
+                      },
+                      "vSIZE_PSC_D": {
+                        "minItems": 9,
+                        "maxItems": 9
+                      }
+                    }
+                  },
+                  "SECT_J": {
+                    "properties": {
+                      "vSIZE_PSC_A": {
+                        "minItems": 7,
+                        "maxItems": 7
+                      },
+                      "vSIZE_PSC_B": {
+                        "minItems": 11,
+                        "maxItems": 11
+                      },
+                      "vSIZE_PSC_C": {
+                        "minItems": 8,
+                        "maxItems": 8
+                      },
+                      "vSIZE_PSC_D": {
+                        "minItems": 9,
+                        "maxItems": 9
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ]
         }
       }
     }
@@ -1359,6 +1977,106 @@
             "vSIZE": [
               0.6,
               0.6
+            ]
+          }
+        }
+      },
+      "5": {
+        "SECTTYPE": "PSC",
+        "SECT_NAME": "BOX_NCE2_2CELL",
+        "SECT_BEFORE": {
+          "OFFSET_PT": "CT",
+          "SHAPE": "NCE2",
+          "PSC_OPT1": "POLYGON",
+          "PSC_OPT2": "2",
+          "JOINT": [
+            false,
+            false
+          ],
+          "USE_SYMMETRIC": true,
+          "USE_WEB_THICK": [
+            true,
+            true
+          ],
+          "USE_WEB_THICK_SHEAR": [
+            [
+              true,
+              true,
+              true
+            ],
+            [
+              true,
+              true,
+              true
+            ]
+          ],
+          "SECT_I": {
+            "SWIDTH": 14.1,
+            "vSIZE_PSC_A": [
+              0.35,
+              0.25,
+              0,
+              0,
+              3.4,
+              1.07,
+              0,
+              0,
+              0.877,
+              5.103,
+              0
+            ],
+            "vSIZE_PSC_B": [
+              0.28,
+              0.32,
+              0.1,
+              0.32,
+              0.25,
+              0.25,
+              0.5,
+              0.804,
+              1.2,
+              0,
+              1.2,
+              0.25,
+              0.25,
+              0.4,
+              1.2,
+              0.25,
+              0,
+              0
+            ],
+            "vSIZE_PSC_C": [
+              0.35,
+              0.25,
+              0,
+              0,
+              3.4,
+              1.07,
+              0,
+              0,
+              0.877,
+              5.103,
+              0
+            ],
+            "vSIZE_PSC_D": [
+              0.28,
+              0.32,
+              0.1,
+              0.32,
+              0.25,
+              0.25,
+              0.5,
+              0.804,
+              1.2,
+              0,
+              1.2,
+              0.25,
+              0.25,
+              0.4,
+              1.2,
+              0.25,
+              0,
+              0
             ]
           }
         }
