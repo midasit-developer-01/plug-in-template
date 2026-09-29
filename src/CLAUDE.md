@@ -136,8 +136,7 @@ const { t } = useTranslation();
 
 ## 4. API request guide
 
-Communication with the Midas server uses one of **two methods**.
-**The default is no pyscript (recommended).**
+All communication with the Midas server goes through `src/utils_api.ts`.
 
 > ### ⛔ Never write an API call from memory
 >
@@ -161,7 +160,7 @@ Communication with the Midas server uses one of **two methods**.
 > **If the user is asking what a feature IS or where it lives in the product** — not asking for
 > a plug-in — answer from `docs/api/features/<uri>.json` (`menu_path` + `usage`) and write no code.
 
-### 4-1. No pyscript (recommended) → `src/utils_api.ts`
+### 4-1. `src/utils_api.ts`
 
 A `fetch`-based TypeScript client. Auth (MAPI-Key) and base URL are handled by `VerifyUtil`.
 **All functions are asynchronous (`async`)**, so call them with `await`.
@@ -200,21 +199,7 @@ const selected = await command("view", "SELECT", undefined, "GET");
 - `requestJson(method, endpoint, body)` is exported as an escape hatch, but `command()` already
   covers every non-db group — reach for it only if an endpoint's `example` matches neither convention.
 
-### 4-2. Using pyscript → `src/utils_pyscript.ts` (reference)
-
-`utils_pyscript.ts` is **currently fully commented out**; it was the implementation that called the Python code
-(`public/py_main.py`, `py_base.py`, `py_api_db.py`).
-
-To switch to pyscript:
-1. Uncomment the pyscript `<script>` / `<py-config>` / `<py-script>` tags in `public/index.html`
-2. Uncomment the `const pyscript: any` declaration in `src/global.d.ts`
-3. Uncomment the code in `src/utils_pyscript.ts`
-4. At call sites, use `dbRead` etc. from `utils_pyscript` instead of `utils_api`
-
-> Both sides provide the same function names (`dbRead`, etc.). However, `utils_api` is asynchronous (needs `await`)
-> while `utils_pyscript` is synchronous, so call sites need editing when switching.
-
-### 4-3. Auth bypass during development (.env)
+### 4-2. Auth bypass during development (.env)
 
 If attaching `?mapiKey=` every time during local development is tedious, you can bypass it via `.env.development.local`.
 

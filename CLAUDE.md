@@ -1,8 +1,7 @@
 # CLAUDE.md — Project Guide
 
 This repository is a React template for building **MIDAS Plug-in Items**.
-It is based on the `@midasit-dev/moaui` UI library, **pyscript is disabled**, and
-API requests run on TypeScript (`fetch`).
+It is based on the `@midasit-dev/moaui` UI library, and API requests run on TypeScript (`fetch`).
 
 > The **work rules, structure, translation, and API guide** for actually building a new
 > project (plug-in) are documented in [`src/CLAUDE.md`](./src/CLAUDE.md). Be sure to read it
@@ -29,10 +28,8 @@ API requests run on TypeScript (`fetch`).
 ```
 template/
 ├─ public/
-│  ├─ index.html          # pyscript tags are commented out (disabled). Loads manifest.
-│  ├─ manifest.json       # Plug-in title / background color / window size (width, height)
-│  ├─ py_*.py             # (old) pyscript Python code — currently unused, kept for reference
-│  └─ py_config.json      # (old) pyscript config — unused
+│  ├─ index.html          # Page shell. Loads manifest.json for the title
+│  └─ manifest.json       # Plug-in title / background color / window size (width, height)
 │
 ├─ .env.example          # Example dev env vars → copy to create .env.development.local
 │
@@ -53,13 +50,12 @@ template/
    ├─ Wrapper.tsx         # MAPI-Key auth verification gate (must pass to render App)
    ├─ App.tsx             # App root. Build the screen starting here
    ├─ config.ts           # Dev config (reads REACT_APP_* such as auth bypass)
-   ├─ utils_api.ts        # ★ API requests (recommended): fetch-based client (db CRUD + command)
-   ├─ utils_pyscript.ts   # (old) pyscript-based API — fully commented out (reference)
+   ├─ utils_api.ts        # ★ API requests: fetch-based client (db CRUD + command)
    ├─ utils_typscript.ts  # Shared utility functions
    ├─ i18n.js             # i18next init (imports src/locales into the bundle)
    ├─ language.ts         # Language detection/switching (path-independent, ja→jp / ko→kr aliases)
    ├─ locales/            # i18n translation resources (en/kr/jp) — included in the bundle
-   ├─ global.d.ts         # Global types (the pyscript declaration is commented out)
+   ├─ global.d.ts         # Global type declarations
    ├─ Signature.tsx       # Console signature
    ├─ UI/                 # Reusable pure widgets (presentational)
    ├─ hooks/              # Custom hooks (logic, state, API)
@@ -149,8 +145,7 @@ Grep [`docs/api/INDEX.md`](./docs/api/INDEX.md) → read `docs/api/schemas/<uri>
 
 | Method | File | Notes |
 | --- | --- | --- |
-| **Recommended (no pyscript)** | `src/utils_api.ts` | `fetch`-based. `dbCreate/dbRead/dbUpdate/dbDelete…` for the `Assign` convention (405 endpoints), `command()` for `Argument` (146) |
-| (old) using pyscript | `src/utils_pyscript.ts` | Fully commented out. To re-enable, see section 7 below / `src/CLAUDE.md` |
+| **Recommended** | `src/utils_api.ts` | `fetch`-based. `dbCreate/dbRead/dbUpdate/dbDelete…` for the `Assign` convention (405 endpoints), `command()` for `Argument` (146) |
 
 For detailed call examples, see the "API Request Guide" in [`src/CLAUDE.md`](./src/CLAUDE.md)
 and the recipes in [`docs/api/cookbook.md`](./docs/api/cookbook.md).
@@ -164,19 +159,7 @@ node scripts/sync-api-docs.js
 
 ---
 
-## 7. pyscript Status
-
-pyscript is **disabled**; the related code is not deleted but **preserved as comments**.
-
-- `public/index.html` — pyscript `<script>`, `<py-config>`, `<py-script>` tags commented out
-- `src/utils_pyscript.ts` — fully commented out
-- `src/global.d.ts` — `const pyscript: any` declaration commented out
-
-**To re-enable**: uncomment the three places above. (For detailed usage, see `src/CLAUDE.md`)
-
----
-
-## 8. Dev / Build Commands
+## 7. Dev / Build Commands
 
 ```bash
 npm start        # Dev server (http://localhost:3000)
@@ -192,7 +175,7 @@ npx tsc --noEmit # Type check
 > The `dev` (DevTools server) script in `package.json` does not work in this template because the
 > DevTools folder has been removed.
 
-### 8-1. Packaging / upload — files the plug-in platform reads by name
+### 7-1. Packaging / upload — files the plug-in platform reads by name
 
 Build, then zip **the contents of `build/`** — not the folder itself. The platform expects
 `index.html` / `icon.svg` / `readme.md` at the **top level of the archive**; an extra `build/`
@@ -216,9 +199,9 @@ Since CRA copies `public/` to `build/` verbatim, keep them at `public/icon.svg` 
 
 ---
 
-## 9. Running / Environment Setup (Claude Code standard procedure)
+## 8. Running / Environment Setup (Claude Code standard procedure)
 
-Running this project requires **Node.js**; Git and Python are optional (version control / old pyscript).
+Running this project requires **Node.js**; Git is optional (version control).
 Installation and running are handled by telling **Claude Code "run it"** (no separate batch file — the AI performs the steps below directly).
 
 ### MAPI-Key required before running
@@ -232,12 +215,11 @@ Installation and running are handled by telling **Claude Code "run it"** (no sep
 ### When the AI (Claude Code) handles it — "run it" standard procedure
 When the user asks to "run it / set up the environment", **the AI does it directly instead of making the user double-click**:
 
-1. Check installs: `node -v` (required). If needed, `git --version`, `python --version`.
+1. Check installs: `node -v` (required). If needed, `git --version`.
 2. Install **only what's missing** (only Node is required):
    ```powershell
    winget install -e --id OpenJS.NodeJS.LTS --silent --accept-package-agreements --accept-source-agreements
    winget install -e --id Git.Git --silent --accept-package-agreements --accept-source-agreements      # optional
-   winget install -e --id Python.Python.3.12 --silent --accept-package-agreements --accept-source-agreements  # optional (only for old pyscript)
    ```
    - If `winget` is missing (older Windows), guide the user to install the Microsoft Store "App Installer". Installing winget requires UAC (admin) approval.
    - Right after a winget install, PATH is not reflected in the current shell → run `npm` in a **new shell**.

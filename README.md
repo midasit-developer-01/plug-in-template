@@ -4,7 +4,7 @@ A React + TypeScript workspace for building MIDAS Civil / Gen (NX) plug-ins.
 
 This document is a **code structure guide**. It covers what each folder does, the path a request
 takes to reach the model, and where the code you write should go.
-Installation and running are in `CLAUDE.md` §9; build and upload are in `CLAUDE.md` §8.
+Installation and running are in `CLAUDE.md` §8; build and upload are in `CLAUDE.md` §7.
 
 Tech stack: React 18, TypeScript 4.9, Create React App 5, recoil, react-i18next,
 @midasit-dev/moaui, Tailwind CSS.
@@ -58,7 +58,7 @@ Full structure:
     |   +-- components/               [my code] Screen-level blocks
     |   |   +-- MainWindow.tsx            Window shell
     |   |   +-- Contents.tsx              The actual screen starts here. Your starting point
-    |   |   \-- RequestBtnPy.tsx          Example button that calls the API
+    |   |   \-- RequestBtn.tsx            Example button that calls the API
     |   |
     |   +-- UI/                       [my code] Reusable widgets (input fields, dialogs, etc.)
     |   |   \-- LanguageType.tsx          Language dropdown
@@ -71,7 +71,6 @@ Full structure:
     |   +-- states/                   [my code] recoil global state (folder doesn't exist yet)
     |   |
     |   +-- utils_api.ts              [wiring] API client. Explained in §6
-    |   +-- utils_pyscript.ts         [wiring] Old Python approach. Fully commented out. See §7
     |   +-- utils_typscript.ts        [wiring] Input validation helpers
     |   +-- config.ts                 [wiring] Reads dev environment variables
     |   +-- language.ts               [wiring] Language detection and persistence
@@ -89,12 +88,10 @@ Full structure:
     |   \-- reference.md                  Convention summary and gotchas
     |
     +-- public/                       Copied as-is to build/ at build time
-    |   +-- index.html                    Contains the pyscript tags, commented out
+    |   +-- index.html                    Page shell. Loads manifest.json for the title
     |   +-- manifest.json                 Plug-in title, window width and height
     |   +-- icon.svg                      Store icon. Only SVG is recognized
-    |   +-- readme.md                     Store description page
-    |   \-- py_base.py, py_api_db.py, py_main.py, py_config.json
-    |                                     Old Python approach assets. See §7
+    |   \-- readme.md                     Store description page
     |
     +-- scripts/
     |   +-- build.js                      Forces the dev auth bypass off at build time
@@ -227,7 +224,7 @@ the actual text in all three files: `src/locales/en`, `kr`, `jp`. If one is miss
 silently falls back to English.
 
 
-## 6. Reading and writing the model (TypeScript, default approach)
+## 6. Reading and writing the model
 
 The only file that sends requests is `src/utils_api.ts`. There are two forms.
 
@@ -302,75 +299,7 @@ Regenerate only when the catalog changes.
     node scripts/sync-api-docs.js
 
 
-## 7. Communicating with Python (pyscript)
-
-The default is the TypeScript approach above. Turn this on **only when you really need a Python
-library** such as numpy. The browser downloads and runs an entire Python runtime, so the first load
-becomes noticeably slower.
-
-Related files and roles:
-
-    public/index.html        pyscript loader and config tags. Currently commented out
-    public/py_config.json    Python packages to use (numpy) and the .py files to load with them
-    public/py_base.py        MidasAPI class and HTTP functions. The counterpart of utils_api.ts
-    public/py_api_db.py      db-form call functions such as py_db_read / py_db_create
-    public/py_main.py        Where you write Python code. Starts at main()
-    src/utils_pyscript.ts    Bridge for calling Python from JS. Fully commented out
-    src/global.d.ts          pyscript global declaration. Commented out
-
-Steps to turn it on (7 steps, all of them uncommenting):
-
-    [1] public/index.html
-        Uncomment the three lines: the pyscript.js script tag, the py-config tag, the py-script tag
-
-    [2] src/utils_pyscript.ts
-        Uncomment the whole file
-
-    [3] src/global.d.ts
-        Uncomment the declaration  const pyscript: any;
-
-    [4] Top of src/Wrapper.tsx
-        Uncomment  import { setGlobalVariable, getGlobalVariable } from "./utils_pyscript";
-
-    [5] src/Wrapper.tsx
-        Change ValidWrapper to (props: any) and make it receive isIntalledPyscript
-
-    [6] src/Wrapper.tsx
-        Uncomment the pyscript status row in the validation panel
-
-    [7] Bottom of src/Wrapper.tsx
-        Uncomment the PyscriptWrapper block and replace
-        export default ValidWrapper;  ->  export default PyscriptWrapper;
-
-This adds one more layer to the execution flow.
-
-    index.tsx
-        |
-        v
-    PyscriptWrapper       Waits until the Python interpreter is ready (shows a loading screen)
-        |                 Once ready, hands the MAPI-Key and server address to Python globals
-        v
-    ValidWrapper          The existing MAPI-Key verification gate
-        |
-        v
-    App.tsx ...
-
-What calls look like on the Python side:
-
-    # public/py_main.py
-    from py_base import MidasAPI, Product
-    from py_api_db import py_db_read, py_db_create
-
-    def main():
-        nodes = py_db_read("NODE")
-        py_db_create("SPRING", { "1": { "SPR_TYPE": "LINEAR" } })
-
-To call a Python function from JS, fetch it with `pyscript.interpreter.globals.get("functionName")`
-and call it. The detailed form is in the comments of `src/utils_pyscript.ts` and the guide comment at
-the bottom of `src/Wrapper.tsx`.
-
-
-## 8. Screen text (i18n)
+## 7. Screen text (i18n)
 
 Translation files are not downloaded at runtime; they are included in the bundle at build time.
 Even if the deploy server blocks the `/locales/` path, nothing is affected.
@@ -391,7 +320,7 @@ When adding text, put the same key in **all three files**: `src/locales/en/trans
 `kr/` and `jp/`.
 
 
-## 9. Dev settings and commands
+## 8. Dev settings and commands
 
 Normally you run it with the key attached to the URL.
 
@@ -417,21 +346,20 @@ Commands:
 `npm run dev` does not work. The DevTools folder has been removed.
 
 
-## 10. Common pitfalls
+## 9. Common pitfalls
 
 - **API failures don't surface as exceptions.** If you don't check `{ error, body }`, a failed write
   looks like nothing happened on screen.
 - **Running analysis without saving looks like a freeze.** If there are unsaved changes, NX opens a
   save dialog, and that dialog holds the API. It is indistinguishable from a slow analysis.
 - **Undo does not fully restore model changes.** Develop on a copy.
-- **pyscript is turned off, not deleted.** The files in §7 must be turned on or off together.
 - **The Validation Check screen is not a malfunction.** It is one of the three causes in §3.
 - **The store icon and description page are recognized by name only.** `icon.svg` must be SVG, and
   `readme.md` must be at the top level of the zip. No code references them, so nothing warns you
   when they are wrong.
 
 
-## 11. What to read next
+## 10. What to read next
 
     CLAUDE.md                 Root guide. Includes install, run, build and upload steps
     src/CLAUDE.md             Coding rules, folder rules, translation rules, project definition template

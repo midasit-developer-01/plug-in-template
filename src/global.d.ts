@@ -1,9 +1,5 @@
 // global.d.ts
-import React from 'react';
-
-declare global {
-  // pyscript 미사용 — 다시 켤 경우 아래 선언과 ./public/index.html 의 pyscript 태그 주석을 해제하세요.
-  // const pyscript: any;
-}
+// 전역 타입 선언이 필요하면 아래 declare global 블록 안에 추가하세요.
+declare global {}
 
 export {};

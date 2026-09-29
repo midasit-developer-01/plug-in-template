@@ -1,8 +1,0 @@
-{
-  "packages": ["numpy"],
-  "fetch": [
-    {
-      "files": ["./py_api_db.py", "./py_base.py"]
-    }
-  ]
-}

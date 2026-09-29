@@ -38,14 +38,3 @@ export function isBetween1And1000000(value: string) {
 	const val = parseFloat(value);
 	return val >= 1 && val <= 1000000;
 }
-
-// (구) pyscript 터미널 태그 제거 함수 — pyscript 미사용으로 주석 처리
-// export const deletePyscriptTerminalTag = () => {
-// 	// Get all elements with the py-terminal tag
-// 	const pyTerminals = document.querySelectorAll('py-terminal');
-//
-// 	// Remove all py-terminal elements
-// 	pyTerminals.forEach(pyTerminal => {
-// 		pyTerminal.remove();
-// 	});
-// }

@@ -8,7 +8,7 @@ import {
 } from "@midasit-dev/moaui";
 import { useTranslation } from "react-i18next";
 import LanguageType from "../UI/LanguageType";
-import RequestBtnPy from "./RequestBtnPy";
+import RequestBtn from "./RequestBtn";
 import { useState } from "react";
 
 const Contents = () => {
@@ -66,7 +66,7 @@ const Contents = () => {
               </Typography>
             </Grid>
             <Grid margin={2}>
-              <RequestBtnPy setexampleAPI={setexampleAPI} />
+              <RequestBtn setexampleAPI={setexampleAPI} />
             </Grid>
           </Stack>
           <Grid margin={2}>
