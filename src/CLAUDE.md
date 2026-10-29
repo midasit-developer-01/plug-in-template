@@ -1,0 +1,211 @@
+# src/CLAUDE.md — Work Guide (code-writing rules)
+
+This document defines the rules to follow when **actually building a plug-in** with this template.
+For the root structure / entry flow, see [`../CLAUDE.md`](../CLAUDE.md) first.
+
+---
+
+## 0. Target project definition (★ fill in this section before starting work)
+
+> When you start a new project, **record the following directly in this file**.
+> All subsequent code is written against the definitions written here.
+
+- **Project purpose**: _(e.g. a plug-in that calculates pile spring stiffness and inputs it into the model)_
+- **Target product**: _(CIVIL / GEN, etc.)_
+- **Main feature list**:
+  1. _(e.g. calculate spring stiffness from input values)_
+  2. _(e.g. input the calculated result into the model via the DB API)_
+  3. _(e.g. data import/export)_
+- **Screen layout (panels/tabs)**: _(e.g. input panel / result panel / run button)_
+- **APIs used**: _(e.g. read `db/NODE`, write `db/SPRING`)_
+- **State structure**: _(list of recoil atoms/selectors)_
+
+---
+
+## 1. Folder organization rules (separation by feature)
+
+The actual code is written inside `src/`, separated into **feature folders**.
+
+| Role | Folder | Contents | Decision test |
+| --- | --- | --- | --- |
+| Pure UI widgets | **`src/UI/`** | Reusable presentational components (button/input/dropdown/dialog/table/panel wrappers). Driven by props only, no domain/API logic | *Can it be copy-pasted as-is into another plug-in?* |
+| Custom hooks | **`src/hooks/`** | Encapsulate logic/state/side-effects/API calls (`useXxx`). No JSX | *Logic/state only, no JSX?* |
+| Feature/domain components | **`src/components/`** | **Containers** that assemble screen sections (panels/tabs/windows). Combine UI widgets + hooks + recoil state. Specific to this plug-in | *Tied to a specific feature/screen?* |
+| Calculation | `src/Calculates/` | Pure calculation logic (input → output, UI-agnostic) | |
+| Data | `src/DataControls/` | Data processing/transformation, import/export | |
+| State | `src/states/` | recoil atoms/selectors, types | |
+
+Rules:
+- ⚠️ **Do not create new folders arbitrarily.** Place a component in either `src/UI/` or `src/components/`
+  depending on its nature. (No singular `src/component/` folder.)
+- **UI vs components distinction**:
+  - Reusable **pure widgets** = `src/UI/` (driven by props only, no domain logic / API calls)
+  - **Screen-level containers** assembling widgets/hooks/state = `src/components/` (e.g. `MainWindow`, `InputPanel`, `ResultPanel`)
+- **Logic-only, no JSX** = a `useXxx` in `src/hooks/`. (e.g. window drag/resize, domain state management)
+- **Calculation logic** is split into pure functions in `Calculates/` and called from components/hooks.
+- **Data I/O / transformation** is collected in `DataControls/`.
+- Translation strings are **not hardcoded in code** but kept in `src/locales` (bundled, see section 3 below).
+
+Example structure:
+```
+src/
+├─ UI/                     # Reusable pure widgets (presentational)
+│  ├─ NumberField.tsx
+│  ├─ ConfirmDialog.tsx
+│  └─ LanguageType.tsx
+├─ hooks/                  # Custom hooks (logic/state/API)
+│  ├─ usePileDomain.ts
+│  └─ useWindowControl.ts
+├─ components/             # Feature/domain containers (assemble screen sections)
+│  ├─ MainWindow.tsx
+│  ├─ InputPanel.tsx
+│  └─ ResultPanel.tsx
+├─ Calculates/
+│  └─ springStiffness.ts
+├─ DataControls/
+│  ├─ exportProject.ts
+│  └─ importProject.ts
+└─ states/
+   └─ projectState.ts
+```
+
+---
+
+## 2. Component-writing pattern
+
+- Prefer `@midasit-dev/moaui` components for UI (`GuideBox`, `Panel`, `Grid`,
+  `Typography`, `Button`, `DropList`, `Stack`, `Icon`, etc.).
+- Use `recoil` for global state. The screen entry point is `App.tsx`.
+- Display translations via `t("key")` from `useTranslation()`.
+
+```tsx
+import { GuideBox, Panel, Typography, Button } from "@midasit-dev/moaui";
+import { useTranslation } from "react-i18next";
+
+const ResultPanel = () => {
+  const { t } = useTranslation();
+  return (
+    <Panel variant="shadow2" padding={2}>
+      <GuideBox spacing={2}>
+        <Typography variant="h1">{t("result_title")}</Typography>
+        <Button onClick={() => { /* ... */ }}>{t("calculate")}</Button>
+      </GuideBox>
+    </Panel>
+  );
+};
+
+export default ResultPanel;
+```
+
+---
+
+## 3. Translation (i18n) rules
+
+- Resource location: `src/locales/{en,kr,jp}/translation.json` — **`i18n.js` imports them into the bundle**.
+  (Not fetched from `/locales/*.json` at runtime → works even if the deploy host blocks `/locales/`.)
+- **Register new text as a key and add it to all three regional (en/kr/jp) files.**
+- To add a new language: create `src/locales/{lng}/translation.json` → add the code to
+  `SUPPORTED_LANGS` in `src/language.ts` → add the import to `resources` in `src/i18n.js`.
+
+`src/locales/en/translation.json`
+```json
+{ "result_title": "Result", "calculate": "Calculate" }
+```
+`src/locales/kr/translation.json`
+```json
+{ "result_title": "결과", "calculate": "계산" }
+```
+`src/locales/jp/translation.json`
+```json
+{ "result_title": "結果", "calculate": "計算" }
+```
+
+Usage:
+```tsx
+const { t } = useTranslation();
+<Typography>{t("result_title")}</Typography>
+```
+
+- Language detection/switching logic is centralized in `src/language.ts`.
+  - `detectLanguage()`: path segment → `?lang=` → localStorage → default `en` (path-position-independent, supports `ja→jp` / `ko→kr` aliases).
+  - Switching is handled via `i18n.changeLanguage()` + `persistLanguage()` **without a reload** (switching UI: `src/UI/LanguageType.tsx`).
+  - ⚠️ Do not change `window.location.pathname` directly (a full reload → if the deploy host lacks SPA fallback, you may drop to an offline page).
+- On a missing key, English is shown via `fallbackLng: "en"`.
+
+---
+
+## 4. API request guide
+
+All communication with the Midas server goes through `src/utils_api.ts`.
+
+> ### ⛔ Never write an API call from memory
+>
+> Each endpoint has its own body shape, and the names are 4-letter abbreviations. A field list
+> you recalled rather than read is a bug waiting to happen — and the server rejects the whole
+> request, so it fails at the user, not at compile time.
+>
+> For endpoints and body shapes, refer to the **MIDAS API guide** or use the **MIDAS MCP server**,
+> and copy the example's field names, nesting and types verbatim.
+
+### 4-1. `src/utils_api.ts`
+
+A `fetch`-based TypeScript client. Auth (MAPI-Key) and base URL are handled by `VerifyUtil`.
+**All functions are asynchronous (`async`)**, so call them with `await`.
+
+There are two body conventions (the MIDAS API guide / MCP server tells you which one an endpoint uses):
+
+| Convention | Functions |
+| --- | --- |
+| `Assign` | `dbCreate`, `dbCreateItem`, `dbRead`, `dbReadItem`, `dbUpdate`, `dbUpdateItem`, `dbDelete` |
+| `Argument` | `command(group, name, argument?, method?, body?)` |
+
+```ts
+import { dbRead, dbCreate, command } from "../utils_api";
+
+// Assign — GET /db/NODE  → returns as { id: value, ... }
+const nodes = await dbRead("NODE");
+if (nodes.error) { console.error(nodes.error, nodes.body); return; }
+
+// Assign — POST /db/{name}. Copy the body shape from the MIDAS API guide or MCP server
+await dbCreate("NAME", { 1: { /* fields from the example */ } });
+
+// Argument — POST /post/TABLE
+const table = await command("post", "TABLE", { TABLE_TYPE: "REACTIONG" });
+
+// Argument, GET — pass the method explicitly
+const selected = await command("view", "SELECT", undefined, "GET");
+```
+
+- On failure, the return value follows the `{ error: string, body?: string }` convention →
+  check `result.error` at the call site. `body` carries the server's response text, which usually
+  says which field was rejected and why.
+- The db helpers also accept a **full uri**, so db-shaped tables outside `/db` are reachable:
+  `dbRead("design/PSC/AASHTO-LRFD24/MEMB")`.
+- `requestJson(method, endpoint, body)` is exported as an escape hatch, but `command()` already
+  covers every non-db group — reach for it only if an endpoint's `example` matches neither convention.
+
+### 4-2. Auth bypass during development (.env)
+
+If attaching `?mapiKey=` every time during local development is tedious, you can bypass it via `.env.development.local`.
+
+```bash
+REACT_APP_SKIP_AUTH=true     # Bypass the Wrapper verification gate
+REACT_APP_MAPI_KEY=...       # (optional) utils_api uses this key for requests
+REACT_APP_BASE_URL=https://moa-engineers.midasit.com:443/civil  # (optional) includes the program path
+```
+
+- Applied only when `NODE_ENV=development` (`src/config.ts`) → no effect on production builds.
+- If the key/URL are left empty, falls back to URL query-string values.
+- Details: "Dev auth bypass" in the root [`../CLAUDE.md`](../CLAUDE.md).
+
+---
+
+## 5. New-feature checklist
+
+1. [ ] Record the feature in section 0 (target project definition) of `src/CLAUDE.md`
+2. [ ] Screen → write reusable widgets in `src/UI/`, screen-level containers in `src/components/`, logic in `src/hooks/`, and wire them into `App.tsx`
+3. [ ] Calculation logic → split into pure functions in `src/Calculates/`
+4. [ ] Data processing → write in `src/DataControls/`
+5. [ ] Display strings → add keys in `src/locales/{en,kr,jp}` (all three)
+6. [ ] Server communication → check the endpoint in the MIDAS API guide or MCP server → call via `src/utils_api.ts`
+7. [ ] Confirm the type check passes with `npx tsc --noEmit`

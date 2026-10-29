@@ -1,0 +1,217 @@
+# CLAUDE.md — Project Guide
+
+This repository is a React template for building **MIDAS Plug-in Items**.
+It is based on the `@midasit-dev/moaui` UI library, and API requests run on TypeScript (`fetch`).
+
+> The **work rules, structure, translation, and API guide** for actually building a new
+> project (plug-in) are documented in [`src/CLAUDE.md`](./src/CLAUDE.md). Be sure to read it
+> before working on code.
+
+---
+
+## 1. Tech Stack
+
+| Area | Technology |
+| --- | --- |
+| Framework | React 18 + TypeScript (Create React App / `react-scripts`) |
+| UI | `@midasit-dev/moaui` (GuideBox, Panel, Typography, Button, DropList, Icon, etc.) |
+| State management | `recoil` |
+| i18n | `react-i18next` + `i18next-http-backend` (per-region JSON loading) |
+| Routing | `react-router-dom` (language paths `/en`, `/kr`, `/jp`) |
+| Notifications | `notistack` |
+| Styling | Tailwind CSS (`input.css` → `output.css`) |
+
+---
+
+## 2. Directory Structure
+
+```
+template/
+├─ public/
+│  ├─ index.html          # Page shell. Loads manifest.json for the title
+│  └─ manifest.json       # Plug-in title / background color / window size (width, height)
+│
+├─ .env.example          # Example dev env vars → copy to create .env.development.local
+│
+├─ scripts/
+│  └─ build.js           # Production build (forces the dev auth bypass off)
+│
+└─ src/
+   ├─ index.tsx           # Entry. BrowserRouter → Wrapper routing
+   ├─ Wrapper.tsx         # MAPI-Key auth verification gate (must pass to render App)
+   ├─ App.tsx             # App root. Build the screen starting here
+   ├─ config.ts           # Dev config (reads REACT_APP_* such as auth bypass)
+   ├─ utils_api.ts        # ★ API requests: fetch-based client (db CRUD + command)
+   ├─ utils_typscript.ts  # Shared utility functions
+   ├─ i18n.js             # i18next init (imports src/locales into the bundle)
+   ├─ language.ts         # Language detection/switching (path-independent, ja→jp / ko→kr aliases)
+   ├─ locales/            # i18n translation resources (en/kr/jp) — included in the bundle
+   ├─ global.d.ts         # Global type declarations
+   ├─ Signature.tsx       # Console signature
+   ├─ UI/                 # Reusable pure widgets (presentational)
+   ├─ hooks/              # Custom hooks (logic, state, API)
+   ├─ components/         # Feature/domain containers (assemble screen sections)
+   ├─ Calculates/         # Pure calculation logic
+   ├─ DataControls/       # Data processing/transformation, import/export
+   └─ states/             # recoil atoms/selectors, types
+```
+
+> The rules for organizing the feature folders inside `src/` (UI / hooks / components /
+> Calculates / DataControls …) follow [`src/CLAUDE.md`](./src/CLAUDE.md).
+
+---
+
+## 3. Entry Flow
+
+```
+index.tsx
+  └─ <BrowserRouter> → <Wrapper />        # Language path (/en, /kr, /jp) routing
+       └─ Wrapper.tsx (ValidWrapper)      # ① MAPI-Key auth verification gate
+            └─ <App />                     # ② Rendered only after verification passes
+                 └─ MainWindow → Contents  # ③ The actual screen
+```
+
+- **Wrapper.tsx**: On app entry, performs a `/health` connection + MAPI-Key verification.
+  - During verification → `<VerifyDialog loading />`
+  - Verification success → render `App`
+  - Verification failure → show the "Validation Check" panel (Base URI / MAPI-Key status)
+- Screen work starts **below `App.tsx`**.
+
+---
+
+## 4. Authentication (MAPI-Key)
+
+There is no separate login UI. Auth info is passed via the **URL query string**.
+
+- `?mapiKey=...` — MAPI-Key (read by `VerifyUtil.getMapiKey()`)
+- `?redirectTo=...` — server origin (defaults to `https://moa-engineers.midasit.com:443`)
+- `VerifyUtil.getBaseUrlAsync()` verifies the key and returns the `{origin}/{program}` base URL
+
+When **running inside the product**, the product injects the parameters above.
+When **developing locally**, you must attach them yourself to pass the auth gate:
+
+```
+http://localhost:3000/en?mapiKey=ISSUED_KEY
+# For a different target server:
+http://localhost:3000/en?mapiKey=...&redirectTo=https://moa-engineers.midasit.com:443
+```
+
+### Dev auth bypass (.env)
+
+If attaching the key to the URL every time is tedious, you can **skip auth in dev mode**.
+Copy `.env.example` to create `.env.development.local` (gitignored):
+
+```bash
+REACT_APP_SKIP_AUTH=true                # Bypass the verification gate → enter the app directly
+REACT_APP_MAPI_KEY=ISSUED_KEY           # (optional) when you also want to test API requests
+REACT_APP_BASE_URL=https://moa-engineers.midasit.com:443/civil  # (optional) includes the program path
+```
+
+- Works only when `NODE_ENV=development` (npm start) → **no effect on production builds**.
+- Bypassing only the gate shows the screen, but API requests work for real only once
+  `REACT_APP_MAPI_KEY`/`REACT_APP_BASE_URL` are filled in. (If empty, falls back to URL query-string values.)
+- Implementation: `src/config.ts` (reads env) → `Wrapper.tsx` (gate bypass) / `utils_api.ts` (key/URL fallback).
+- Restart the dev server after changes.
+
+---
+
+## 5. Internationalization (i18n)
+
+- Resources: `src/locales/{en,kr,jp}/translation.json` — **included in the bundle (imported in `i18n.js`)**.
+  They are not fetched from `/locales/*.json` at runtime. (Fine even if the deploy host blocks `/locales/` with 403.)
+- Language is decided by `detectLanguage()` in `src/language.ts` — **independent of the URL path position**:
+  ① match a supported language in a path segment (`/jp` → jp) → ② `?lang=` → ③ localStorage → ④ default `en`.
+  (Includes alias normalization: `ja→jp`, `ko→kr`, `en-US→en`.)
+- Switching happens **without a page reload** via `i18n.changeLanguage()` + saving to localStorage (does not force the path to change).
+- Usage: `const { t } = useTranslation();` → `t("key")`
+- **Translation keys must be added to all three regional files.** (Details: `src/CLAUDE.md`)
+
+---
+
+## 6. API Requests (Summary)
+
+**Never write an API call from memory.** Each endpoint has its own body shape.
+For endpoints and body shapes, refer to the **MIDAS API guide** or use the **MIDAS MCP server**.
+
+| Method | File | Notes |
+| --- | --- | --- |
+| **Recommended** | `src/utils_api.ts` | `fetch`-based. `dbCreate/dbRead/dbUpdate/dbDelete…` for the `Assign` convention, `command()` for `Argument` |
+
+For detailed call examples, see the "API Request Guide" in [`src/CLAUDE.md`](./src/CLAUDE.md).
+
+---
+
+## 7. Dev / Build Commands
+
+```bash
+npm start        # Dev server (http://localhost:3000)
+npm run build    # Production build (dev auth bypass forced OFF)
+npm run css      # Tailwind watch (input.css → output.css)
+npx tsc --noEmit # Type check
+```
+
+> **Dev mode OFF at build time**: `npm run build` runs through `scripts/build.js`, which
+> **forcibly disables** the auth bypass before building (e.g. `REACT_APP_SKIP_AUTH=false`) — a double safeguard.
+> The original `config.ts` also ignores the bypass when `NODE_ENV !== "development"`, so builds are always production-safe.
+>
+> The `dev` (DevTools server) script in `package.json` does not work in this template because the
+> DevTools folder has been removed.
+
+### 7-1. Packaging / upload — files the plug-in platform reads by name
+
+Build, then zip **the contents of `build/`** — not the folder itself. The platform expects
+`index.html` / `icon.svg` / `readme.md` at the **top level of the archive**; an extra `build/`
+wrapper folder makes the plug-in load blank. Upload the zip from the **My Work** tab of the
+plug-in platform (cloud icon) → choose `new` / `update`, fill in title and description →
+**Select Zip File** → **Run** to verify. (See [`README.md`](./README.md) §5 for the screenshots.)
+
+The platform reads two files **by exact name from the top level of `build/`**. Neither is referenced by
+any code, so nothing warns you when they are missing or wrong — the store page just renders broken.
+
+| File | Used as | Rules |
+| --- | --- | --- |
+| `build/icon.svg` | The plug-in icon in the store | **SVG only.** No other format is recognized — not `.ico`, not `.png`, and `manifest.json`'s `icons` array is ignored entirely. A missing `icon.svg` shows "이미지 로드 실패" in the icon slot. |
+| `build/readme.md` | The plug-in description page | Markdown. Edit `public/readme.md`. Images work — put the file under `public/` and reference it relative to `build/` (`![](./screenshot.png)`). |
+
+Since CRA copies `public/` to `build/` verbatim, keep them at `public/icon.svg` and `public/readme.md`.
+
+> `public/favicon.ico` and `manifest.json`'s `icons` are for the **browser tab and PWA metadata only**.
+> They have no effect on the store listing — don't try to fix a broken store icon there.
+> (Source: [A Guide to Creating Plug-in for Developers](https://support.midasuser.com/hc/en-us/articles/42327585548953-A-Guide-to-Creating-Plug-in-for-Developers), FAQ)
+
+---
+
+## 8. Running / Environment Setup (Claude Code standard procedure)
+
+Running this project requires **Node.js**; Git is optional (version control).
+Installation and running are handled by telling **Claude Code "run it"** (no separate batch file — the AI performs the steps below directly).
+
+### MAPI-Key required before running
+- The app **requires a MAPI-Key before running** (without it, you are blocked at the verification gate).
+- The key is passed via URL query: `http://localhost:3000/?mapiKey=<KEY>` →
+  `VerifyUtil.getMapiKey()` in `Wrapper.tsx` reads it to pass the verification gate (not the dev-bypass `.env`).
+- The AI saves a received key to the root `.mapikey` (gitignored, kept only on this PC) and reuses it next time.
+- Since the route is a `/*` catch-all, the language follows `detectLanguage()` (localStorage / default en).
+- Precondition: the target MIDAS NX app is running + a model file is open (verification/requests act on the running program).
+
+### When the AI (Claude Code) handles it — "run it" standard procedure
+When the user asks to "run it / set up the environment", **the AI does it directly instead of making the user double-click**:
+
+1. Check installs: `node -v` (required). If needed, `git --version`.
+2. Install **only what's missing** (only Node is required):
+   ```powershell
+   winget install -e --id OpenJS.NodeJS.LTS --silent --accept-package-agreements --accept-source-agreements
+   winget install -e --id Git.Git --silent --accept-package-agreements --accept-source-agreements      # optional
+   ```
+   - If `winget` is missing (older Windows), guide the user to install the Microsoft Store "App Installer". Installing winget requires UAC (admin) approval.
+   - Right after a winget install, PATH is not reflected in the current shell → run `npm` in a **new shell**.
+3. Dependencies: run `npm install` if `node_modules` is missing.
+4. **Obtain the MAPI-Key (required)**: if the root `.mapikey` exists, use its value; otherwise **ask the user for the key** and save the received value to `.mapikey` (reused next run).
+   - Running just `npm start` without a key blocks the app at the verification gate ("Validation Check").
+   - Key source: [API Settings] in MIDAS CIVIL/GEN NX.
+5. Start the server + open the browser with the key attached:
+   - Run `npm start` in the **background** → once localhost:3000 is ready, open `http://localhost:3000/?mapiKey=<KEY>`.
+
+> ⚠️ Claude Code asks for **permission approval** before running commands → the user must click "Allow" (not fully unattended).
+> Avoid auto-installing just because a session started (when a missing tool is detected, confirm/propose first; do system-wide installs only after approval).
+> Precondition: the target **MIDAS NX app is running + a model file is open** (the condition for passing key verification).

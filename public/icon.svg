@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  플러그인 스토어 아이콘.
+
+  플랫폼은 build/ 최상단의 "icon.svg" 만 아이콘으로 인식한다 (다른 포맷 불가,
+  manifest.json 의 icons 는 무시). 자세한 내용은 ../CLAUDE.md 8-1 절 참고.
+
+  도형: 위·오른쪽은 돌기(원을 더함), 왼쪽·아래는 홈(mask 로 원을 뺌).
+  목록에서 20px 안팎으로 그려지므로 형태를 단순하게 유지할 것.
+  파란색은 어두운 패널과 밝은 배경 양쪽에서 모두 살아남는 중간 채도를 골랐다.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="240" height="240" role="img" aria-label="MIDAS plug-in">
+  <mask id="sockets">
+    <rect width="240" height="240" fill="#fff"/>
+    <circle cx="14" cy="136" r="32" fill="#000"/>
+    <circle cx="104" cy="226" r="32" fill="#000"/>
+  </mask>
+  <g mask="url(#sockets)" fill="#2E6FF2">
+    <rect x="14" y="46" width="180" height="180" rx="20"/>
+    <circle cx="104" cy="46" r="32"/>
+    <circle cx="194" cy="136" r="32"/>
+  </g>
+  <path fill="#FFFFFF" transform="translate(120,122) scale(0.8) translate(-120.209,-122.8125)"
+        d="M 167.527344 68.90625 L 120.886719 115.523438 L 119.507812 115.523438 L 72.890625 68.90625 L 45.9375 68.90625 L 45.9375 176.71875 L 72.890625 176.71875 L 72.890625 122.8125 L 118.8125 168.734375 L 121.605469 168.734375 L 167.527344 122.8125 L 167.527344 176.71875 L 194.480469 176.71875 L 194.480469 68.90625 Z"/>
+</svg>
